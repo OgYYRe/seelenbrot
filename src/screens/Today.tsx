@@ -17,6 +17,7 @@ const ZikirList: Zikir[] = [
 export default function TodayScreen() {
     const [salavatDone, setSalavatDone] = useState(false);
 
+
     const [zikir, setZikir] = useState<Zikir | null>(null);
     useEffect(() => {
         const loadZikir = async () => {
@@ -55,7 +56,6 @@ export default function TodayScreen() {
             {salavatDone && <Text>Salavat gönderildi!</Text>}
 
             {/* Zikir – optional */}
-
             {zikir && (
                 <View style={{ marginTop: 20 }}>
                     <Text>{zikir.name}</Text>

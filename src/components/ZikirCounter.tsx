@@ -23,6 +23,7 @@ export default function ZikirCounter({target, name}: ZikirProps) {
                     disabled={done}
             />
             {done && <Text>Allah kabul etsin</Text>}
+            {/*TODO: For future: max 3 Zikir. + Some zikir has explanation*/}
                 </View>
 
     );
