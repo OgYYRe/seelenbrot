@@ -1,9 +1,10 @@
-import {Text, View } from "react-native";
+import {Pressable, Text, View} from "react-native";
 import SalavatSlider from "../components/SalavatSlider";
 import {useEffect, useState} from "react";
 import ZikirCounter from "../components/ZikirCounter";
 import QuranTracker from "../components/QuranTracker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import CevsenViewPage from "../components/CevsenViewPage.tsx";
 
 type Zikir = { name: string; target: number };
 
@@ -11,6 +12,7 @@ const ZikirList: Zikir[] = [
     { name: "Salavat", target: 1 },
     { name: "Ya Latif", target: 4 },
 ];
+
 
 
 
@@ -43,6 +45,11 @@ export default function TodayScreen() {
     }, []);
 
 
+    // Quran and Cevsen toggles
+    const [openQuran, setOpenQuran] = useState(false);
+    const [openCevsen, setOpenCevsen] = useState(false);
+
+
     return (
 
         <View style={{ padding: 20 }}>
@@ -64,9 +71,28 @@ export default function TodayScreen() {
             )}
 
             {/* Quran */}
-            <View style={{ marginTop: 20 }}>
-                <QuranTracker />
-            </View>
+            <Pressable onPress={() => setOpenQuran(prev => !prev)}>
+                <Text
+                >{openQuran ? "Kuran Sayfasini kapa⌃⌃⌃⌃⌃⌃" : "Kuran Sayfasini ac⌄⌄⌄⌄⌄"}</Text>
+            </Pressable>
+
+            {openQuran && (
+                <View>
+                    <QuranTracker />
+                </View>
+            )}
+
+
+            <Pressable onPress={() => setOpenCevsen(prev => !prev)}>
+                <Text
+                >{openCevsen ? "Cevsen Sayfasini kapa⌃⌃⌃⌃⌃⌃" : "Cevsen Sayfasini ac⌄⌄⌄⌄⌄"}</Text>
+            </Pressable>
+
+            {openCevsen && (
+                <View>
+                    <CevsenViewPage />
+                </View>
+            )}
         </View>
     );
 }

@@ -7,25 +7,37 @@ export default function DebugScreen() {
 
     useEffect(() => {
         const loadDebugData = async () => {
-            const quran = await AsyncStorage.getItem("quran:lastPage");
-            const recipe = await AsyncStorage.getItem("recipe:settings");
+            try {
+                const keys = await AsyncStorage.getAllKeys();
+                const pairs = await AsyncStorage.multiGet(keys); // [[key, value], ...]
 
-            setDebugData({
-                quran: quran ? JSON.parse(quran) : null,
-                recipe: recipe ? JSON.parse(recipe) : null,
-            });
+                const data: Record<string, any> = {};
+                for (const [k, v] of pairs) {
+                    if (v == null) {
+                        data[k] = null;
+                        continue;
+                    }
+                    // Wenn JSON: parse, sonst String lassen
+                    try {
+                        data[k] = JSON.parse(v);
+                    } catch {
+                        data[k] = v;
+                    }
+                }
+
+                setDebugData({ keys, data });
+            } catch (e) {
+                setDebugData({ error: String(e) });
+            }
         };
 
-        loadDebugData();
+        void loadDebugData();
     }, []);
 
     return (
         <ScrollView style={{ padding: 16 }}>
             <Text>DEBUG STORAGE</Text>
-
-            <Text>
-                {JSON.stringify(debugData, null, 2)}
-            </Text>
+            <Text>{JSON.stringify(debugData, null, 2)}</Text>
         </ScrollView>
     );
 }

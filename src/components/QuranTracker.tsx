@@ -3,11 +3,13 @@ import { useEffect, useState} from "react";
 
 import CheckBox from "@react-native-community/checkbox";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import QuranPDFView from "./QuranPDFView.tsx";
 
 
 const LAST_PAGE_KEY = 'quran:lastPage'
 
 export default function QuranTracker(){
+
 
 
     const [checkedPage, setCheckedPage] = useState<number>(0)
@@ -62,15 +64,12 @@ export default function QuranTracker(){
 
     return (
         <View>
-        <Text>Quran Tracker Component</Text>
 
             <Text>
                 <Text>{currentPage}. Sayfa</Text>
             </Text>
 
-            <Text>
-                Burada current sayfa ekrana basilacak
-            </Text>
+            <QuranPDFView page={currentPage} />
 
             <View>
                 <CheckBox

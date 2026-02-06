@@ -4,139 +4,243 @@ import CheckBox from "@react-native-community/checkbox";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
-const RECIPE_SETTINGS_KEY = 'recipe:settings';
+
+
+const PROGRESS_KEY = 'app:progress';
 
 export default function RecipeScreen() {
 
-    // Options for recipe state
-    const [optionsForRecipe, setOptionsForRecipe] = useState({
-        zikir: false,
-        kuran: false,
-        cevsen: false,
-        ezber: false,
+    const [active, setActive] = useState({
+        dhikr: false,
+        quran: false,
+        jawshan: false,
+        memorization: false,
     });
 
-    // Zikir states
-    const[zikirName, setzikirName] = useState('');
-    const[zikirAmount, setzikirAmount] = useState('');
+    // Quran states
+    const[quranTargetInput, setQuranTargetInput] = useState('');
+    // Dhikr states
+    const[dhikrNameInput, setDhikrNameInput] = useState('');
+    const[dailyDhikrTargetInput, setDailyDhikrTargetInput] = useState('');
+    // Jawshan states
+    const[jawshanTargetInput, setJawshanTargetInput] = useState('');
+    // Memorization states
+    const [memizationSurahInput, setMemorizationSurahInput] = useState('');
+    const [memorizationStartTargetInput, setMemorizationTargetInput] = useState('');
+    const [memorizationEndTargetInput, setMemorizationEndTargetInput] = useState('');
 
 
-
-    // Zikir checkbox
-    const checkBoxZikirHandler = (value: boolean) => {
-        setOptionsForRecipe({
-            ...optionsForRecipe,
-            zikir: value,
-        });
-    };
-
-    // Zikir save function
-    const saveZikirHandler = async () => {
-        if (optionsForRecipe.zikir) {
-            if (!zikirName.trim() || !zikirAmount.trim()) {
-                Alert.alert('Eksik', 'Zikir adi veya adet bos olamaz.');
-                return;
-            }
-            if (Number.isNaN(Number(zikirAmount.trim()))) {
-                Alert.alert('Hata', 'Zikir adeti sayi olmalidir.');
-                return;
-            }
-        }
-
-        // first create object
-        try {
-        const dataToSave = {
-            options: optionsForRecipe,
-            zikir: optionsForRecipe.zikir
-            ? {
-                name: zikirName,
-                amount: zikirAmount,
-            }: null,
-            cevsen:{
-                enabled: optionsForRecipe.cevsen,
-            }
-        };
-        // second object save ( AsyncStorage.setItem )
-        await AsyncStorage.setItem(RECIPE_SETTINGS_KEY, JSON.stringify(dataToSave));
-        Alert.alert('Basarili', `${zikirName}x${zikirAmount} menüye eklendi.`);
-
-        setzikirName('');
-        setzikirAmount('');
-
-    } catch (error) {
-        console.error('Kaydetme hatasi:', error);
-    }
-}
-
-    // Cevsen checkbox
-    const checkBoxCevsenHandler = async (value: boolean) => {
-        setOptionsForRecipe(prev => ({
+    // Quran checkbox
+    const checkBoxQuranHandler = async (value: boolean) => {
+        setActive(prev => ({
             ...prev,
-            cevsen: value,
+            quran: value,
+        }));
+        const raw = await AsyncStorage.getItem(PROGRESS_KEY);
+        if (!raw) return;
+
+        const progress = JSON.parse(raw);
+        progress.quran.active = value;
+
+        await AsyncStorage.setItem(
+            PROGRESS_KEY,
+            JSON.stringify(progress)
+        );
+    }
+    // Dhikr checkbox
+    const checkBoxDhikrHandler = async (value: boolean) => {
+        setActive(prev => ({
+            ...prev,
+            dhikr: value,
         }));
 
-        await AsyncStorage.setItem(
-            RECIPE_SETTINGS_KEY,
-            JSON.stringify({
-                options: {
-                    ...optionsForRecipe,
-                    cevsen: value,
-                },
-                cevsen: { enabled: value },
-            })
-        );
-    };
+        const raw = await AsyncStorage.getItem(PROGRESS_KEY);
+        if (!raw) return;
 
-
-
-    // Kuran checkbox
-    const checkBoxKuranHandler = async (value: boolean) => {
-        setOptionsForRecipe({
-            ...optionsForRecipe,
-            kuran: value,
-        });
+        const progress = JSON.parse(raw);
+        progress.dhikr.active = value;
 
         await AsyncStorage.setItem(
-            RECIPE_SETTINGS_KEY,
-            JSON.stringify({
-                options: {
-                    ...optionsForRecipe,
-                    kuran: value,
-                },
-            })
+            PROGRESS_KEY,
+            JSON.stringify(progress)
         );
     }
+    // Jawshan checkbox
+    const checkBoxJawshanHandler = async (value: boolean) => {
+        setActive(prev => ({
+            ...prev,
+            jawshan: value,
+        }));
+        const raw = await AsyncStorage.getItem(PROGRESS_KEY);
+        if (!raw) return;
+
+        const progress = JSON.parse(raw);
+        progress.jawshan.active = value;
+
+        await AsyncStorage.setItem(
+            PROGRESS_KEY,
+            JSON.stringify(progress)
+        );
+    }
+    // Memorization checkbox
+    const checkBoxMemorizationHandler = async (value: boolean) => {
+        setActive(prev => ({
+            ...prev,
+            memorization: value,
+        }));
+
+        const raw = await AsyncStorage.getItem(PROGRESS_KEY);
+        if (!raw) return;
+
+        const progress = JSON.parse(raw);
+        progress.memorization.active = value;
+
+        await AsyncStorage.setItem(
+            PROGRESS_KEY,
+            JSON.stringify(progress)
+        );
+    }
+
+    // Quran save function
+    const saveQuranHandler = async () => {
+        if (!dailyDhikrTargetInput.trim()) {
+            Alert.alert('Eksik', 'Kuran hedefi bos olamaz.');
+            return;
+        }
+        if (Number.isNaN(Number(quranTargetInput.trim()))) {
+            Alert.alert('Hata', 'Kuran hedefi sayi olmalidir.');
+            return;
+        }
+        const raw = await AsyncStorage.getItem(PROGRESS_KEY);
+        if (!raw) return;
+
+        const progress = JSON.parse(raw);
+
+        progress.quran = {
+            ...progress.quran,
+            dailyTarget: Number(quranTargetInput.trim()),
+            todayCount: 0
+        }
+
+        await AsyncStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
+
+        Alert.alert('Basarili', `Kuran hedefi tarife eklendi`);
+    }
+    // Dhikr save function
+    const saveDhikrHandler = async () => {
+        if (!dhikrNameInput.trim() || !dailyDhikrTargetInput.trim()) {
+            Alert.alert('Eksik', 'Zikir adi veya adet bos olamaz.');
+            return;
+        }
+        if (Number.isNaN(Number(dailyDhikrTargetInput.trim()))) {
+            Alert.alert('Hata', 'Zikir adeti sayi olmalidir.');
+            return;
+        }
+        const raw = await AsyncStorage.getItem(PROGRESS_KEY);
+        if (!raw) return;
+
+        const progress = JSON.parse(raw);
+
+        progress.dhikr = {
+            ...progress.dhikr,
+            dhikrName: dhikrNameInput.trim(),
+            dailyTarget: Number(dailyDhikrTargetInput.trim()),
+            todayCount: 0
+        }
+
+        await AsyncStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
+
+        Alert.alert('Basarili', `${dhikrNameInput}Zikir tarife eklendi`);
+
+
+
+}
+    // Jawshan save function
+    const saveJawshanHandler = async () => {
+        if (!jawshanTargetInput.trim()) {
+            Alert.alert('Eksik', 'Cevsen hedefi bos olamaz.');
+            return;
+        }
+        if (Number.isNaN(Number(jawshanTargetInput.trim()))) {
+            Alert.alert('Hata', 'Cevsen hedefi sayi olmalidir.');
+            return;
+        }
+        const raw = await AsyncStorage.getItem(PROGRESS_KEY);
+        if (!raw) return;
+
+        const progress = JSON.parse(raw);
+
+        progress.jawshan = {
+            ...progress.jawshan,
+            dailyTarget: Number(jawshanTargetInput.trim()),
+            todayCount: 0
+        }
+
+        await AsyncStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
+
+        Alert.alert('Basarili', `Cevsen hedefi tarife eklendi`);
+    }
+    // Memorization save function
+    const saveMemorizationHandler = async () => {
+        if (!memizationSurahInput.trim() || !memorizationStartTargetInput.trim() || !memorizationEndTargetInput.trim()) {
+            Alert.alert('Eksik', 'Ezber hedefi bos olamaz.');
+            return;
+        }
+        if (Number.isNaN(Number(memizationSurahInput.trim())) || Number.isNaN(Number(memorizationStartTargetInput.trim())) || Number.isNaN(Number(memorizationEndTargetInput.trim()))) {
+            Alert.alert('Hata', 'Ezber hedefi sayi olmalidir.');
+            return;
+        }
+        const raw = await AsyncStorage.getItem(PROGRESS_KEY);
+        if (!raw) return;
+
+        const progress = JSON.parse(raw);
+
+        progress.memorization = {
+            ...progress.memorization,
+            surah: Number(memizationSurahInput.trim()),
+            startAyah: Number(memorizationStartTargetInput.trim()),
+            endAyah: Number(memorizationEndTargetInput.trim()),
+            todayAyah: Number(memorizationStartTargetInput.trim()),
+        }
+
+        await AsyncStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
+
+        Alert.alert('Basarili', `Ezber hedefi tarife eklendi`);
+    }
+
+
+
+
+
+
 
 
     // Load saved settings
     useEffect(() => {
-        const loadSettings = async () => {
-            try {
-                const raw = await AsyncStorage.getItem(RECIPE_SETTINGS_KEY);
-                if (!raw) return;
+        const load = async () => {
+            const raw = await AsyncStorage.getItem(PROGRESS_KEY);
+            if (!raw) return;
 
-                const saved = JSON.parse(raw);
+            const progress = JSON.parse(raw);
 
-                if (saved?.options) {
-                    setOptionsForRecipe(saved.options);
+            setActive({
+                dhikr: progress.dhikr?.active || false,
+                quran: progress.quran?.active || false,
+                jawshan: progress.jawshan?.active || false,
+                memorization: progress.memorization?.active || false,
+            });
+
+            if (progress.dhikr?.active)
+                if (typeof progress.dhikr.dhikrName === "string") {
+                    setDhikrNameInput(progress.dhikr.dhikrName);
                 }
 
-                if (saved?.zikir) {
-                    // if zikir exists, set zikir option to true
-                    setOptionsForRecipe(prev => ({
-                        ...prev,
-                        zikir: true,
-                    }));
-
-                    if (typeof saved.zikir.name === 'string') setzikirName(saved.zikir.name);
-                    if (typeof saved.zikir.amount === 'string') setzikirAmount(saved.zikir.amount);
-                }
-            } catch (e) {
-                console.error('Okuma hatasi:', e);
+            if (typeof progress.dhikr.dailyTarget === "number") {
+                setDailyDhikrTargetInput((String(progress.dhikr.dailyTarget)));
             }
-        };
+        }
 
-        loadSettings();
+        load();
     }, []);
 
 
@@ -144,29 +248,29 @@ export default function RecipeScreen() {
         <View>
             <Text>Ruhun Gidasi Tarif Menüsü</Text>
 
-            {/* Zikir place */}
+            {/* Dhikr place */}
             <Text>Zikir olsun</Text>
             <CheckBox
-                value={optionsForRecipe.zikir}
-                onValueChange={checkBoxZikirHandler}
+                value={active.dhikr}
+                onValueChange={checkBoxDhikrHandler}
             />
 
-            {optionsForRecipe.zikir && (
+            {active.dhikr && (
                 <View>
                     <TextInput
-                        value={zikirName}
-                        onChangeText={setzikirName}
+                        value={dhikrNameInput}
+                        onChangeText={setDhikrNameInput}
                         placeholder={'Hangi zikir? (ör: Ya Latif)'}
                     />
 
                     <TextInput
-                        value={zikirAmount}
-                        onChangeText={setzikirAmount}
+                        value={dailyDhikrTargetInput}
+                        onChangeText={setDailyDhikrTargetInput}
                         keyboardType={"numeric"}
                         placeholder="Kac adet? (ör: 129)"
                         />
                     <Button
-                        onPress={saveZikirHandler}
+                        onPress={saveDhikrHandler}
                         title = "+ Tarif'e Ekle"
                         color = 'green'
                     />
@@ -176,33 +280,89 @@ export default function RecipeScreen() {
 
 
 
-            {/* Kuran place */}
+            {/* Quran place */}
             <Text>Kuran-i Kerim olmazsa olmaz</Text>
             <CheckBox
-                value={optionsForRecipe.kuran}
-                onValueChange={checkBoxKuranHandler}
+                value={active.quran}
+                onValueChange={checkBoxQuranHandler}
             />
 
-            {/* Cevsen place */}
+            {active.quran && (
+                <View>
+                    <TextInput
+                        value={quranTargetInput}
+                        keyboardType={"numeric"}
+                        onChangeText={setQuranTargetInput}
+                        placeholder={'Gunde kac sayfa? (ör: 2)'}
+                    />
+
+                    <Button
+                        onPress={saveQuranHandler}
+                        title = "+ Tarif'e Ekle"
+                        color = 'green'
+                    />
+                </View>
+            )}
+
+            {/* Jawshan place */}
             <Text>Cevsen de okurum...(Haftada 1 tane biter)</Text>
             <CheckBox
-                value={optionsForRecipe.cevsen}
-                onValueChange={checkBoxCevsenHandler}
+                value={active.jawshan}
+                onValueChange={checkBoxJawshanHandler}
             />
 
+            {active.jawshan && (
+                <View>
+                    <TextInput
+                        value={jawshanTargetInput}
+                        keyboardType={"numeric"}
+                        onChangeText={setJawshanTargetInput}
+                        placeholder={'Günde kaç bab? (ör: 15)'}
+                    />
+
+                    <Button
+                        onPress={saveJawshanHandler}
+                        title = "+ Tarif'e Ekle"
+                        color = 'green'
+                    />
+                </View>
+            )}
 
 
             {/* Ezber place */}
-            <Text>Ezber de yapiyorum</Text>
+            <Text>Ezber de yapayim</Text>
             <CheckBox
-                value={optionsForRecipe.ezber}
-                onValueChange={(value) =>
-                    setOptionsForRecipe(prev =>({
-                        ...prev,
-                        ezber: value,
-                    }))
-                }
+                value={active.memorization}
+                onValueChange={checkBoxMemorizationHandler}
             />
+            {active.memorization && (
+                <View>
+                    <TextInput
+                        value={memizationSurahInput}
+                        keyboardType={"numeric"}
+                        onChangeText={setMemorizationSurahInput}
+                        placeholder={`Kacinci sure? ör: Ra'd=13, Bakara=2`}
+                    />
+                    <TextInput
+                        value={memorizationStartTargetInput}
+                        keyboardType={"numeric"}
+                        onChangeText={setMemorizationTargetInput}
+                        placeholder={'Ayet baslangic numarasi? (ör: 28)'}
+                    />
+                    <TextInput
+                        value={memorizationEndTargetInput}
+                        keyboardType={"numeric"}
+                        onChangeText={setMemorizationEndTargetInput}
+                        placeholder={'Ayet bitis numarasi? (ör: 28)'}
+                    />
+                    <Button
+                        onPress={saveMemorizationHandler}
+                        title = "+ Tarif'e Ekle"
+                        color = 'green'
+                    />
+                </View>
+
+            )}
 
         </View>
     )
