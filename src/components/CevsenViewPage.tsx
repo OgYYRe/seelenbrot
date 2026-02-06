@@ -6,7 +6,7 @@ export default function CevsenViewPage(): JSX.Element {
 
     useEffect(() => {
         const bab = require("../../assets/Cevsen/B001.json");
-        const endings = require("../../assets/Cevsen/CevsenEnding.json");
+        const endings = require("../../assets/Cevsen/JawshanEnding.json");
 
         const fullText = bab.text + "\n\n" + (endings[bab.endingId] ?? "");
 
