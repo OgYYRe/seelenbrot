@@ -58,9 +58,32 @@ async function initProgressStorage() {
     const existing = await AsyncStorage.getItem(STORAGE_KEY);
     if (existing == null) {
         await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_PROGRESS));
-
     }
 }
+
+// Reset the Counts
+async function checkDailyReset() {
+    const raw = await AsyncStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+
+    const progress = JSON.parse(raw);
+
+    const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+
+    if (progress.lastResetDate === today) return;
+
+    // Reset daily counts
+    progress.quran.todayReadPages = 0;
+    progress.jawshan.todayReadBab = 0;
+    progress.salawat.doneToday = false;
+    progress.dhikr.todayCount = 0;
+    progress.memorization.todayCount = 0;
+
+    progress.lastResetDate = today;
+
+    await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+}
+
 
 
 
@@ -68,8 +91,13 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
     useEffect(() => {
-        void initProgressStorage();
+        const init = async () => {
+            await initProgressStorage();
+            await checkDailyReset();
+        };
+        init();
     }, []);
+
 
     return (
       <GestureHandlerRootView style={{flex: 1}}>
