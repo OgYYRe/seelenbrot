@@ -2,13 +2,13 @@ import {useState} from "react";
 import {Button, Text, View} from "react-native";
 
 
-type ZikirProps = {
+type DhikrProps = {
     target: number;
     name?: string;
 };
 
 
-export default function ZikirCounter({target, name}: ZikirProps) {
+export default function ZikirCounter({target, name}: DhikrProps) {
 
     const [count, setCount] = useState(0);
     const done: boolean = count >= target;
@@ -16,7 +16,7 @@ export default function ZikirCounter({target, name}: ZikirProps) {
 
 
         <View>
-            <Text>Tesbih: {count} / {target}</Text>
+            <Text>{count} / {target}</Text>
             <Button
                 title={`${name ?? "Zikir"} +1`}
                 onPress={() => setCount(count + 1)}

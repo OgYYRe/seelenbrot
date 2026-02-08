@@ -6,34 +6,28 @@ import QuranTracker from "../components/QuranTracker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import CevsenViewPage from "../components/CevsenViewPage.tsx";
 
-type Zikir = { name: string; target: number };
-
-const ZikirList: Zikir[] = [
-    { name: "Salavat", target: 1 },
-    { name: "Ya Latif", target: 4 },
-];
-
-
+type Dhikr = { name: string; target: number };
 
 
 export default function TodayScreen() {
     const [salavatDone, setSalavatDone] = useState(false);
 
 
-    const [zikir, setZikir] = useState<Zikir | null>(null);
+    const [dhikr, setDhikr] = useState<Dhikr | null>(null);
     useEffect(() => {
-        const loadZikir = async () => {
+        const loadDhikr = async () => {
             try {
-                const storedZikir = await AsyncStorage.getItem('recipe:settings');
-                if (!storedZikir) return;
+                const storedDhikr = await AsyncStorage.getItem('app:progress');
+                if (!storedDhikr) return;
 
-                const parsed = JSON.parse(storedZikir);
-                if (parsed?.options?.zikir) {
-                    setZikir({
-                        name: parsed.zikir.name,
-                        target: Number(parsed.zikir.amount),
-
+                const parsed = JSON.parse(storedDhikr);
+                if (parsed?.dhikr?.active) {
+                    setDhikr({
+                        name: typeof parsed.dhikr.dhikrName === "string" ? parsed.dhikr.dhikrName : "",
+                        target: Number(parsed.dhikr.dailyTarget),
                     });
+                } else {
+                    setDhikr(null);
                 }
             }
             catch (error) {
@@ -41,7 +35,7 @@ export default function TodayScreen() {
             }
         }
 
-        loadZikir();
+        loadDhikr();
     }, []);
 
 
@@ -62,14 +56,6 @@ export default function TodayScreen() {
             />
             {salavatDone && <Text>Salavat gönderildi!</Text>}
 
-            {/* Zikir – optional */}
-            {zikir && (
-                <View style={{ marginTop: 20 }}>
-                    <Text>{zikir.name}</Text>
-                    <ZikirCounter target={zikir.target} name={zikir.name} />
-                </View>
-            )}
-
             {/* Quran */}
             <Pressable onPress={() => setOpenQuran(prev => !prev)}>
                 <Text
@@ -82,6 +68,13 @@ export default function TodayScreen() {
                 </View>
             )}
 
+            {/* Dhikr – optional */}
+            {dhikr && (
+                <View style={{ marginTop: 20 }}>
+                    <Text>{dhikr.name}</Text>
+                    <ZikirCounter target={dhikr.target} name={dhikr.name} />
+                </View>
+            )}
 
             <Pressable onPress={() => setOpenCevsen(prev => !prev)}>
                 <Text

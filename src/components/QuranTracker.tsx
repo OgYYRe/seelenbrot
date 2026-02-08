@@ -6,23 +6,21 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import QuranPDFView from "./QuranPDFView.tsx";
 
 
-const LAST_PAGE_KEY = 'quran:lastPage'
+const PROGRESS_KEY = 'app:progress'
 
 export default function QuranTracker(){
 
+    // Quran State for UI
+    const [lastReadPage, setLastReadPage] = useState<number>(0)
+    const currentPage = lastReadPage + 1;
 
-
-    const [checkedPage, setCheckedPage] = useState<number>(0)
-    const currentPage = checkedPage + 1;
-
-    const [checked, setChecked] = useState<boolean>(false);
 
     useEffect(() => {
         const loadLastPage = async ()=>{
-            const stored = await AsyncStorage.getItem(LAST_PAGE_KEY);
+            const stored = await AsyncStorage.getItem(PROGRESS_KEY);
             if (stored){
                 const parsed = JSON.parse(stored);
-                setCheckedPage(parsed.quran);
+                setLastReadPage(parsed.quran?.lastReadPage ?? 0);
             }
         };
         loadLastPage();
@@ -30,7 +28,7 @@ export default function QuranTracker(){
 
     const handleCheckChange = async (value: boolean) => {
         if (!value) return;
-        setChecked(true);
+
         Alert.alert(
             'Onay',
             `${currentPage}. sayfayi okudunuz mu?`,
@@ -39,20 +37,27 @@ export default function QuranTracker(){
                     text: 'Iptal',
                     onPress: ()=> {
                         console.log('Iptal edildi')
-                        setChecked(false);
+
                     },
                     style: 'cancel',
                     isPreferred: true
                 },
                 {
                     text: 'Evet',
-                        onPress: async ()=> {
-                        console.log('Evet onaylandi');
-                        const nextPage = checkedPage +1;
-                        setCheckedPage(nextPage);
-                        await AsyncStorage.setItem(LAST_PAGE_KEY, JSON.stringify({quran: nextPage}));
-                        setChecked(false);
-                        },
+                    onPress: async () => {
+                        const stored = await AsyncStorage.getItem(PROGRESS_KEY);
+                        if (!stored) return;
+                        const progress = JSON.parse(stored);
+                        if (!progress.quran) {
+                            progress.quran = { lastReadPage: 0 };
+                        }
+                        const nextPage = lastReadPage + 1;
+                        progress.quran.lastReadPage = nextPage;
+                        await AsyncStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
+                        setLastReadPage(nextPage);
+
+                    }
+                    ,
                     style: 'default',
                 },
             ],
@@ -73,11 +78,9 @@ export default function QuranTracker(){
 
             <View>
                 <CheckBox
-                    disabled={false}
-                    value={checked}
+                    value={false}
                     onValueChange={handleCheckChange}
                 />
-
                 <Text>{currentPage}. Sayfayi okudum ✔</Text>
             </View>
 

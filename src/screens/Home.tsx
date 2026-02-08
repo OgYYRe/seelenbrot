@@ -6,9 +6,10 @@ export default function HomeScreen({navigation}:  any ) {
     return (
         <View>
             <View style={{ borderWidth: 5, borderColor: "#ccc", padding: 10, marginBottom: 10 }}>
-                <Text style={{ textAlign: "center", writingDirection: "rtl", }}>(...)اَلَا بِذِكْرِ اللّٰهِ تَطْمَئِنُّ الْقُلُوبُۜ</Text>
-                <Text style={{ fontStyle:'italic', fontWeight:'bold',textAlign: "center",}}>..., Kalpler, ancak Allah’ı anmakla huzur bulur.</Text>
-                <Text style={{fontStyle:'normal', textAlign:'center' }}>..., Die Herzen werden nur durch die Erwähnung Allahs ruhig.</Text>
+                <Text style={{ textAlign: "center", writingDirection: "rtl", fontSize:24 }}>اَلَا بِذِكْرِ اللّٰهِ تَطْمَئِنُّ الْقُلُوبُۜ</Text>
+
+                <Text style={{ fontStyle:'italic', fontWeight:'bold',textAlign: "center", fontSize:16}}>..., Kalpler, ancak Allah’ı anmakla huzur bulur.</Text>
+                <Text style={{fontStyle:'normal', textAlign:'center', fontSize:14 }}>..., Die Herzen werden nur durch die Erwähnung Allahs ruhig.</Text>
             </View>
 
 

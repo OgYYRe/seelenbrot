@@ -118,7 +118,7 @@ export default function RecipeScreen() {
 
         progress.quran = {
             ...progress.quran,
-            dailyTarget: Number(quranTargetInput.trim()),
+            dailyTargetPages: Number(quranTargetInput.trim()),
             todayCount: 0
         }
 
@@ -172,7 +172,7 @@ export default function RecipeScreen() {
 
         progress.jawshan = {
             ...progress.jawshan,
-            dailyTarget: Number(jawshanTargetInput.trim()),
+            dailyTargetBab: Number(jawshanTargetInput.trim()),
             todayCount: 0
         }
 
@@ -197,10 +197,10 @@ export default function RecipeScreen() {
 
         progress.memorization = {
             ...progress.memorization,
-            surah: Number(memizationSurahInput.trim()),
-            startAyah: Number(memorizationStartTargetInput.trim()),
-            endAyah: Number(memorizationEndTargetInput.trim()),
-            todayAyah: Number(memorizationStartTargetInput.trim()),
+            surahNumber: Number(memizationSurahInput.trim()),
+            ayahStart: Number(memorizationStartTargetInput.trim()),
+            ayahEnd: Number(memorizationEndTargetInput.trim()),
+            todayCount: 0
         }
 
         await AsyncStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
@@ -329,7 +329,7 @@ export default function RecipeScreen() {
             )}
 
 
-            {/* Ezber place */}
+            {/* Memorization place */}
             <Text>Ezber de yapayim</Text>
             <CheckBox
                 value={active.memorization}
