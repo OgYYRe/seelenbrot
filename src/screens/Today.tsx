@@ -1,10 +1,10 @@
 import {Pressable, Text, View} from "react-native";
 import SalavatSlider from "../components/SalavatSlider";
 import {useEffect, useState} from "react";
-import ZikirCounter from "../components/ZikirCounter";
+import ZikirCounter from "../components/DhikrCounter.tsx";
 import QuranTracker from "../components/QuranTracker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import CevsenViewPage from "../components/CevsenViewPage.tsx";
+import JawshanViewPage from "../components/JawshanViewPage.tsx";
 
 type Dhikr = { name: string; target: number };
 
@@ -39,22 +39,30 @@ export default function TodayScreen() {
     }, []);
 
 
-    // Quran and Cevsen toggles
+    // Quran and Jawshan toggles
     const [openQuran, setOpenQuran] = useState(false);
-    const [openCevsen, setOpenCevsen] = useState(false);
+    const [openJawshan, setOpenJawshan] = useState(false);
 
 
     return (
 
         <View style={{ padding: 20 }}>
-            {/* Salavat – always */}
-            <Text>Salavat</Text>
+            {/* Salawat – always */}
+            <Text> </Text>
             <SalavatSlider
                 label="Peygamberimize selam gönder."
                 disabled={salavatDone}
                 onUnlock={() => setSalavatDone(true)}
             />
             {salavatDone && <Text>Salavat gönderildi!</Text>}
+
+            {/* Dhikr – optional */}
+            {dhikr && (
+                <View style={{ marginTop: 20 }}>
+                    <Text>{dhikr.name}</Text>
+                    <ZikirCounter target={dhikr.target} name={dhikr.name} />
+                </View>
+            )}
 
             {/* Quran */}
             <Pressable onPress={() => setOpenQuran(prev => !prev)}>
@@ -68,22 +76,16 @@ export default function TodayScreen() {
                 </View>
             )}
 
-            {/* Dhikr – optional */}
-            {dhikr && (
-                <View style={{ marginTop: 20 }}>
-                    <Text>{dhikr.name}</Text>
-                    <ZikirCounter target={dhikr.target} name={dhikr.name} />
-                </View>
-            )}
 
-            <Pressable onPress={() => setOpenCevsen(prev => !prev)}>
+
+            <Pressable onPress={() => setOpenJawshan(prev => !prev)}>
                 <Text
-                >{openCevsen ? "Cevsen Sayfasini kapa⌃⌃⌃⌃⌃⌃" : "Cevsen Sayfasini ac⌄⌄⌄⌄⌄"}</Text>
+                >{openJawshan ? "Cevsen Sayfasini kapa⌃⌃⌃⌃⌃⌃" : "Cevsen Sayfasini ac⌄⌄⌄⌄⌄"}</Text>
             </Pressable>
 
-            {openCevsen && (
+            {openJawshan && (
                 <View>
-                    <CevsenViewPage />
+                    <JawshanViewPage />
                 </View>
             )}
         </View>

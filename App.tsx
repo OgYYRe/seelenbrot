@@ -33,6 +33,7 @@ const DEFAULT_PROGRESS = {
     salawat: {
         active: true,
         dailyTarget: 1,
+        todayCount: 0,
         doneToday: false
     },
 

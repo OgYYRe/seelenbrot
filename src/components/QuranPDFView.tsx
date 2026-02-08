@@ -16,8 +16,7 @@ export default function QuranPDFView({page, totalPages = 604, source}: Props) {
         return p;
     }, [page, totalPages]);
 
-    // Varsayilan: assets/Q
-    // Not: Bu relative yol projendeki klasor yapina gore degisebilir.
+
     const pdfSource = source ?? require("../../assets/Q.pdf");
 
     return (

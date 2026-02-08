@@ -1,7 +1,7 @@
 import React, {JSX, useEffect, useState} from "react";
 import { ScrollView, Text } from "react-native";
 
-export default function CevsenViewPage(): JSX.Element {
+export default function JawshanViewPage(): JSX.Element {
   const [text, setText] = useState("");
 
     useEffect(() => {

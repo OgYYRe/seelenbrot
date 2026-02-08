@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { Text, View } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
@@ -7,6 +7,7 @@ import Animated, {
     withSpring,
 } from "react-native-reanimated";
 import { scheduleOnRN } from "react-native-worklets";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type Props = {
     width?: number;
@@ -15,12 +16,49 @@ type Props = {
     label?: string;
 };
 
-export default function SalavatSlider({
-                                          width = 175,
-                                          onUnlock,
-                                          disabled = false,
-                                          label = "Slide to unlock",
-                                      }: Props) {
+export default function SalavatSlider({width = 175, onUnlock, disabled = false, label = "Slide to unlock",}: Props) {
+
+    const [todayCount, setTodayCount] = useState(0);
+    const done = todayCount >= 1;
+
+
+    useEffect(() => {
+        const load = async () => {
+            const raw = await AsyncStorage.getItem("app:progress");
+            if (!raw) return;
+
+            const progress = JSON.parse(raw);
+            const storedCount = progress.salawat?.doneToday ? 1 : 0;
+            setTodayCount(storedCount);
+
+            if (storedCount === 1) {
+                x.value = withSpring(maxX);
+            }
+
+        };
+
+        load();
+    }, []);
+
+    const saveDoneToday = async () => {
+        const raw = await AsyncStorage.getItem("app:progress");
+        if (!raw) return;
+
+        const progress = JSON.parse(raw);
+        progress.salawat = progress.salawat ?? {};
+        progress.salawat.doneToday = true;
+
+        await AsyncStorage.setItem("app:progress", JSON.stringify(progress));
+
+        setTodayCount(1);
+        onUnlock();
+    };
+
+
+
+
+
+
     const thumbSize = 56;
     const padding = 4;
 
@@ -42,11 +80,12 @@ export default function SalavatSlider({
 
             if (reached) {
                 x.value = withSpring(maxX);
-                scheduleOnRN(onUnlock);
+                scheduleOnRN(saveDoneToday);
             } else {
                 x.value = withSpring(0);
             }
-        });
+        })
+
 
     const thumbStyle = useAnimatedStyle(() => ({
         transform: [{ translateX: x.value }],
@@ -58,6 +97,11 @@ export default function SalavatSlider({
 
         }}>
             <Text style={{ marginBottom: 12 }}>{label}</Text>
+            <Text style={{ marginBottom: 12 }}>
+                {todayCount} / 1
+            </Text>
+
+
 
             <View
                 style={{
@@ -66,11 +110,11 @@ export default function SalavatSlider({
                     borderRadius: thumbSize / 2,
                     justifyContent: "center",
                     padding,
-                    opacity: disabled ? 0.9 : 1,
+                    opacity: done ? 0.9 : 1,
 
-                    backgroundColor: disabled ? "#2ecc71" : "#937878",
+                    backgroundColor: done ? "#2ecc71" : "#937878",
                     borderWidth: 1,
-                    borderColor: disabled ? "#27ae60" : "#6e4f4f",
+                    borderColor: done ? "#27ae60" : "#6e4f4f",
                 }}
             >
                 <GestureDetector gesture={pan}>
@@ -81,9 +125,9 @@ export default function SalavatSlider({
                                 height: thumbSize - padding * 2,
                                 borderRadius: (thumbSize - padding * 2) / 2,
 
-                                backgroundColor: disabled ? "#1e8449" : "#ffffff",
+                                backgroundColor: done ? "#1e8449" : "#ffffff",
                                 borderWidth: 1,
-                                borderColor: disabled ? "#145a32" : "#cccccc",
+                                borderColor: done ? "#145a32" : "#cccccc",
 
                                 shadowColor: "#000",
                                 shadowOpacity: 0.2,

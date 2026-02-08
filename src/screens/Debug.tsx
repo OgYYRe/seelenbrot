@@ -1,4 +1,4 @@
-import { Text, ScrollView } from "react-native";
+import {Text, ScrollView, Button} from "react-native";
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -38,6 +38,23 @@ export default function DebugScreen() {
         <ScrollView style={{ padding: 16 }}>
             <Text>DEBUG STORAGE</Text>
             <Text>{JSON.stringify(debugData, null, 2)}</Text>
+            <Button
+                title="Reset"
+                onPress={async () => {
+                    await AsyncStorage.removeItem("app:progress");
+                    await AsyncStorage.removeItem("recipe:settings");
+                    await AsyncStorage.removeItem("recipe:keys")
+                    await AsyncStorage.removeItem("quran:lastPage");
+                    await AsyncStorage.removeItem("recipe:settings");
+                    await AsyncStorage.removeItem("app:progress");
+                    await AsyncStorage.clear();
+
+
+                    const keys = await AsyncStorage.getAllKeys();
+                    console.log(keys);
+
+                }}
+            />
         </ScrollView>
     );
 }
