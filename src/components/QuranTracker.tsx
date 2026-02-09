@@ -13,6 +13,8 @@ export default function QuranTracker(){
     // Quran State for UI
     const [lastReadPage, setLastReadPage] = useState<number>(0)
     const currentPage = lastReadPage + 1;
+    const [checked, setChecked] = useState(false);
+
 
 
     useEffect(() => {
@@ -37,6 +39,7 @@ export default function QuranTracker(){
                     text: 'Iptal',
                     onPress: ()=> {
                         console.log('Iptal edildi')
+                        setChecked(false)
 
                     },
                     style: 'cancel',
@@ -55,9 +58,9 @@ export default function QuranTracker(){
                         progress.quran.lastReadPage = nextPage;
                         await AsyncStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
                         setLastReadPage(nextPage);
+                        setChecked(false)
 
-                    }
-                    ,
+                    },
                     style: 'default',
                 },
             ],
@@ -78,8 +81,11 @@ export default function QuranTracker(){
 
             <View>
                 <CheckBox
-                    value={false}
-                    onValueChange={handleCheckChange}
+                    value={checked}
+                    onValueChange={(v) => {
+                        setChecked(v);
+                        handleCheckChange(v);
+                    }}
                 />
                 <Text>{currentPage}. Sayfayi okudum ✔</Text>
             </View>
