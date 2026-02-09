@@ -17,7 +17,7 @@ export default function QuranPDFView({page, totalPages = 604, source}: Props) {
     }, [page, totalPages]);
 
 
-    const pdfSource = source ?? require("../../assets/Q.pdf");
+    const pdfSource = source ?? require("../../assets/lastQ.pdf");
 
     return (
         <View style={styles.wrapper}>
