@@ -5,6 +5,7 @@ import ZikirCounter from "../components/DhikrCounter.tsx";
 import QuranTracker from "../components/QuranTracker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import JawshanViewPage from "../components/JawshanTracker.tsx";
+import MemorizationTracker from "../components/MemorizationTracker.tsx";
 
 type Dhikr = { name: string; target: number };
 
@@ -42,6 +43,7 @@ export default function TodayScreen() {
     // Quran and Jawshan toggles
     const [openQuran, setOpenQuran] = useState(false);
     const [openJawshan, setOpenJawshan] = useState(false);
+    const [openMemorization, setOpenMemorization] = useState(false);
 
 
     return (
@@ -93,6 +95,21 @@ export default function TodayScreen() {
                     <JawshanViewPage />
                 </View>
             )}
+
+
+
+            <Pressable onPress={() => setOpenMemorization(prev => !prev)}>
+                <Text
+                >{openMemorization ? "Memorization Sayfasini kapa⌃⌃⌃⌃⌃⌃" : "Memorization Sayfasini ac⌄⌄⌄⌄⌄"}</Text>
+            </Pressable>
+
+            {openMemorization && (
+            <View>
+                <MemorizationTracker />
+            </View>
+             )
+
+            }
         </ScrollView>
 
     );

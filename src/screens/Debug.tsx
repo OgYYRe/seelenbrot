@@ -2,6 +2,7 @@ import {Text, ScrollView, Button} from "react-native";
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+
 export default function DebugScreen() {
     const [debugData, setDebugData] = useState<any>({});
 
@@ -41,11 +42,7 @@ export default function DebugScreen() {
             <Button
                 title="Reset"
                 onPress={async () => {
-                    await AsyncStorage.removeItem("app:progress");
-                    await AsyncStorage.removeItem("recipe:settings");
-                    await AsyncStorage.removeItem("recipe:keys")
-                    await AsyncStorage.removeItem("quran:lastPage");
-                    await AsyncStorage.removeItem("recipe:settings");
+
                     await AsyncStorage.removeItem("app:progress");
                     await AsyncStorage.clear();
 
@@ -55,6 +52,9 @@ export default function DebugScreen() {
 
                 }}
             />
+
+
+
         </ScrollView>
     );
 }
