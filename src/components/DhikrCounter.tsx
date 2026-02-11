@@ -37,7 +37,8 @@ export default function DhikrCounter({target, name}: DhikrProps) {
         progress.dhikr = progress.dhikr ?? {};
 
 
-        const current = progress.dhikr.todayCount ?? 0;
+
+        const current = Number(progress.dhikr.todayCount ?? 0);
         progress.dhikr.todayCount = current + 1;
 
         await AsyncStorage.setItem('app:progress', JSON.stringify(progress));

@@ -1,10 +1,10 @@
-import {Pressable, Text, View} from "react-native";
+import {Pressable, ScrollView, Text, View} from "react-native";
 import SalavatSlider from "../components/SalavatSlider";
 import {useEffect, useState} from "react";
 import ZikirCounter from "../components/DhikrCounter.tsx";
 import QuranTracker from "../components/QuranTracker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import JawshanViewPage from "../components/JawshanViewPage.tsx";
+import JawshanViewPage from "../components/JawshanTracker.tsx";
 
 type Dhikr = { name: string; target: number };
 
@@ -46,8 +46,13 @@ export default function TodayScreen() {
 
     return (
 
-        <View style={{ padding: 20 }}>
-            {/* Salawat – always */}
+        <ScrollView
+            style={{ flex: 1 }}
+            contentContainerStyle={{ padding: 20 }}
+        >
+
+
+        {/* Salawat – always */}
             <Text> </Text>
             <SalavatSlider
                 label="Peygamberimize selam gönder."
@@ -88,6 +93,7 @@ export default function TodayScreen() {
                     <JawshanViewPage />
                 </View>
             )}
-        </View>
+        </ScrollView>
+
     );
 }

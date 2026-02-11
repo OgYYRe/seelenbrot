@@ -11,23 +11,23 @@ import {useEffect} from "react";
 
 
 const STORAGE_KEY = 'app:progress';
+
+// Default progress structure
 const DEFAULT_PROGRESS = {
     lastResetDate: "2026-02-05",
 
     quran: {
         active: true,
-        lastReadPage: 0,
-        dailyTargetPages: 2,
-        todayReadPages: 0,
-        dayStartPage: 0
+        dailyTarget: 2,
+        todayCount: 0,
+        total: 0
     },
 
     jawshan: {
         active: true,
-        lastReadBab: 0,
-        dailyTargetBab: 15,
-        todayReadBab: 0,
-        dayStartBab: 0
+        dailyTarget: 15,
+        todayCount: 0,
+        total:0
     },
 
     salawat: {
@@ -50,7 +50,8 @@ const DEFAULT_PROGRESS = {
         ayahStart: 28,
         ayahEnd: 28,
         dailyTarget: 3,
-        todayCount: 0
+        todayCount: 0,
+        total: 0
     }
 };
 
@@ -61,7 +62,7 @@ async function initProgressStorage() {
     }
 }
 
-// Reset the Counts
+// Reset the Counts and update totals if the day has changed
 async function checkDailyReset() {
     const raw = await AsyncStorage.getItem(STORAGE_KEY);
     if (!raw) return;
@@ -72,11 +73,17 @@ async function checkDailyReset() {
 
     if (progress.lastResetDate === today) return;
 
-    // Reset daily counts
-    progress.quran.todayReadPages = 0;
-    progress.jawshan.todayReadBab = 0;
+    // Reset daily counts and update totals
+    progress.quran.total = (progress.quran.total || 0) + (progress.quran.todayCount || 0);
+    progress.quran.todayCount = 0;
+
+    progress.jawshan.total = (progress.jawshan.total || 0) + (progress.jawshan.todayCount || 0);
+    progress.jawshan.todayCount = 0;
+
     progress.salawat.doneToday = false;
-    progress.dhikr.todayCount = 0;
+
+
+    progress.memorization.total = (progress.memorization.total || 0) + (progress.memorization.todayCount || 0);
     progress.memorization.todayCount = 0;
 
     progress.lastResetDate = today;

@@ -11,18 +11,16 @@ const PROGRESS_KEY = 'app:progress'
 export default function QuranTracker(){
 
     // Quran State for UI
-    const [lastReadPage, setLastReadPage] = useState<number>(0)
-    const currentPage = lastReadPage + 1;
+    const [totalRead, setTotalRead] = useState<number>(0)
+    const currentPage = totalRead + 1;
     const [checked, setChecked] = useState(false);
-
-
 
     useEffect(() => {
         const loadLastPage = async ()=>{
             const stored = await AsyncStorage.getItem(PROGRESS_KEY);
             if (stored){
                 const parsed = JSON.parse(stored);
-                setLastReadPage(parsed.quran?.lastReadPage ?? 0);
+                setTotalRead(Number(parsed.quran?.total ?? 0));
             }
         };
         loadLastPage();
@@ -40,7 +38,6 @@ export default function QuranTracker(){
                     onPress: ()=> {
                         console.log('Iptal edildi')
                         setChecked(false)
-
                     },
                     style: 'cancel',
                     isPreferred: true
@@ -52,12 +49,15 @@ export default function QuranTracker(){
                         if (!stored) return;
                         const progress = JSON.parse(stored);
                         if (!progress.quran) {
-                            progress.quran = { lastReadPage: 0 };
+                            progress.quran = { total: 0 };
                         }
-                        const nextPage = lastReadPage + 1;
-                        progress.quran.lastReadPage = nextPage;
+                        const total = Number(progress.quran.total ?? 0);
+                        const nextPage = total + 1;
+                        progress.quran.total = nextPage;
+                        progress.quran.todayCount = Number(progress.quran.todayCount ?? 0) + 1;
+
                         await AsyncStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
-                        setLastReadPage(nextPage);
+                        setTotalRead(nextPage);
                         setChecked(false)
 
                     },

@@ -22,6 +22,7 @@ export default function QuranPDFView({page, totalPages = 604, source}: Props) {
     return (
         <View style={styles.wrapper}>
             <Pdf
+                key={safePage}
                 source={pdfSource}
                 page={safePage}
                 singlePage={true}
