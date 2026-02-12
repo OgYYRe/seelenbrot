@@ -45,14 +45,15 @@ export default function QuranPDFView({ page }: Props) {
             <Modal visible={isFull} animationType="fade" onRequestClose={close}>
                 <SafeAreaView style={styles.fullscreen}>
                     <View style={{ flex: 1 }}>
+
                         <Pdf
                             source={pdfSource}
                             page={safePage}
-                            singlePage
                             fitPolicy={0}
                             minScale={1}
                             maxScale={4}
-                            enablePaging={false}
+                            enablePaging={true}
+                            horizontal={true}
                             style={styles.fullPdf}
                             onLoadComplete={() => setLoading(false)}
                             onError={(e) => {
@@ -61,9 +62,12 @@ export default function QuranPDFView({ page }: Props) {
                             }}
                         />
 
-                        <Pressable onPress={close} style={styles.closeBtn}>
-                            <Text style={styles.closeText}>X</Text>
-                        </Pressable>
+                        <View style={styles.topBar}>
+                            <Pressable onPress={close} style={styles.closeBtn} hitSlop={12}>
+                                <Text style={styles.closeText}>X</Text>
+                            </Pressable>
+                        </View>
+
 
                         {loading && (
                             <View
@@ -112,18 +116,26 @@ const styles = StyleSheet.create({
         width: "100%",
     },
     closeBtn: {
-        position: "absolute",
-        top: 12,
-        right: 12,
         width: 44,
         height: 44,
         borderRadius: 22,
-        backgroundColor: "rgba(0,0,0,0.5)",
+        backgroundColor: "rgba(255,255,255,0.12)",
         justifyContent: "center",
         alignItems: "center",
     },
     closeText: {
         color: "#fff",
         fontSize: 18,
+    },
+    topBar: {
+        position: "absolute",
+        top: 0,
+        left: 0,
+        right: 0,
+        height: 56,
+        backgroundColor: "black",
+        alignItems: "flex-end",
+        justifyContent: "center",
+        paddingRight: 12,
     },
 });
