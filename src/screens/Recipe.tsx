@@ -246,7 +246,7 @@ export default function RecipeScreen() {
 
     return (
         <View>
-            <Text>Ruhun Gidasi Tarif Menüsü</Text>
+            <Text>Ruhun Gidasi Malzemeler</Text>
 
             {/* Dhikr place */}
             <Text>Zikir olsun</Text>

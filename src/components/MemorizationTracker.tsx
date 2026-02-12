@@ -21,7 +21,7 @@ export default function MemorizationTracker(): JSX.Element {
     const [loaded, setLoaded] = useState(false);
 
 
-    //
+    // Text state for the memorization piece
     const [pieceText, setPieceText] = useState("");
 
     // Counter states
@@ -83,7 +83,8 @@ export default function MemorizationTracker(): JSX.Element {
                 todayCount: mem.todayCount != null ? Number(mem.todayCount) : 0,
                 total: mem.total != null ? Number(mem.total) : 0,
             });
-            setTodayCount(mem.todayCount != null ? Number(mem.todayCount) : 0);
+            const normalizedToday = mem.todayCount != null ? Number(mem.todayCount) : 0;
+            setTodayCount(normalizedToday);
 
 
             setLoaded(true);
@@ -137,8 +138,9 @@ export default function MemorizationTracker(): JSX.Element {
 
 
                 <Text style={{ marginTop: 12 }}>
-                    {memorization.todayCount ?? 0}/{memorization.dailyTarget}
+                    {todayCount}/{memorization.dailyTarget}
                 </Text>
+
 
                 <Text
                     selectable

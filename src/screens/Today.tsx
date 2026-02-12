@@ -1,7 +1,7 @@
 import {Pressable, ScrollView, Text, View} from "react-native";
 import SalavatSlider from "../components/SalavatSlider";
 import {useEffect, useState} from "react";
-import ZikirCounter from "../components/DhikrCounter.tsx";
+import DhikrCounter from "../components/DhikrCounter.tsx";
 import QuranTracker from "../components/QuranTracker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import JawshanViewPage from "../components/JawshanTracker.tsx";
@@ -61,13 +61,13 @@ export default function TodayScreen() {
                 disabled={salavatDone}
                 onUnlock={() => setSalavatDone(true)}
             />
-            {salavatDone && <Text>Salavat gönderildi!</Text>}
+
 
             {/* Dhikr – optional */}
             {dhikr && (
                 <View style={{ marginTop: 20 }}>
                     <Text>{dhikr.name}</Text>
-                    <ZikirCounter target={dhikr.target} name={dhikr.name} />
+                    <DhikrCounter target={dhikr.target} name={dhikr.name} />
                 </View>
             )}
 

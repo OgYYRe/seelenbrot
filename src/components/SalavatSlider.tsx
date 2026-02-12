@@ -16,10 +16,17 @@ type Props = {
     label?: string;
 };
 
-export default function SalavatSlider({width = 175, onUnlock, disabled = false, label = "Slide to unlock",}: Props) {
+export default function SalavatSlider({width = 275, onUnlock, disabled = false, label = "Slide to unlock",}: Props) {
 
     const [todayCount, setTodayCount] = useState(0);
     const done = todayCount >= 1;
+
+
+    const thumbSize = 56;
+    const padding = 4;
+
+    const maxX = width - thumbSize;
+    const x = useSharedValue(0);
 
 
     useEffect(() => {
@@ -38,7 +45,8 @@ export default function SalavatSlider({width = 175, onUnlock, disabled = false, 
         };
 
         load();
-    }, []);
+    }, [maxX, x]);
+
 
     const saveDoneToday = async () => {
         const raw = await AsyncStorage.getItem("app:progress");
@@ -59,11 +67,7 @@ export default function SalavatSlider({width = 175, onUnlock, disabled = false, 
 
 
 
-    const thumbSize = 56;
-    const padding = 4;
 
-    const maxX = width - thumbSize;
-    const x = useSharedValue(0);
 
     const pan = Gesture.Pan()
         .onUpdate((e) => {
@@ -117,6 +121,25 @@ export default function SalavatSlider({width = 175, onUnlock, disabled = false, 
                     borderColor: done ? "#27ae60" : "#6e4f4f",
                 }}
             >
+                {/* Text for slider */}
+                <Text
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                    style={{
+                        position: "absolute",
+                        alignSelf: "center",
+                        paddingHorizontal: 16,
+                        textAlign: "center",
+                        color: "#000000",
+                        fontWeight: "600",
+                        fontSize: 10,
+
+                    }}
+                >
+                    {done ? "Salavat Gönderildi" : "Allahümme Salli ala seyyidina Muhammed"}
+                </Text>
+
+
                 <GestureDetector gesture={pan}>
                     <Animated.View
                         style={[
@@ -125,7 +148,10 @@ export default function SalavatSlider({width = 175, onUnlock, disabled = false, 
                                 height: thumbSize - padding * 2,
                                 borderRadius: (thumbSize - padding * 2) / 2,
 
-                                backgroundColor: done ? "#1e8449" : "#ffffff",
+                                backgroundColor: done
+                                    ? "rgba(30,132,73,0.6)"
+                                    : "rgba(255,255,255,0.6)",
+
                                 borderWidth: 1,
                                 borderColor: done ? "#145a32" : "#cccccc",
 
