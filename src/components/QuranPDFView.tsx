@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import {
-    ActivityIndicator, Alert,
+    ActivityIndicator,
     Modal,
     Pressable,
     StyleSheet,
