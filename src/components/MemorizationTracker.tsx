@@ -1,9 +1,13 @@
 import React, { JSX, useEffect, useState } from "react";
 import {Alert, Button, ScrollView, Text, View} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
+
 
 const PROGRESS_KEY = "app:progress";
 const quran = require("../../assets/quran.json");
+
+
 
 
 type Memorization = {
@@ -20,6 +24,7 @@ export default function MemorizationTracker(): JSX.Element {
     const [memorization, setMemorization] = useState<Memorization | null>(null);
     const [loaded, setLoaded] = useState(false);
 
+    const navigation = useNavigation<any>();
 
     // Text state for the memorization piece
     const [pieceText, setPieceText] = useState("");
@@ -118,9 +123,22 @@ export default function MemorizationTracker(): JSX.Element {
 
     if (!loaded) return <Text>Yukleniyor...</Text>;
 
-    if (!memorization) return <Text>Memorization ayari bulunamadi.</Text>;
+    if (!memorization) return <Text>Ezber icin ayar bulunamadi.</Text>;
 
-    if (!memorization.active) return <Text>Memorization kapali.</Text>;
+    if (!memorization.active)
+        return (
+            <Text>
+                Ezber kapali. Ezber'i malzemelere eklemek icin -{">"} {" "}
+                <Text
+                    onPress={() => navigation.navigate("Recipe")}
+                    style={{ color: "blue", textDecorationLine: "underline" }}
+                >
+                    Malzemeleri ayarla
+                </Text>
+            </Text>
+        );
+
+
 
     return (
         <ScrollView style={{ flex: 1 }} contentContainerStyle={{ padding: 16 }}>

@@ -22,14 +22,17 @@ export default function TodayScreen() {
                 if (!storedDhikr) return;
 
                 const parsed = JSON.parse(storedDhikr);
-                if (parsed?.dhikr?.active) {
-                    setDhikr({
-                        name: typeof parsed.dhikr.dhikrName === "string" ? parsed.dhikr.dhikrName : "",
-                        target: Number(parsed.dhikr.dailyTarget),
-                    });
-                } else {
+
+                if (parsed?.dhikr?.active === false) {
                     setDhikr(null);
+                    return;
                 }
+
+                setDhikr({
+                    name: typeof parsed.dhikr?.dhikrName === "string" ? parsed.dhikr.dhikrName : "",
+                    target: Number(parsed.dhikr?.dailyTarget ?? 0),
+                });
+
             }
             catch (error) {
                 console.error('Zikir yukleme hatasi:', error);
@@ -44,6 +47,7 @@ export default function TodayScreen() {
     const [openQuran, setOpenQuran] = useState(false);
     const [openJawshan, setOpenJawshan] = useState(false);
     const [openMemorization, setOpenMemorization] = useState(false);
+    const [openDhikr, setOpenDhikr] = useState(false);
 
 
     return (
@@ -55,7 +59,7 @@ export default function TodayScreen() {
 
 
         {/* Salawat – always */}
-            <Text> </Text>
+
             <SalavatSlider
                 label="Peygamberimize selam gönder."
                 disabled={salavatDone}
@@ -64,12 +68,23 @@ export default function TodayScreen() {
 
 
             {/* Dhikr – optional */}
-            {dhikr && (
-                <View style={{ marginTop: 20 }}>
-                    <Text>{dhikr.name}</Text>
-                    <DhikrCounter target={dhikr.target} name={dhikr.name} />
-                </View>
+            <Pressable onPress={() => setOpenDhikr(prev => !prev)}>
+                <Text
+                >{openDhikr ? "Zikir Sayfasini kapa⌃⌃⌃⌃⌃⌃" : "Zikir Sayfasini ac⌄⌄⌄⌄⌄"}</Text>
+            </Pressable>
+
+            {openDhikr && (
+                dhikr ? (
+                    <View style={{ marginTop: 20 }}>
+                        <Text>{dhikr.name}</Text>
+                        <DhikrCounter target={dhikr.target} name={dhikr.name} />
+                    </View>
+                ) : (
+                    <Text>Zikir kapali. Recipe’den aktif et.</Text>
+                )
             )}
+
+
 
             {/* Quran */}
             <Pressable onPress={() => setOpenQuran(prev => !prev)}>

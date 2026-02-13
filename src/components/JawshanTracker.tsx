@@ -3,6 +3,7 @@ import {Alert, ScrollView, Text, View} from "react-native";
 import CheckBox from "@react-native-community/checkbox";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import JawshanView from "./JawshanView.tsx";
+import { useNavigation } from "@react-navigation/native";
 
 
 
@@ -11,9 +12,14 @@ const PROGRESS_KEY = 'app:progress'
 
 export default function JawshanTracker(): JSX.Element {
 
-  const [totalRead, setTotalRead] = useState<number>(0)
-  const currentBab = totalRead + 1;
-  const [checked, setChecked] = useState<boolean>(false);
+    // Navigation
+    const navigation = useNavigation<any>();
+    const [active, setActive] = useState(true);
+
+
+    const [totalRead, setTotalRead] = useState<number>(0)
+    const currentBab = totalRead + 1;
+    const [checked, setChecked] = useState<boolean>(false);
 
     useEffect(() => {
         const loadLastPage = async ()=>{
@@ -21,6 +27,7 @@ export default function JawshanTracker(): JSX.Element {
             if (stored){
                 const parsed = JSON.parse(stored);
                 setTotalRead(Number(parsed.jawshan?.total ?? 0));
+                setActive(Boolean(parsed.jawshan?.active));
             }
         };
         loadLastPage();
@@ -64,6 +71,19 @@ export default function JawshanTracker(): JSX.Element {
             ],
         );
     }
+
+    if (!active)
+        return (
+            <Text>
+                Cevsen kapali. Cevsen'i malzemelere eklemek icin -{">"} {" "}
+                <Text
+                    onPress={() => navigation.navigate("Recipe")}
+                    style={{ color: "blue", textDecorationLine: "underline" }}
+                >
+                    Malzemeleri ayarla
+                </Text>
+            </Text>
+        );
 
 
 

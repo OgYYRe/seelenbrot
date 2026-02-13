@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import {Button, Text, View} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
 
 
 type DhikrProps = {
@@ -11,6 +12,11 @@ type DhikrProps = {
 
 export default function DhikrCounter({target, name}: DhikrProps) {
 
+    // Navigation
+    const navigation = useNavigation<any>();
+    const [active, setActive] = useState(true);
+
+
     const [todayCount, setTodayCount] = useState(0);
     useEffect(() => {
         const load = async () => {
@@ -20,6 +26,7 @@ export default function DhikrCounter({target, name}: DhikrProps) {
             const progress = JSON.parse(raw);
             const storedCount = progress.dhikr?.todayCount ?? 0;
             setTodayCount(storedCount);
+            setActive(progress.dhikr?.active !== false);
         };
 
         load();
@@ -45,6 +52,20 @@ export default function DhikrCounter({target, name}: DhikrProps) {
         setTodayCount(current + 1);
 
     }
+
+    if (!active)
+        return (
+            <Text>
+                Zikir kapali.  Zikr'i malzemelere eklemek icin -{">"} {" "}
+                <Text
+                    onPress={() => navigation.navigate("Recipe")}
+                    style={{ color: "blue", textDecorationLine: "underline" }}
+                >
+                    Malzemeleri ayarla
+                </Text>
+            </Text>
+        );
+
 
     return (
 

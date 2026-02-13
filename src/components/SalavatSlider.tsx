@@ -35,7 +35,8 @@ export default function SalavatSlider({width = 275, onUnlock, disabled = false, 
             if (!raw) return;
 
             const progress = JSON.parse(raw);
-            const storedCount = progress.salawat?.doneToday ? 1 : 0;
+            const storedCount = Number(progress.salawat?.todayCount ?? 0);
+
             setTodayCount(storedCount);
 
             if (storedCount === 1) {
@@ -55,6 +56,8 @@ export default function SalavatSlider({width = 275, onUnlock, disabled = false, 
         const progress = JSON.parse(raw);
         progress.salawat = progress.salawat ?? {};
         progress.salawat.doneToday = true;
+        progress.salawat.todayCount = 1;
+
 
         await AsyncStorage.setItem("app:progress", JSON.stringify(progress));
 

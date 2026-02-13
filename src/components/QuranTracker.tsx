@@ -4,11 +4,20 @@ import { useEffect, useState} from "react";
 import CheckBox from "@react-native-community/checkbox";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import QuranPDFView from "./QuranPDFView.tsx";
+import { useNavigation } from "@react-navigation/native";
+
 
 
 const PROGRESS_KEY = 'app:progress'
 
 export default function QuranTracker(){
+
+    // Navigation
+    const navigation = useNavigation<any>();
+
+    const [active, setActive] = useState(true);
+
+
 
     // Quran State for UI
     const [totalRead, setTotalRead] = useState<number>(0)
@@ -21,6 +30,7 @@ export default function QuranTracker(){
             if (stored){
                 const parsed = JSON.parse(stored);
                 setTotalRead(Number(parsed.quran?.total ?? 0));
+                setActive(Boolean(parsed.quran?.active));
             }
         };
         loadLastPage();
@@ -68,6 +78,19 @@ export default function QuranTracker(){
 
 
     }
+
+    if (!active)
+        return (
+            <Text>
+                Kuran-i Kerim kapali. Kuran-i Kerim'i malzemelere eklemek icin -{">"} {" "}
+                <Text
+                    onPress={() => navigation.navigate("Recipe")}
+                    style={{ color: "blue", textDecorationLine: "underline" }}
+                >
+                    Malzemeleri ayarla
+                </Text>
+            </Text>
+        );
 
 
     return (
