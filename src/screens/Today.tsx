@@ -1,65 +1,30 @@
 import {Pressable, ScrollView, Text, View} from "react-native";
 import SalavatSlider from "../components/SalavatSlider";
-import {useEffect, useState} from "react";
 import DhikrCounter from "../components/DhikrCounter.tsx";
 import QuranTracker from "../components/QuranTracker";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import JawshanViewPage from "../components/JawshanTracker.tsx";
 import MemorizationTracker from "../components/MemorizationTracker.tsx";
+import {useState} from "react";
 
-type Dhikr = { name: string; target: number };
 
 
 export default function TodayScreen() {
     const [salavatDone, setSalavatDone] = useState(false);
 
-
-    const [dhikr, setDhikr] = useState<Dhikr | null>(null);
-    useEffect(() => {
-        const loadDhikr = async () => {
-            try {
-                const storedDhikr = await AsyncStorage.getItem('app:progress');
-                if (!storedDhikr) return;
-
-                const parsed = JSON.parse(storedDhikr);
-
-                if (parsed?.dhikr?.active === false) {
-                    setDhikr(null);
-                    return;
-                }
-
-                setDhikr({
-                    name: typeof parsed.dhikr?.dhikrName === "string" ? parsed.dhikr.dhikrName : "",
-                    target: Number(parsed.dhikr?.dailyTarget ?? 0),
-                });
-
-            }
-            catch (error) {
-                console.error('Zikir yukleme hatasi:', error);
-            }
-        }
-
-        loadDhikr();
-    }, []);
-
-
-    // Quran and Jawshan toggles
+    // Recipes toggles
+    const [openDhikr, setOpenDhikr] = useState(false);
     const [openQuran, setOpenQuran] = useState(false);
     const [openJawshan, setOpenJawshan] = useState(false);
     const [openMemorization, setOpenMemorization] = useState(false);
-    const [openDhikr, setOpenDhikr] = useState(false);
-
 
     return (
-
         <ScrollView
             style={{ flex: 1 }}
             contentContainerStyle={{ padding: 20 }}
         >
 
-
-        {/* Salawat – always */}
-
+            {/* Salawat – always */}
             <SalavatSlider
                 label="Peygamberimize selam gönder."
                 disabled={salavatDone}
@@ -74,16 +39,10 @@ export default function TodayScreen() {
             </Pressable>
 
             {openDhikr && (
-                dhikr ? (
-                    <View style={{ marginTop: 20 }}>
-                        <Text>{dhikr.name}</Text>
-                        <DhikrCounter target={dhikr.target} name={dhikr.name} />
-                    </View>
-                ) : (
-                    <Text>Zikir kapali. Recipe’den aktif et.</Text>
-                )
+                <View>
+                    <DhikrCounter />
+                </View>
             )}
-
 
 
             {/* Quran */}
@@ -122,9 +81,8 @@ export default function TodayScreen() {
             <View>
                 <MemorizationTracker />
             </View>
-             )
+             )}
 
-            }
         </ScrollView>
 
     );

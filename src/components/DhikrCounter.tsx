@@ -4,9 +4,15 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 
 
+
 type DhikrProps = {
-    target: number;
+    target?: number;
     name?: string;
+};
+
+type Dhikr ={
+    name?: string,
+    target?: number
 };
 
 
@@ -17,6 +23,10 @@ export default function DhikrCounter({target, name}: DhikrProps) {
     const [active, setActive] = useState(true);
 
 
+    const [dhikr, setDhikr] = useState<Dhikr | null>(null);
+
+
+
     const [todayCount, setTodayCount] = useState(0);
     useEffect(() => {
         const load = async () => {
@@ -24,18 +34,31 @@ export default function DhikrCounter({target, name}: DhikrProps) {
             if (!raw) return;
 
             const progress = JSON.parse(raw);
-            const storedCount = progress.dhikr?.todayCount ?? 0;
-            setTodayCount(storedCount);
+
+            setTodayCount(progress.dhikr?.todayCount ?? 0);
             setActive(progress.dhikr?.active !== false);
+
+            if (progress?.dhikr?.active === false) {
+                setDhikr(null);
+                return;
+            }
+
+            setDhikr({
+                name: typeof progress.dhikr?.dhikrName === "string" ? progress.dhikr.dhikrName : "",
+                target: Number(progress.dhikr?.dailyTarget ?? 0),
+            });
         };
 
         load();
     }, []);
 
-    const done: boolean = todayCount >= target;
+
+    const usedTarget = target ?? dhikr?.target ?? 0;
+    const usedName = name ?? dhikr?.name ?? "Zikir";
+    const done: boolean = todayCount >= usedTarget;
 
     async function onDhikrPress() {
-        if (todayCount >= target) return;
+        if (todayCount >= usedTarget) return;
 
         const raw = await AsyncStorage.getItem('app:progress');
         if (!raw) return;
@@ -66,14 +89,20 @@ export default function DhikrCounter({target, name}: DhikrProps) {
             </Text>
         );
 
+    if (!dhikr)
+        return (
+            <Text>Zikir kapali. Recipe’den aktif et.</Text>
+        );
+
+
 
     return (
 
 
         <View>
-            <Text>{todayCount} / {target}</Text>
+            <Text>{todayCount} / {usedTarget}</Text>
             <Button
-                title={`${name ?? "Zikir"} +1`}
+                title={`${usedName} +1`}
                 onPress={onDhikrPress}
                     disabled={done}
             />
