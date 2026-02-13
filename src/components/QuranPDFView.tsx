@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import {
-    ActivityIndicator,
+    ActivityIndicator, Alert,
     Modal,
     Pressable,
     StyleSheet,
@@ -8,7 +8,7 @@ import {
     View,
 } from "react-native";
 import Pdf from "react-native-pdf";
-import { SafeAreaView } from "react-native-safe-area-context";
+import {SafeAreaView, useSafeAreaInsets} from "react-native-safe-area-context";
 
 type Props = {
     page: number;
@@ -26,6 +26,9 @@ export default function QuranPDFView({ page }: Props) {
 
     const [isFull, setIsFull] = useState(false);
     const [loading, setLoading] = useState(false);
+
+    const insets = useSafeAreaInsets();
+
 
     const open = () => {
         setLoading(true);
@@ -45,7 +48,12 @@ export default function QuranPDFView({ page }: Props) {
             <Modal visible={isFull} animationType="fade" onRequestClose={close}>
                 <SafeAreaView style={styles.fullscreen}>
                     <View style={{ flex: 1 }}>
+                        <View style={[styles.topBar, { top: insets.top }]} pointerEvents="box-none">
 
+                        <Pressable onPress={close} style={styles.closeBtn} hitSlop={12}>
+                                <Text style={styles.closeText}>X</Text>
+                            </Pressable>
+                        </View>
                         <Pdf
                             source={pdfSource}
                             page={safePage}
@@ -62,11 +70,7 @@ export default function QuranPDFView({ page }: Props) {
                             }}
                         />
 
-                        <View style={styles.topBar}>
-                            <Pressable onPress={close} style={styles.closeBtn} hitSlop={12}>
-                                <Text style={styles.closeText}>X</Text>
-                            </Pressable>
-                        </View>
+
 
 
                         {loading && (
@@ -137,5 +141,6 @@ const styles = StyleSheet.create({
         alignItems: "flex-end",
         justifyContent: "center",
         paddingRight: 12,
+        zIndex: 999,
     },
 });
