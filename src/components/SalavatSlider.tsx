@@ -9,6 +9,7 @@ import Animated, {
 import { scheduleOnRN } from "react-native-worklets";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+
 type Props = {
     width?: number;
     onUnlock: () => void;
@@ -103,8 +104,8 @@ export default function SalavatSlider({width = 275, onUnlock, disabled = false, 
             alignItems: "center",
 
         }}>
-            <Text style={{ marginBottom: 12 }}>{label}</Text>
-            <Text style={{ marginBottom: 12 }}>
+            <Text style={{ marginBottom: 12, color: "white", fontSize: 16, fontWeight: "bold" }}>{label}</Text>
+            <Text style={{ marginBottom: 12, color: "white", fontSize: 16 }}>
                 {todayCount} / 1
             </Text>
 
@@ -133,9 +134,10 @@ export default function SalavatSlider({width = 275, onUnlock, disabled = false, 
                         alignSelf: "center",
                         paddingHorizontal: 16,
                         textAlign: "center",
-                        color: "#000000",
+                        color: "#ffffff",
                         fontWeight: "600",
-                        fontSize: 10,
+                        fontSize: 16,
+
 
                     }}
                 >

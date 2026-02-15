@@ -1,4 +1,4 @@
-import {Pressable, ScrollView, Text, View} from "react-native";
+import {Pressable, ScrollView, Text, View, StyleSheet} from "react-native";
 import SalavatSlider from "../components/SalavatSlider";
 import DhikrCounter from "../components/DhikrCounter.tsx";
 import QuranTracker from "../components/QuranTracker";
@@ -6,7 +6,7 @@ import QuranTracker from "../components/QuranTracker";
 import JawshanViewPage from "../components/JawshanTracker.tsx";
 import MemorizationTracker from "../components/MemorizationTracker.tsx";
 import {useState} from "react";
-
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 export default function TodayScreen() {
@@ -19,71 +19,111 @@ export default function TodayScreen() {
     const [openMemorization, setOpenMemorization] = useState(false);
 
     return (
-        <ScrollView
-            style={{ flex: 1 }}
-            contentContainerStyle={{ padding: 20 }}
-        >
-
-            {/* Salawat – always */}
-            <SalavatSlider
-                label="Peygamberimize selam gönder."
-                disabled={salavatDone}
-                onUnlock={() => setSalavatDone(true)}
-            />
+        <SafeAreaView style={styles.container}>
+            <ScrollView style={styles.container} contentContainerStyle={styles.content}>
 
 
-            {/* Dhikr – optional */}
-            <Pressable onPress={() => setOpenDhikr(prev => !prev)}>
-                <Text
-                >{openDhikr ? "Zikir Sayfasini kapa⌃⌃⌃⌃⌃⌃" : "Zikir Sayfasini ac⌄⌄⌄⌄⌄"}</Text>
-            </Pressable>
-
-            {openDhikr && (
-                <View>
-                    <DhikrCounter />
+                {/* Salawat – always */}
+                <View style={styles.card}>
+                <SalavatSlider
+                    label="Peygamberimize selam gönder."
+                    disabled={salavatDone}
+                    onUnlock={() => setSalavatDone(true)}
+                />
                 </View>
-            )}
 
-
-            {/* Quran */}
-            <Pressable onPress={() => setOpenQuran(prev => !prev)}>
-                <Text
-                >{openQuran ? "Kuran Sayfasini kapa⌃⌃⌃⌃⌃⌃" : "Kuran Sayfasini ac⌄⌄⌄⌄⌄"}</Text>
-            </Pressable>
-
-            {openQuran && (
-                <View>
-                    <QuranTracker />
+                {/* Dhikr – optional */}
+                <View style={styles.card}>
+                    <Pressable onPress={() => setOpenDhikr(prev => !prev)} style={styles.cardHeader}>
+                        <Text style={styles.cardTitle}>Zikir</Text>
+                        <Text style={styles.cardAction}>{openDhikr ? "Kapat" : "Aç"}</Text>
+                    </Pressable>
+                    {openDhikr && <View style={styles.cardBody}><DhikrCounter/></View>}
                 </View>
-            )}
 
 
-
-            <Pressable onPress={() => setOpenJawshan(prev => !prev)}>
-                <Text
-                >{openJawshan ? "Cevsen Sayfasini kapa⌃⌃⌃⌃⌃⌃" : "Cevsen Sayfasini ac⌄⌄⌄⌄⌄"}</Text>
-            </Pressable>
-
-            {openJawshan && (
-                <View>
-                    <JawshanViewPage />
+                {/* Quran */}
+                <View style={styles.card}>
+                    <Pressable onPress={() => setOpenQuran(prev => !prev)} style={styles.cardHeader}>
+                        <Text style={styles.cardTitle}>Kuran-i Kerim</Text>
+                        <Text style={styles.cardAction}>{openQuran ? "Kapat" : "Aç"}</Text>
+                    </Pressable>
+                    {openQuran && <View style={styles.cardBody}><QuranTracker/></View>}
                 </View>
-            )}
 
 
+                {/* Jawshan */}
+                <View style={styles.card}>
+                    <Pressable onPress={() => setOpenJawshan(prev => !prev)} style={styles.cardHeader}>
+                        <Text style={styles.cardTitle}>Cevsen</Text>
+                        <Text style={styles.cardAction}>{openJawshan ? "Kapat" : "Aç"}</Text>
+                    </Pressable>
+                    {openJawshan && <View style={styles.cardBody}><JawshanViewPage/></View>}
+                </View>
 
-            <Pressable onPress={() => setOpenMemorization(prev => !prev)}>
-                <Text
-                >{openMemorization ? "Memorization Sayfasini kapa⌃⌃⌃⌃⌃⌃" : "Memorization Sayfasini ac⌄⌄⌄⌄⌄"}</Text>
-            </Pressable>
 
-            {openMemorization && (
-            <View>
-                <MemorizationTracker />
-            </View>
-             )}
+                {/* Memorization */}
+                <View style={styles.card}>
+                    <Pressable onPress={() => setOpenMemorization(prev => !prev)} style={styles.cardHeader}>
+                        <Text style={styles.cardTitle}>Ezber</Text>
+                        <Text style={styles.cardAction}>{openMemorization ? "Kapat" : "Aç"}</Text>
+                    </Pressable>
+                    {openMemorization && <View style={styles.cardBody}><MemorizationTracker/></View>}
+                </View>
 
-        </ScrollView>
-
+            </ScrollView>
+        </SafeAreaView>
     );
 }
+
+const colors = {
+    background: '#041219', // deeper dark navy
+    card: '#072f36', // deep teal
+    accentBlue: '#0f5b83', // slightly brighter deep blue
+    accentGreen: '#1f7a3a', // deep green
+    textPrimary: '#e6f7ff',
+    textAction: '#7CB7FF'
+}
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: colors.background,
+    },
+    content: {
+        padding: 16,
+        gap: 12,
+        paddingBottom: 40,
+    },
+    card: {
+        backgroundColor: colors.card,
+        borderRadius: 14,
+        padding: 12,
+        borderWidth: 1,
+        borderColor: 'rgba(255,255,255,0.03)',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 6 },
+        shadowOpacity: 0.28,
+        shadowRadius: 10,
+        elevation: 6,
+    },
+    cardHeader: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingVertical: 6,
+    },
+    cardTitle: {
+        fontSize: 16,
+        fontWeight: '700',
+        color: colors.textPrimary,
+    },
+    cardAction: {
+        fontSize: 14,
+        fontWeight: '600',
+        color: colors.textAction,
+    },
+    cardBody: {
+        marginTop: 10,
+    }
+});

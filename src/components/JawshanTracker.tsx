@@ -6,8 +6,6 @@ import JawshanView from "./JawshanView.tsx";
 import { useNavigation } from "@react-navigation/native";
 
 
-
-
 const PROGRESS_KEY = 'app:progress'
 
 export default function JawshanTracker(): JSX.Element {

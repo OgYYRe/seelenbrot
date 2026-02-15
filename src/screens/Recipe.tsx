@@ -1,10 +1,9 @@
-import {Alert, Button, Text, TextInput, View} from "react-native";
+import {Alert, Text, TextInput} from "react-native";
 import {useEffect, useState} from "react";
 import CheckBox from "@react-native-community/checkbox";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
-
-
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { ScrollView, View, Pressable, StyleSheet } from 'react-native';
 
 const PROGRESS_KEY = 'app:progress';
 
@@ -245,125 +244,217 @@ export default function RecipeScreen() {
 
 
     return (
-        <View>
-            <Text>Ruhun Gidasi Malzemeler</Text>
+        <SafeAreaView style={styles.container}>
+            <ScrollView contentContainerStyle={styles.content}>
 
-            {/* Dhikr place */}
-            <Text>Zikir olsun</Text>
-            <CheckBox
-                value={active.dhikr}
-                onValueChange={checkBoxDhikrHandler}
-            />
+                <Text style={styles.title}>Ruhun Gıdası — Malzemeler</Text>
 
-            {active.dhikr && (
-                <View>
-                    <TextInput
-                        value={dhikrNameInput}
-                        onChangeText={setDhikrNameInput}
-                        placeholder={'Hangi zikir? (ör: Ya Latif)'}
-                    />
-
-                    <TextInput
-                        value={dailyDhikrTargetInput}
-                        onChangeText={setDailyDhikrTargetInput}
-                        keyboardType={"numeric"}
-                        placeholder="Kac adet? (ör: 129)"
+                {/* Dhikr place */}
+                <View style={styles.card}>
+                    <View style={styles.cardHeader}>
+                        <Text style={styles.cardTitle}>Zikir</Text>
+                        <CheckBox
+                            value={active.dhikr}
+                            onValueChange={checkBoxDhikrHandler}
+                            tintColors={{ true: colors.accentGreen, false: 'rgba(255,255,255,0.4)'}}
                         />
-                    <Button
-                        onPress={saveDhikrHandler}
-                        title = "+ Tarif'e Ekle"
-                        color = 'green'
-                    />
-                </View>
-            )}
+                    </View>
 
+                    {active.dhikr && (
+                        <View style={styles.cardBody}>
+                            <TextInput
+                                value={dhikrNameInput}
+                                onChangeText={setDhikrNameInput}
+                                placeholder={'Hangi zikir? (ör: Ya Latif)'}
+                                placeholderTextColor={'rgba(255,255,255,0.5)'}
+                                style={styles.input}
+                            />
 
+                            <TextInput
+                                value={dailyDhikrTargetInput}
+                                onChangeText={setDailyDhikrTargetInput}
+                                keyboardType={"numeric"}
+                                placeholder="Kaç adet? (ör: 129)"
+                                placeholderTextColor={'rgba(255,255,255,0.5)'}
+                                style={styles.input}
+                            />
 
-
-            {/* Quran place */}
-            <Text>Kuran-i Kerim olmazsa olmaz</Text>
-            <CheckBox
-                value={active.quran}
-                onValueChange={checkBoxQuranHandler}
-            />
-
-            {active.quran && (
-                <View>
-                    <TextInput
-                        value={quranTargetInput}
-                        keyboardType={"numeric"}
-                        onChangeText={setQuranTargetInput}
-                        placeholder={'Gunde kac sayfa? (ör: 2)'}
-                    />
-
-                    <Button
-                        onPress={saveQuranHandler}
-                        title = "+ Tarif'e Ekle"
-                        color = 'green'
-                    />
-                </View>
-            )}
-
-            {/* Jawshan place */}
-            <Text>Cevsen de okurum...(Haftada 1 tane biter)</Text>
-            <CheckBox
-                value={active.jawshan}
-                onValueChange={checkBoxJawshanHandler}
-            />
-
-            {active.jawshan && (
-                <View>
-                    <TextInput
-                        value={jawshanTargetInput}
-                        keyboardType={"numeric"}
-                        onChangeText={setJawshanTargetInput}
-                        placeholder={'Günde kaç bab? (ör: 15)'}
-                    />
-
-                    <Button
-                        onPress={saveJawshanHandler}
-                        title = "+ Tarif'e Ekle"
-                        color = 'green'
-                    />
-                </View>
-            )}
-
-
-            {/* Memorization place */}
-            <Text>Ezber de yapayim</Text>
-            <CheckBox
-                value={active.memorization}
-                onValueChange={checkBoxMemorizationHandler}
-            />
-            {active.memorization && (
-                <View>
-                    <TextInput
-                        value={memizationSurahInput}
-                        keyboardType={"numeric"}
-                        onChangeText={setMemorizationSurahInput}
-                        placeholder={`Kacinci sure? ör: Ra'd=13, Bakara=2`}
-                    />
-                    <TextInput
-                        value={memorizationStartTargetInput}
-                        keyboardType={"numeric"}
-                        onChangeText={setMemorizationTargetInput}
-                        placeholder={'Ayet baslangic numarasi? (ör: 28)'}
-                    />
-                    <TextInput
-                        value={memorizationEndTargetInput}
-                        keyboardType={"numeric"}
-                        onChangeText={setMemorizationEndTargetInput}
-                        placeholder={'Ayet bitis numarasi? (ör: 28)'}
-                    />
-                    <Button
-                        onPress={saveMemorizationHandler}
-                        title = "+ Tarif'e Ekle"
-                        color = 'green'
-                    />
+                            <Pressable onPress={saveDhikrHandler} style={({pressed}) => [styles.primaryButton, pressed && styles.buttonPressed]}>
+                                <Text style={styles.primaryButtonText}>+ Tarife Ekle</Text>
+                            </Pressable>
+                        </View>
+                    )}
                 </View>
 
-            )}
 
-        </View>
+                {/* Quran place */}
+                <View style={styles.card}>
+                    <View style={styles.cardHeader}>
+                        <Text style={styles.cardTitle}>Kuran-i Kerim</Text>
+                        <CheckBox
+                            value={active.quran}
+                            onValueChange={checkBoxQuranHandler}
+                            tintColors={{ true: colors.accentBlue, false: 'rgba(255,255,255,0.4)'}}
+                        />
+                    </View>
+
+                    {active.quran && (
+                        <View style={styles.cardBody}>
+                            <TextInput
+                                value={quranTargetInput}
+                                keyboardType={"numeric"}
+                                onChangeText={setQuranTargetInput}
+                                placeholder={'Günde kaç sayfa? (ör: 2)'}
+                                placeholderTextColor={'rgba(255,255,255,0.5)'}
+                                style={styles.input}
+                            />
+
+                            <Pressable onPress={saveQuranHandler} style={({pressed}) => [styles.primaryButton, pressed && styles.buttonPressed]}>
+                                <Text style={styles.primaryButtonText}>+ Tarife Ekle</Text>
+                            </Pressable>
+                        </View>
+                    )}
+                </View>
+
+
+                {/* Jawshan place */}
+                <View style={styles.card}>
+                    <View style={styles.cardHeader}>
+                        <Text style={styles.cardTitle}>Cevsen</Text>
+                        <CheckBox
+                            value={active.jawshan}
+                            onValueChange={checkBoxJawshanHandler}
+                            tintColors={{ true: colors.accentBlue, false: 'rgba(255,255,255,0.4)'}}
+                        />
+                    </View>
+
+                    {active.jawshan && (
+                        <View style={styles.cardBody}>
+                            <TextInput
+                                value={jawshanTargetInput}
+                                keyboardType={"numeric"}
+                                onChangeText={setJawshanTargetInput}
+                                placeholder={'Günde kaç bab? (ör: 15)'}
+                                placeholderTextColor={'rgba(255,255,255,0.5)'}
+                                style={styles.input}
+                            />
+
+                            <Pressable onPress={saveJawshanHandler} style={({pressed}) => [styles.primaryButton, pressed && styles.buttonPressed]}>
+                                <Text style={styles.primaryButtonText}>+ Tarife Ekle</Text>
+                            </Pressable>
+                        </View>
+                    )}
+                </View>
+
+
+                {/* Memorization place */}
+                <View style={styles.card}>
+                    <View style={styles.cardHeader}>
+                        <Text style={styles.cardTitle}>Ezber</Text>
+                        <CheckBox
+                            value={active.memorization}
+                            onValueChange={checkBoxMemorizationHandler}
+                            tintColors={{ true: colors.accentGreen, false: 'rgba(255,255,255,0.4)'}}
+                        />
+                    </View>
+
+                    {active.memorization && (
+                        <View style={styles.cardBody}>
+                            <TextInput
+                                value={memizationSurahInput}
+                                keyboardType={"numeric"}
+                                onChangeText={setMemorizationSurahInput}
+                                placeholder={`Kaçıncı sure? ör: Ra'd=13, Bakara=2`}
+                                placeholderTextColor={'rgba(255,255,255,0.5)'}
+                                style={styles.input}
+                            />
+                            <TextInput
+                                value={memorizationStartTargetInput}
+                                keyboardType={"numeric"}
+                                onChangeText={setMemorizationTargetInput}
+                                placeholder={'Ayet başlangıç numarası? (ör: 28)'}
+                                placeholderTextColor={'rgba(255,255,255,0.5)'}
+                                style={styles.input}
+                            />
+                            <TextInput
+                                value={memorizationEndTargetInput}
+                                keyboardType={"numeric"}
+                                onChangeText={setMemorizationEndTargetInput}
+                                placeholder={'Ayet bitiş numarası? (ör: 28)'}
+                                placeholderTextColor={'rgba(255,255,255,0.5)'}
+                                style={styles.input}
+                            />
+
+                            <Pressable onPress={saveMemorizationHandler} style={({pressed}) => [styles.primaryButton, pressed && styles.buttonPressed]}>
+                                <Text style={styles.primaryButtonText}>+ Tarife Ekle</Text>
+                            </Pressable>
+                        </View>
+
+                    )}
+                </View>
+
+            </ScrollView>
+        </SafeAreaView>
     )
 }
+
+const colors = {
+    background: '#041219', // deeper dark navy
+    card: '#072f36', // deep teal
+    accentBlue: '#0f5b83', // slightly brighter deep blue
+    accentGreen: '#1f7a3a', // deep green
+    buttonBg: '#072a2e',
+    textPrimary: '#e6f7ff',
+    textSecondary: '#97c9d6',
+}
+
+const styles = StyleSheet.create({
+    container: { flex: 1, backgroundColor: colors.background },
+    content: { padding: 20, paddingBottom: 40 },
+    title: { color: colors.textPrimary, fontSize: 22, fontWeight: '700', marginBottom: 12 },
+
+    card: {
+        backgroundColor: colors.card,
+        borderRadius: 14,
+        padding: 14,
+        marginBottom: 14,
+        borderWidth: 1,
+        borderColor: 'rgba(255,255,255,0.03)',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 6 },
+        shadowOpacity: 0.28,
+        shadowRadius: 10,
+        elevation: 6,
+    },
+    cardHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 },
+    cardTitle: { color: colors.textPrimary, fontSize: 18, fontWeight: '700' },
+    cardBody: { },
+
+    input: {
+        backgroundColor: '#052026',
+        color: colors.textPrimary,
+        paddingHorizontal: 12,
+        paddingVertical: 10,
+        borderRadius: 10,
+        marginBottom: 10,
+        borderWidth: 1,
+        borderColor: 'rgba(255,255,255,0.03)'
+    },
+
+    primaryButton: {
+        backgroundColor: colors.buttonBg,
+        paddingVertical: 12,
+        paddingHorizontal: 16,
+        borderRadius: 10,
+        alignItems: 'center',
+        borderLeftWidth: 6,
+        borderLeftColor: colors.accentGreen,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 6 },
+        shadowOpacity: 0.22,
+        shadowRadius: 8,
+        elevation: 4,
+    },
+    buttonPressed: { opacity: 0.95, transform: [{ scale: 0.998 }] },
+    primaryButtonText: { color: colors.textPrimary, fontWeight: '700' }
+});

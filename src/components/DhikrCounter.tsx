@@ -78,21 +78,21 @@ export default function DhikrCounter({target, name}: DhikrProps) {
 
     if (!active)
         return (
-            <Text>
-                Zikir kapali.  Zikr'i malzemelere eklemek icin -{">"} {" "}
+            <View>
+                <Text style={{ color: "white" }}>
+                    Zikir kapali. Zikr'i malzemelere eklemek icin
+                </Text>
+
                 <Text
                     onPress={() => navigation.navigate("Recipe")}
-                    style={{ color: "blue", textDecorationLine: "underline" }}
+                    style={{ color: "white", textDecorationLine: "underline", fontWeight: "bold", marginTop: 6 }}
                 >
-                    Malzemeleri ayarla
+                    Malzemeleri ayarla {"->"}
                 </Text>
-            </Text>
+            </View>
         );
 
-    if (!dhikr)
-        return (
-            <Text>Zikir kapali. Recipe’den aktif et.</Text>
-        );
+
 
 
 
