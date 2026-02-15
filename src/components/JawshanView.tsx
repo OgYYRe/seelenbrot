@@ -1,8 +1,13 @@
 import React, { JSX, useEffect, useState } from "react";
-import { ScrollView, Text, View } from "react-native";
+import { ScrollView, Text, View, StyleSheet } from "react-native";
 import { BAB_MAP } from "../../assets/Cevsen";
 
 type Props = { babNumber: number };
+
+const colors = {
+    textPrimary: '#e6f7ff',
+    muted: 'rgba(255,255,255,0.65)'
+}
 
 export default function JawshanView({ babNumber }: Props): JSX.Element {
     const [bab, setBab] = useState<any>(null);
@@ -12,24 +17,17 @@ export default function JawshanView({ babNumber }: Props): JSX.Element {
     }, [babNumber]);
 
     if (!bab) {
-        return <Text>{babNumber}. bab bulunamadi</Text>;
+        return <Text style={styles.missing}>{babNumber}. bab bulunamadi</Text>;
     }
 
     return (
-        <View style={{ marginTop: 12 }}>
-            <Text style={{ fontSize: 18, fontWeight: "600", marginBottom: 8 }}>
-                {bab.title}
-            </Text>
+        <View style={styles.wrapper}>
+            <Text style={styles.title}>{bab.title}</Text>
 
-            <ScrollView>
+            <ScrollView style={styles.scroll}>
                 <Text
                     selectable
-                    style={{
-                        fontSize: 22,
-                        lineHeight: 40,
-                        textAlign: "right",
-                        writingDirection: "rtl",
-                    }}
+                    style={styles.text}
                 >
                     {bab.text}
                 </Text>
@@ -37,3 +35,11 @@ export default function JawshanView({ babNumber }: Props): JSX.Element {
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    wrapper: { marginTop: 12 },
+    title: { fontSize: 18, fontWeight: '600', marginBottom: 8, color: colors.textPrimary },
+    scroll: { maxHeight: 420 },
+    text: { fontSize: 22, lineHeight: 40, textAlign: 'right', writingDirection: 'rtl', color: colors.textPrimary },
+    missing: { color: colors.muted }
+});

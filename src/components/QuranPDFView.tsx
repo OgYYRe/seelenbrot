@@ -47,7 +47,7 @@ export default function QuranPDFView({ page }: Props) {
 
             <Modal visible={isFull} animationType="fade" onRequestClose={close}>
                 <SafeAreaView style={styles.fullscreen}>
-                    <View style={{ flex: 1 }}>
+                    <View style={styles.contentWrapper}>
                         <View style={[styles.topBar, { top: insets.top }]} pointerEvents="box-none">
 
                         <Pressable onPress={close} style={styles.closeBtn} hitSlop={12}>
@@ -77,11 +77,11 @@ export default function QuranPDFView({ page }: Props) {
                             <View
                                 style={[
                                     StyleSheet.absoluteFill,
-                                    { justifyContent: "center", alignItems: "center" },
+                                    styles.centeredOverlay,
                                 ]}
                                 pointerEvents="none"
                             >
-                                <ActivityIndicator size="large" />
+                                <ActivityIndicator size="large" color={colors.accentBlue} />
                             </View>
                         )}
                     </View>
@@ -91,14 +91,26 @@ export default function QuranPDFView({ page }: Props) {
     );
 }
 
+const colors = {
+    background: '#041219', // deep dark navy
+    card: '#072f36', // deep teal
+    accentBlue: '#0f5b83',
+    accentGreen: '#1f7a3a',
+    textPrimary: '#e6f7ff',
+    muted: 'rgba(255,255,255,0.65)'
+}
+
 const styles = StyleSheet.create({
     previewBox: {
-        width: "50%",
-        height: 50,
-        backgroundColor: "#000",
+        width: "100%",
+        height: 64,
+        backgroundColor: colors.card,
         borderRadius: 12,
         overflow: "hidden",
         alignSelf: "center",
+        borderWidth: 1,
+        borderColor: 'rgba(255,255,255,0.03)',
+        justifyContent: 'center'
 
 
     },
@@ -106,30 +118,38 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
+        paddingHorizontal: 12,
+        backgroundColor: 'rgba(255,255,255,0.1)',
     },
     previewText: {
-        color: "#fff",
+        color: colors.textPrimary,
         fontSize: 14,
+        fontWeight: '600'
     },
     fullscreen: {
         flex: 1,
-        backgroundColor: "black",
+        backgroundColor: colors.background,
+    },
+    contentWrapper: {
+        flex: 1,
     },
     fullPdf: {
         flex: 1,
         width: "100%",
+        backgroundColor: colors.background,
     },
     closeBtn: {
         width: 44,
         height: 44,
         borderRadius: 22,
-        backgroundColor: "rgba(255,255,255,0.12)",
+        backgroundColor: 'rgba(15,91,131,0.12)',
         justifyContent: "center",
         alignItems: "center",
     },
     closeText: {
-        color: "#fff",
+        color: colors.textPrimary,
         fontSize: 18,
+        fontWeight: '700'
     },
     topBar: {
         position: "absolute",
@@ -137,10 +157,14 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         height: 56,
-        backgroundColor: "black",
+        backgroundColor: 'transparent',
         alignItems: "flex-end",
         justifyContent: "center",
         paddingRight: 12,
         zIndex: 999,
     },
+    centeredOverlay: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    }
 });

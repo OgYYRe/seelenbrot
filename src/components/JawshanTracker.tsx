@@ -1,5 +1,5 @@
 import React, {JSX, useEffect, useState} from "react";
-import {Alert, ScrollView, Text, View} from "react-native";
+import {Alert, ScrollView, Text, View, StyleSheet, Pressable} from "react-native";
 import CheckBox from "@react-native-community/checkbox";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import JawshanView from "./JawshanView.tsx";
@@ -72,41 +72,39 @@ export default function JawshanTracker(): JSX.Element {
 
     if (!active)
         return (
-            <Text>
-                Cevsen kapali. Cevsen'i malzemelere eklemek icin -{">"} {" "}
-                <Text
-                    onPress={() => navigation.navigate("Recipe")}
-                    style={{ color: "blue", textDecorationLine: "underline" }}
-                >
-                    Malzemeleri ayarla
+            <View style={styles.inactiveWrap}>
+                <Text style={styles.inactiveText}>
+                    Cevsen kapali. Cevsen'i malzemelere eklemek icin -{">"} {" "}
                 </Text>
-            </Text>
+                <Pressable onPress={() => navigation.navigate("Recipe")} style={({pressed}) => [styles.linkWrap, pressed && styles.linkPressed]}>
+                    <Text style={styles.linkText}>Malzemeleri ayarla</Text>
+                </Pressable>
+            </View>
         );
 
 
 
     return (
         <ScrollView
-            style={{ flex: 1 }}
-            contentContainerStyle={{ padding: 16, paddingBottom: 40 }}
+            style={styles.container}
+            contentContainerStyle={styles.content}
         >
             <View>
 
-                <Text>
-                    <Text>{currentBab}. Bab</Text>
-                </Text>
+
 
                 <JawshanView babNumber={currentBab} />
 
-                <View>
+                <View style={styles.checkRow}>
                     <CheckBox
                         value={checked}
                         onValueChange={(v) => {
                             setChecked(v);
                             handleCheckChange(v);
                         }}
+                        tintColors={{ true: colors.accentBlue, false: 'rgba(255,255,255,0.4)'}}
                     />
-                    <Text>{currentBab}. Bab'i okudum ✔</Text>
+                    <Text style={styles.checkText}>{currentBab}. Bab'i okudum ✔</Text>
                 </View>
 
             </View>
@@ -118,3 +116,26 @@ export default function JawshanTracker(): JSX.Element {
 
   );
 }
+
+const colors = {
+    background: '#041219',
+    card: '#072f36',
+    accentBlue: '#0f5b83',
+    accentGreen: '#1f7a3a',
+    textPrimary: '#e6f7ff',
+    muted: 'rgba(255,255,255,0.65)'
+}
+
+const styles = StyleSheet.create({
+    container: { flex: 1, backgroundColor: 'transparent' },
+    content: { padding: 16, paddingBottom: 40 },
+
+    checkRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 12 },
+    checkText: { color: colors.textPrimary },
+
+    inactiveWrap: { padding: 12, backgroundColor: colors.card, borderRadius: 12, borderWidth: 1, borderColor: 'rgba(255,255,255,0.03)' },
+    inactiveText: { color: colors.muted, marginBottom: 8 },
+    linkWrap: { alignSelf: 'flex-start' },
+    linkText: { color: colors.accentBlue, textDecorationLine: 'underline', fontWeight: '600' },
+    linkPressed: { opacity: 0.8 }
+});

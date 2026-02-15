@@ -1,12 +1,11 @@
 import React, { JSX, useEffect, useState } from "react";
-import {Alert, Button, ScrollView, Text, View} from "react-native";
+import {Alert, ScrollView, Text, View, StyleSheet, Pressable} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 
 
 const PROGRESS_KEY = "app:progress";
 const quran = require("../../assets/quran.json");
-
 
 
 
@@ -39,7 +38,7 @@ export default function MemorizationTracker(): JSX.Element {
 
         const target = Number(memorization.dailyTarget ?? 0);
         if (!target || target <= 0) {
-            Alert.alert("Hata", "dailyTarget ayarlanmis degil.");
+            Alert.alert("Hata", "dailyTarget ayarlanmamis degil.");
             return;
         }
 
@@ -114,77 +113,116 @@ export default function MemorizationTracker(): JSX.Element {
             .filter((x: any) => x.sura === memorization.surahNumber && x.aya >= start && x.aya <= end)
             .sort((a: any, b: any) => a.aya - b.aya);
 
-        const text = list.map((a: any) => `${a.aya}. ${a.text}`).join("\n\n");
+        const text = list.map((a: any) => `${a.aya}. ${a.text}`).join("\n");
 
         setPieceText(text);
 
     }, [memorization]);
 
 
-    if (!loaded) return <Text>Yukleniyor...</Text>;
+    if (!loaded) return <Text style={styles.loadingText}>Yukleniyor...</Text>;
 
-    if (!memorization) return <Text>Ezber icin ayar bulunamadi.</Text>;
+    if (!memorization) return <Text style={styles.missingText}>Ezber icin ayar bulunamadi.</Text>;
 
     if (!memorization.active)
         return (
-            <Text>
-                Ezber kapali. Ezber'i malzemelere eklemek icin -{">"} {" "}
-                <Text
-                    onPress={() => navigation.navigate("Recipe")}
-                    style={{ color: "blue", textDecorationLine: "underline" }}
-                >
-                    Malzemeleri ayarla
+            <View style={styles.inactiveWrap}>
+                <Text style={styles.inactiveText}>
+                    Ezber kapali.
                 </Text>
-            </Text>
+                <Pressable onPress={() => navigation.navigate('Recipe')} style={({pressed}) => [styles.linkWrap, pressed && styles.linkPressed]}>
+                    <Text style={styles.linkText}>Malzemeleri ayarla</Text>
+                </Pressable>
+            </View>
         );
 
 
 
     return (
-        <ScrollView style={{ flex: 1 }} contentContainerStyle={{ padding: 16 }}>
+        <ScrollView style={styles.container} contentContainerStyle={styles.content}>
             <View>
-                <Text style={{ fontSize: 18, fontWeight: "600", marginBottom: 12 }}>
-                    Memorization (Aktif)
-                </Text>
 
-                <Text>Sure: {memorization.surahNumber}</Text>
-                <Text>Ayet araligi: {memorization.ayahStart}-{memorization.ayahEnd}</Text>
+
+                <Text style={styles.meta}>Sure: {memorization.surahNumber}</Text>
+                <Text style={styles.meta}>Ayet araligi: {memorization.ayahStart}-{memorization.ayahEnd}</Text>
 
 
 
 
-
-
-                <Text style={{ marginTop: 12 }}>
-                    {todayCount}/{memorization.dailyTarget}
-                </Text>
+                <Text style={styles.counter}>{todayCount}/{memorization.dailyTarget}</Text>
 
 
                 <Text
                     selectable
-                    style={{
-                        marginTop: 12,
-                        fontSize: 22,
-                        lineHeight: 40,
-                        textAlign: "right",
-                        writingDirection: "rtl",
-                        padding: 14,
-                        borderRadius: 12,
-                        backgroundColor: "#f2f2f2",
-                    }}
+                    style={styles.pieceText}
                 >
                     {pieceText}
                 </Text>
 
 
-                <Button
-                    title="Okudum (+) "
-                    onPress={handleCounter}
-                    disabled={todayCount >= Number(memorization.dailyTarget ?? 0)}
-                />
+                <Pressable onPress={handleCounter} style={({pressed}) => [styles.primaryButton, pressed && styles.buttonPressed]} disabled={todayCount >= Number(memorization.dailyTarget ?? 0)}>
+                    <Text style={styles.primaryButtonText}>Okudum (+)</Text>
+                </Pressable>
 
 
             </View>
         </ScrollView>
     );
 }
+
+const colors = {
+    background: '#041219',
+    card: '#072f36',
+    accentBlue: '#0f5b83',
+    accentGreen: '#1f7a3a',
+    textPrimary: '#e6f7ff',
+    muted: 'rgba(255,255,255,0.65)'
+}
+
+const styles = StyleSheet.create({
+    container: { flex: 1, backgroundColor: 'transparent' },
+    content: { padding: 16, paddingBottom: 40 },
+
+
+    meta: { color: colors.muted, marginBottom: 6 },
+    counter: { marginTop: 12, color: colors.textPrimary },
+
+    pieceText: {
+        marginTop: 12,
+        fontSize: 28,
+        lineHeight: 42,
+        textAlign: 'right',
+        writingDirection: 'rtl',
+        padding: 14,
+        borderRadius: 12,
+        backgroundColor: '#052026',
+        color: colors.textPrimary
+    },
+
+    primaryButton: {
+        backgroundColor: colors.card,
+        paddingVertical: 12,
+        paddingHorizontal: 16,
+        borderRadius: 10,
+        alignItems: 'center',
+        borderLeftWidth: 6,
+        borderLeftColor: colors.accentGreen,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 6 },
+        shadowOpacity: 0.22,
+        shadowRadius: 8,
+        elevation: 4,
+        marginTop: 14
+    },
+    buttonPressed: { opacity: 0.95, transform: [{ scale: 0.998 }] },
+    primaryButtonText: { color: colors.textPrimary, fontWeight: '700' },
+
+    loadingText: { color: colors.textPrimary },
+    missingText: { color: colors.muted },
+
+    inactiveWrap: { padding: 12, backgroundColor: colors.card, borderRadius: 12, borderWidth: 1, borderColor: 'rgba(255,255,255,0.03)', flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center' },
+    inactiveText: { color: colors.muted, flexShrink: 1 },
+    linkWrap: { marginLeft: 10 },
+    linkText: { color: colors.accentBlue, textDecorationLine: 'underline', fontWeight: '600' },
+    linkPressed: { opacity: 0.8 }
+});

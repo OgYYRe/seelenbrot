@@ -1,4 +1,4 @@
-import {Alert, Text, View} from "react-native";
+import {Alert, Text, View, StyleSheet, Pressable} from "react-native";
 import { useEffect, useState} from "react";
 
 import CheckBox from "@react-native-community/checkbox";
@@ -81,38 +81,59 @@ export default function QuranTracker(){
 
     if (!active)
         return (
-            <Text>
-                Kuran-i Kerim kapali. Kuran-i Kerim'i malzemelere eklemek icin -{">"} {" "}
-                <Text
-                    onPress={() => navigation.navigate("Recipe")}
-                    style={{ color: "blue", textDecorationLine: "underline" }}
-                >
-                    Malzemeleri ayarla
+            <View style={styles.inactiveWrap}>
+                <Text style={styles.inactiveText}>
+                    Kuran-i Kerim kapali. Kuran-i Kerim'i malzemelere eklemek icin -{">"} {" "}
                 </Text>
-            </Text>
+                <Pressable onPress={() => navigation.navigate("Recipe") } style={({pressed}) => [styles.linkWrap, pressed && styles.linkPressed]}>
+                    <Text style={styles.linkText}>Malzemeleri ayarla</Text>
+                </Pressable>
+            </View>
         );
 
 
     return (
-        <View>
+        <View style={styles.container}>
 
-            <Text>
-                <Text>{currentPage}. Sayfa</Text>
-            </Text>
+            <Text style={styles.pageLabel}>{currentPage}. Sayfa</Text>
 
             <QuranPDFView page={currentPage} />
 
-            <View>
+            <View style={styles.checkRow}>
                 <CheckBox
                     value={checked}
                     onValueChange={(v) => {
                         setChecked(v);
                         handleCheckChange(v);
                     }}
+                    tintColors={{ true: colors.accentBlue, false: 'rgba(255,255,255,0.4)'}}
                 />
-                <Text>{currentPage}. Sayfayi okudum ✔</Text>
+                <Text style={styles.checkText}>{currentPage}. Sayfayi okudum ✔</Text>
             </View>
 
         </View>
     );
 }
+
+const colors = {
+    background: '#041219',
+    card: '#072f36',
+    accentBlue: '#0f5b83',
+    accentGreen: '#1f7a3a',
+    textPrimary: '#e6f7ff',
+    muted: 'rgba(255,255,255,0.65)'
+}
+
+const styles = StyleSheet.create({
+    container: { backgroundColor: 'transparent' },
+    pageLabel: { color: colors.textPrimary, fontSize: 16, fontWeight: '700', marginBottom: 8 },
+
+    checkRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 10 },
+    checkText: { color: colors.textPrimary },
+
+    inactiveWrap: { padding: 12, backgroundColor: colors.card, borderRadius: 12, borderWidth: 1, borderColor: 'rgba(255,255,255,0.03)' },
+    inactiveText: { color: colors.muted, marginBottom: 8 },
+    linkWrap: { alignSelf: 'flex-start' },
+    linkText: { color: colors.accentBlue, textDecorationLine: 'underline', fontWeight: '600' },
+    linkPressed: { opacity: 0.8 }
+});

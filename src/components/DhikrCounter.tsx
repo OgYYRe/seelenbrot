@@ -1,8 +1,8 @@
+import React from 'react';
 import {useEffect, useState} from "react";
-import {Button, Text, View} from "react-native";
+import {Pressable, Text, View, StyleSheet} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
-
 
 
 type DhikrProps = {
@@ -15,6 +15,14 @@ type Dhikr ={
     target?: number
 };
 
+const colors = {
+    background: '#041219',
+    card: '#072f36',
+    accentBlue: '#0f5b83',
+    accentGreen: '#1f7a3a',
+    textPrimary: '#e6f7ff',
+    muted: 'rgba(255,255,255,0.65)'
+}
 
 export default function DhikrCounter({target, name}: DhikrProps) {
 
@@ -78,14 +86,14 @@ export default function DhikrCounter({target, name}: DhikrProps) {
 
     if (!active)
         return (
-            <View>
-                <Text style={{ color: "white" }}>
-                    Zikir kapali. Zikr'i malzemelere eklemek icin
+            <View style={styles.inactiveWrap}>
+                <Text style={styles.inactiveText}>
+                    Zikir kapali. Zikir'i malzemelere eklemek icin
                 </Text>
 
                 <Text
                     onPress={() => navigation.navigate("Recipe")}
-                    style={{ color: "white", textDecorationLine: "underline", fontWeight: "bold", marginTop: 6 }}
+                    style={styles.linkText}
                 >
                     Malzemeleri ayarla {"->"}
                 </Text>
@@ -95,20 +103,43 @@ export default function DhikrCounter({target, name}: DhikrProps) {
 
 
 
-
     return (
 
 
-        <View>
-            <Text>{todayCount} / {usedTarget}</Text>
-            <Button
-                title={`${usedName} +1`}
-                onPress={onDhikrPress}
-                    disabled={done}
-            />
-            {done && <Text>Allah kabul etsin</Text>}
+        <View style={styles.container}>
+            <Text style={styles.countText}>{todayCount} / {usedTarget}</Text>
+
+            <Pressable onPress={onDhikrPress} style={({pressed}) => [styles.primaryButton, pressed && styles.buttonPressed]} disabled={done}>
+                <Text style={styles.primaryButtonText}>{usedName} +1</Text>
+            </Pressable>
+
+            {done && <Text style={styles.doneText}>Allah kabul etsin</Text>}
             {/*TODO: For future: max 3 Zikir. + Some zikir has explanation*/}
-                </View>
+        </View>
 
     );
 }
+
+const styles = StyleSheet.create({
+    container: { paddingVertical: 6 },
+    countText: { color: colors.textPrimary, fontWeight: '600', marginBottom: 8 },
+
+    primaryButton: {
+        backgroundColor: colors.accentBlue,
+        paddingVertical: 10,
+        paddingHorizontal: 14,
+        borderRadius: 10,
+        alignItems: 'center',
+        borderLeftWidth: 6,
+        borderLeftColor: colors.accentGreen,
+
+    },
+    buttonPressed: { opacity: 0.95 },
+    primaryButtonText: { color: colors.textPrimary, fontWeight: '700' },
+
+    doneText: { color: colors.muted, marginTop: 8 },
+
+    inactiveWrap: { padding: 12, backgroundColor: colors.card, borderRadius: 12, borderWidth: 1, borderColor: 'rgba(255,255,255,0.03)' },
+    inactiveText: { color: colors.muted, marginBottom: 8 },
+    linkText: { color: colors.accentBlue, textDecorationLine: 'underline', fontWeight: '700' }
+});
