@@ -8,19 +8,24 @@ export default function HomeScreen({navigation}:  any ) {
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView contentContainerStyle={styles.content}>
-                <View style={styles.container}>
-                    <Text style={styles.title}>
-                        Ruhun Gıdası'na hoş geldiniz
-                    </Text>
-                    <Text style={styles.title}>
-                        Malzemeleri ayarla menüsünden, Ruhun Gıdası'a eklemek isteklerinizi seçebilirsiniz.
-                    </Text>
-                </View>
+
                 <View style={styles.headerCard}>
                     <Text style={styles.arabicText}>اَلَا بِذِكْرِ ٱللَّهِ تَطْمَئِنُّ ٱلْقُلُوبُ ❂ </Text>
                     <Text style={styles.subtitle}>Kalpler, ancak Allah’ı anmakla huzur bulur.</Text>
-                    <Text style={styles.smallText}>Die Herzen werden nur durch die Erwähnung Allahs ruhig.</Text>
-                    <Text style={styles.smallText}>Hearts find peace through the remembrance of Allah.</Text>
+                    <Text style={styles.smallTextGer}>Die Herzen werden nur durch die Erwähnung Allahs ruhig.</Text>
+                    <Text style={styles.smallTextEng}>Hearts find peace through the remembrance of Allah.</Text>
+                    <Text style={styles.smallTextQ}>Ra'd 13:28</Text>
+                </View>
+                <View style={styles.container}>
+                    <Text style={styles.title}>
+                        Ruhun Gıdası'na hoş geldiniz.
+                    </Text>
+                    <Text style={styles.title}>
+                        Malzemeleri ayarla menüsünden, Ruhun Gıdası'na eklemek isteklerinizi seçebilirsiniz.
+                    </Text>
+                    <Text style={styles.title}>
+                        Yemek Vakti menüsünde ise, seçtiğiniz malzemelere göre günlük gıdanızı alabilirsiniz.
+                    </Text>
                 </View>
 
                 <View style={styles.section}>
@@ -71,7 +76,7 @@ const colors = {
 
 const styles = StyleSheet.create({
     title: {
-        fontSize: 22,
+        fontSize: 16,
         fontWeight: '700',
         color: colors.textPrimary,
         textAlign: 'center',
@@ -81,8 +86,8 @@ const styles = StyleSheet.create({
     content: { padding: 20, paddingBottom: 40 },
     headerCard: {
         backgroundColor: colors.card,
-        borderRadius: 16,
-        padding: 22,
+        borderRadius: 20,
+        padding: 20,
         marginBottom: 18,
         // soft outer glow
         shadowColor: '#000',
@@ -110,11 +115,23 @@ const styles = StyleSheet.create({
         color: colors.textSecondary,
         marginBottom: 6
     },
-    smallText: {
+    smallTextGer: {
+        fontStyle: 'normal',
+        textAlign: 'center',
+        fontSize: 12,
+        color: colors.muted
+    },
+    smallTextEng: {
         fontStyle: 'normal',
         textAlign: 'center',
         fontSize: 14,
         color: colors.muted
+    },
+    smallTextQ: {
+        fontStyle: 'normal',
+        fontSize: 12,
+        color: colors.muted,
+        marginTop: 6
     },
 
     section: {
