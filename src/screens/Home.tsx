@@ -1,13 +1,35 @@
 import React from "react";
 import {Pressable, Text, View, StyleSheet, ScrollView} from "react-native";
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useTranslation } from "react-i18next";
+import i18n from "../i18n";
 
 
 export default function HomeScreen({navigation}:  any ) {
 
+    const changeLanguage = (lng: string) => {
+            i18n.changeLanguage(lng);
+    };
+
+    const { t } = useTranslation();
+
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView contentContainerStyle={styles.content}>
+                <View style={styles.langRow}>
+                    <Pressable onPress={() => changeLanguage("tr")} style={styles.flagButton}>
+                        <Text style={styles.flag}>🇹🇷</Text>
+                    </Pressable>
+
+                    <Pressable onPress={() => changeLanguage("en")} style={styles.flagButton}>
+                        <Text style={styles.flag}>🇬🇧</Text>
+                    </Pressable>
+
+                    <Pressable onPress={() => changeLanguage("de")} style={styles.flagButton}>
+                        <Text style={styles.flag}>🇩🇪</Text>
+                    </Pressable>
+                </View>
+
 
                 <View style={styles.headerCard}>
                     <Text style={styles.arabicText}>اَلَا بِذِكْرِ ٱللَّهِ تَطْمَئِنُّ ٱلْقُلُوبُ ❂ </Text>
@@ -18,26 +40,26 @@ export default function HomeScreen({navigation}:  any ) {
                 </View>
                 <View style={styles.container}>
                     <Text style={styles.title}>
-                        Ruhun Gıdası'na hoş geldiniz.
+                        {t("welcome_1")}
                     </Text>
                     <Text style={styles.title}>
-                        Malzemeleri ayarla menüsünden, Ruhun Gıdası'na eklemek isteklerinizi seçebilirsiniz.
+                        {t("home_intro_1")}
                     </Text>
                     <Text style={styles.title}>
-                        Yemek Vakti menüsünde ise, seçtiğiniz malzemelere göre günlük gıdanızı alabilirsiniz.
+                        {t("home_intro_2")}
                     </Text>
                 </View>
 
                 <View style={styles.section}>
                     <Pressable onPress={()=> navigation.navigate('Recipe')} style={({pressed}) => [styles.button, pressed && styles.buttonPressed]}>
-                        <Text style={styles.buttonText}>Malzemeleri ayarla</Text>
+                        <Text style={styles.buttonText}>{t("nav1")}</Text>
                     </Pressable>
                 </View>
 
 
                 <View style={styles.section}>
                 <Pressable onPress={()=> navigation.navigate('Today')} style={({pressed}) => [styles.button, pressed && styles.buttonPressed]}>
-                    <Text style={styles.buttonText}>Yemek Vakti</Text>
+                    <Text style={styles.buttonText}>{t("nav2")}</Text>
                 </Pressable>
                 </View>
 
@@ -51,7 +73,7 @@ export default function HomeScreen({navigation}:  any ) {
                 <View style={styles.section}>
 
                 <Pressable onPress={()=> navigation.navigate('Settings')} style={({pressed}) => [styles.button, pressed && styles.buttonPressed]}>
-                        <Text style={styles.buttonText}>Ayarlar</Text>
+                        <Text style={styles.buttonText}>{t("nav3")}</Text>
                     </Pressable>
                 </View>
 
@@ -75,6 +97,23 @@ const colors = {
 }
 
 const styles = StyleSheet.create({
+    langRow: {
+        flexDirection: "row",
+        justifyContent: "center",
+        marginBottom: 12,
+        gap: 12
+    },
+
+    flagButton: {
+        padding: 8,
+        borderRadius: 10,
+        backgroundColor: colors.card,
+    },
+
+    flag: {
+        fontSize: 26
+    },
+
     title: {
         fontSize: 16,
         fontWeight: '700',

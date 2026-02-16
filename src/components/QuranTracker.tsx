@@ -30,7 +30,8 @@ export default function QuranTracker(){
             if (stored){
                 const parsed = JSON.parse(stored);
                 setTotalRead(Number(parsed.quran?.total ?? 0));
-                setActive(Boolean(parsed.quran?.active));
+                setActive(parsed.quran?.active ?? true);
+
             }
         };
         loadLastPage();
@@ -59,10 +60,12 @@ export default function QuranTracker(){
                         if (!stored) return;
                         const progress = JSON.parse(stored);
                         if (!progress.quran) {
-                            progress.quran = { total: 0 };
+                            progress.quran = { total: 0, todayCount: 0, active: true };
                         }
+
                         const total = Number(progress.quran.total ?? 0);
                         const nextPage = total + 1;
+
                         progress.quran.total = nextPage;
                         progress.quran.todayCount = Number(progress.quran.todayCount ?? 0) + 1;
 

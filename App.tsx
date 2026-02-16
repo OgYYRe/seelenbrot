@@ -5,16 +5,19 @@ import {NavigationContainer} from "@react-navigation/native";
 import {GestureHandlerRootView} from "react-native-gesture-handler";
 import RecipeScreen from "./src/screens/Recipe.tsx";
 import DebugScreen from "./src/screens/Debug.tsx";
-import SettingsScreen from "./src/screens/Settings.tsx";
+import SettingsScreen from "./src/screens/Info.tsx";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {useEffect} from "react";
-
+import { AppState, type AppStateStatus } from "react-native";
+import "./src/i18n";
 
 const STORAGE_KEY = 'app:progress';
 
 // Default progress structure
+const today = new Date().toISOString().slice(0, 10);
+
 const DEFAULT_PROGRESS = {
-    lastResetDate: "2026-02-05",
+    lastResetDate: today,
 
     quran: {
         active: true,
@@ -69,21 +72,24 @@ async function checkDailyReset() {
 
     const progress = JSON.parse(raw);
 
-    const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+    const today = new Date().toISOString().slice(0, 10);
+
+
+    progress.quran = progress.quran ?? { total: 0, todayCount: 0 };
+    progress.jawshan = progress.jawshan ?? { total: 0, todayCount: 0 };
+    progress.salawat = progress.salawat ?? { todayCount: 0, doneToday: false };
+    progress.memorization = progress.memorization ?? { total: 0, todayCount: 0 };
 
     if (progress.lastResetDate === today) return;
 
-    // Reset daily counts and update totals
-    progress.quran.total = (progress.quran.total || 0) + (progress.quran.todayCount || 0);
+    // Reset daily counts
     progress.quran.todayCount = 0;
 
-    progress.jawshan.total = (progress.jawshan.total || 0) + (progress.jawshan.todayCount || 0);
     progress.jawshan.todayCount = 0;
 
     progress.salawat.doneToday = false;
     progress.salawat.todayCount = 0;
 
-    progress.memorization.total = (progress.memorization.total || 0) + (progress.memorization.todayCount || 0);
     progress.memorization.todayCount = 0;
 
     progress.lastResetDate = today;
@@ -98,12 +104,28 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
     useEffect(() => {
+        let currentState: AppStateStatus = AppState.currentState;
+
         const init = async () => {
             await initProgressStorage();
             await checkDailyReset();
         };
         init();
+
+        const sub = AppState.addEventListener("change", (nextState) => {
+            const wasBackground = currentState === "inactive" || currentState === "background";
+            const isActive = nextState === "active";
+
+            if (wasBackground && isActive) {
+                void checkDailyReset();
+            }
+
+            currentState = nextState;
+        });
+
+        return () => sub.remove();
     }, []);
+
 
 
     return (
