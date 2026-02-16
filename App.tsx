@@ -81,7 +81,7 @@ async function checkDailyReset() {
     progress.jawshan.todayCount = 0;
 
     progress.salawat.doneToday = false;
-
+    progress.salawat.todayCount = 0;
 
     progress.memorization.total = (progress.memorization.total || 0) + (progress.memorization.todayCount || 0);
     progress.memorization.todayCount = 0;

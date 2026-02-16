@@ -103,11 +103,11 @@ export default function RecipeScreen() {
     // Quran save function
     const saveQuranHandler = async () => {
         if (!dailyDhikrTargetInput.trim()) {
-            Alert.alert('Eksik', 'Kuran hedefi bos olamaz.');
+            Alert.alert('Eksik', 'Kur\'an-ı Kerim hedefi bos olamaz.');
             return;
         }
         if (Number.isNaN(Number(quranTargetInput.trim()))) {
-            Alert.alert('Hata', 'Kuran hedefi sayi olmalidir.');
+            Alert.alert('Hata', 'Kur\'an-ı Kerim hedefi sayi olmalıdır.');
             return;
         }
         const raw = await AsyncStorage.getItem(PROGRESS_KEY);
@@ -132,7 +132,7 @@ export default function RecipeScreen() {
             return;
         }
         if (Number.isNaN(Number(dailyDhikrTargetInput.trim()))) {
-            Alert.alert('Hata', 'Zikir adeti sayi olmalidir.');
+            Alert.alert('Hata', 'Zikir adeti sayi olmalıdır.');
             return;
         }
         const raw = await AsyncStorage.getItem(PROGRESS_KEY);
@@ -157,11 +157,11 @@ export default function RecipeScreen() {
     // Jawshan save function
     const saveJawshanHandler = async () => {
         if (!jawshanTargetInput.trim()) {
-            Alert.alert('Eksik', 'Cevsen hedefi bos olamaz.');
+            Alert.alert('Eksik', 'Cevşen hedefi bos olamaz.');
             return;
         }
         if (Number.isNaN(Number(jawshanTargetInput.trim()))) {
-            Alert.alert('Hata', 'Cevsen hedefi sayi olmalidir.');
+            Alert.alert('Hata', 'Cevşen hedefi sayi olmalıdır.');
             return;
         }
         const raw = await AsyncStorage.getItem(PROGRESS_KEY);
@@ -177,7 +177,7 @@ export default function RecipeScreen() {
 
         await AsyncStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
 
-        Alert.alert('Basarili', `Cevsen hedefi tarife eklendi`);
+        Alert.alert('Basarili', `Cevşen hedefi tarife eklendi`);
     }
     // Memorization save function
     const saveMemorizationHandler = async () => {
@@ -186,7 +186,7 @@ export default function RecipeScreen() {
             return;
         }
         if (Number.isNaN(Number(memizationSurahInput.trim())) || Number.isNaN(Number(memorizationStartTargetInput.trim())) || Number.isNaN(Number(memorizationEndTargetInput.trim()))) {
-            Alert.alert('Hata', 'Ezber hedefi sayi olmalidir.');
+            Alert.alert('Hata', 'Ezber hedefi sayi olmalıdır.');
             return;
         }
         const raw = await AsyncStorage.getItem(PROGRESS_KEY);
@@ -320,7 +320,7 @@ export default function RecipeScreen() {
                 {/* Jawshan place */}
                 <View style={styles.card}>
                     <View style={styles.cardHeader}>
-                        <Text style={styles.cardTitle}>Cevsen</Text>
+                        <Text style={styles.cardTitle}>Cevşen</Text>
                         <CheckBox
                             value={active.jawshan}
                             onValueChange={checkBoxJawshanHandler}

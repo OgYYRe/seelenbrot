@@ -45,7 +45,7 @@ export default function TodayScreen() {
                 {/* Quran */}
                 <View style={styles.card}>
                     <Pressable onPress={() => setOpenQuran(prev => !prev)} style={styles.cardHeader}>
-                        <Text style={styles.cardTitle}>Kuran-i Kerim</Text>
+                        <Text style={styles.cardTitle}>Kur'an-ı Kerim</Text>
                         <Text style={styles.cardAction}>{openQuran ? "Kapat" : "Aç"}</Text>
                     </Pressable>
                     {openQuran && <View style={styles.cardBody}><QuranTracker/></View>}
@@ -55,7 +55,7 @@ export default function TodayScreen() {
                 {/* Jawshan */}
                 <View style={styles.card}>
                     <Pressable onPress={() => setOpenJawshan(prev => !prev)} style={styles.cardHeader}>
-                        <Text style={styles.cardTitle}>Cevsen</Text>
+                        <Text style={styles.cardTitle}>Cevşen</Text>
                         <Text style={styles.cardAction}>{openJawshan ? "Kapat" : "Aç"}</Text>
                     </Pressable>
                     {openJawshan && <View style={styles.cardBody}><JawshanViewPage/></View>}

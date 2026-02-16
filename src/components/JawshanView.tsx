@@ -1,6 +1,6 @@
 import React, { JSX, useEffect, useState } from "react";
 import { ScrollView, Text, View, StyleSheet } from "react-native";
-import { BAB_MAP } from "../../assets/Cevsen";
+import { BAB_MAP } from "../../assets/Jawshan/";
 
 type Props = { babNumber: number };
 

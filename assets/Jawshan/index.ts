@@ -100,4 +100,5 @@ export const BAB_MAP: Record<number, any> = {
     99: require("./B099.json"),
     100: require("./B100.json"),
     101: require("./B101.json"),
+    102: require("./B102.json"),
 }

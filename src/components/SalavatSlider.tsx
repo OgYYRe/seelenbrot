@@ -128,7 +128,8 @@ export default function SalavatSlider({width = 275, onUnlock, disabled = false, 
                 {/* Text for slider */}
                 <Text
                     numberOfLines={1}
-                    ellipsizeMode="tail"
+                    adjustsFontSizeToFit
+                    minimumFontScale={0.6}
                     style={{
                         position: "absolute",
                         alignSelf: "center",
@@ -137,11 +138,10 @@ export default function SalavatSlider({width = 275, onUnlock, disabled = false, 
                         color: "#ffffff",
                         fontWeight: "600",
                         fontSize: 16,
-
-
                     }}
                 >
-                    {done ? "Salavat Gönderildi" : "Allahümme Salli ala seyyidina Muhammed"}
+
+                {done ? "Salavat Gönderildi" : "Allahümme salli alâ seyyidinâ Muhammed"}
                 </Text>
 
 

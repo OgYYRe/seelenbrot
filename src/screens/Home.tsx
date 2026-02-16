@@ -8,12 +8,19 @@ export default function HomeScreen({navigation}:  any ) {
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView contentContainerStyle={styles.content}>
+                <View style={styles.container}>
+                    <Text style={styles.title}>
+                        Ruhun Gıdası'na hoş geldiniz
+                    </Text>
+                    <Text style={styles.title}>
+                        Malzemeleri ayarla menüsünden, Ruhun Gıdası'a eklemek isteklerinizi seçebilirsiniz.
+                    </Text>
+                </View>
                 <View style={styles.headerCard}>
-                    <Text style={styles.arabicText}>اَلَا بِذِكْرِ اللّٰهِ تَطْمَئِنُّ الْقُلُوبُۜ</Text>
-
+                    <Text style={styles.arabicText}>اَلَا بِذِكْرِ ٱللَّهِ تَطْمَئِنُّ ٱلْقُلُوبُ ❂ </Text>
                     <Text style={styles.subtitle}>Kalpler, ancak Allah’ı anmakla huzur bulur.</Text>
                     <Text style={styles.smallText}>Die Herzen werden nur durch die Erwähnung Allahs ruhig.</Text>
-                    <Text style={styles.smallText}>Hearts </Text>
+                    <Text style={styles.smallText}>Hearts find peace through the remembrance of Allah.</Text>
                 </View>
 
                 <View style={styles.section}>
@@ -63,6 +70,13 @@ const colors = {
 }
 
 const styles = StyleSheet.create({
+    title: {
+        fontSize: 22,
+        fontWeight: '700',
+        color: colors.textPrimary,
+        textAlign: 'center',
+        marginBottom: 12
+    },
     container: { flex: 1, backgroundColor: colors.background },
     content: { padding: 20, paddingBottom: 40 },
     headerCard: {
