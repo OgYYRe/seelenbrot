@@ -14,9 +14,9 @@ i18n
                     welcome_1: "Ruhun Gıdası'na hoş geldiniz.",
                     home_intro_1: "Malzemeleri Ayarla menüsünden seçim yapabilirsiniz.",
                     home_intro_2: "Yemek Vakti menüsünde günlük gıdanızı alabilirsiniz.",
-                    nav1: "Malzemeleri Ayarla",
-                    nav2: "Yemek Vakti",
-                    nav3: "Bilgi",
+                    nav1: "Malzemeleri Ayarla   ⚙️",
+                    nav2: "Yemek Vakti  🥖",
+                    nav3: "Bilgi    ℹ",
 
                     // Recipe Screen
                     recipe_title: "Ruhun Gıdası — Malzemeleri Ayarla",
@@ -168,9 +168,9 @@ i18n
                     welcome_1: "Welcome to Food of the Soul.",
                     home_intro_1: "In the Configure Ingredients menu, you can choose what you want to add to Food of the Soul.",
                     home_intro_2: "In Food Time, you can take your daily nourishment based on your selected ingredients.",
-                    nav1: "Configure Ingredients",
-                    nav2: "Food Time",
-                    nav3: "Info",
+                    nav1: "Configure Ingredients    ⚙️",
+                    nav2: "Food Time   🥖",
+                    nav3: "Info   ℹ",
 
                     // Recipe Screen
                     recipe_title: "Food of the Soul — Configure Ingredients",
@@ -320,9 +320,9 @@ i18n
                     welcome_1: "Willkommen bei Seelenbrot.",
                     home_intro_1: "Im Menü ‚Zutaten einstellen‘ kannst du auswählen, was du zu Seelenbrot hinzufügen möchtest.",
                     home_intro_2: "Im Menü ‚Essenszeit‘ kannst du deine tägliche Zufuhr entsprechend den gewählten Zutaten einnehmen.",
-                    nav1: "Zutaten einstellen",
-                    nav2: "Essenszeit",
-                    nav3: "Info",
+                    nav1: "Zutaten einstellen   ⚙️",
+                    nav2: "Essenszeit    🥖",
+                    nav3: "Info   ℹ",
 
                     // Recipe Screen
                     recipe_title: "Seelenbrot — Zutaten einstellen",

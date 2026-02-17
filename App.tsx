@@ -4,7 +4,6 @@ import TodayScreen from "./src/screens/Today.tsx";
 import {NavigationContainer} from "@react-navigation/native";
 import {GestureHandlerRootView} from "react-native-gesture-handler";
 import RecipeScreen from "./src/screens/Recipe.tsx";
-import DebugScreen from "./src/screens/Debug.tsx";
 import SettingsScreen from "./src/screens/Info.tsx";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {useEffect} from "react";
@@ -150,7 +149,6 @@ export default function App() {
               <Stack.Screen name="Home" component={HomeScreen} />
               <Stack.Screen name="Today" component={TodayScreen} />
               <Stack.Screen name="Recipe" component={RecipeScreen} />
-              <Stack.Screen name="Debug" component={DebugScreen} />
               <Stack.Screen name="Settings" component={SettingsScreen} />
 
           </Stack.Navigator>

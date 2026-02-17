@@ -67,15 +67,8 @@ export default function HomeScreen({navigation}:  any ) {
                 </Pressable>
                 </View>
 
-                <View style={styles.section}>
-                    <Pressable onPress={()=> navigation.navigate('Debug')} style={({pressed}) => [styles.button, pressed && styles.buttonPressed]}>
-                        <Text style={styles.buttonText}>Debug Ekrani</Text>
-                    </Pressable>
-                </View>
-
 
                 <View style={styles.section}>
-
                 <Pressable onPress={()=> navigation.navigate('Settings')} style={({pressed}) => [styles.button, pressed && styles.buttonPressed]}>
                         <Text style={styles.buttonText}>{t("nav3")}</Text>
                     </Pressable>
