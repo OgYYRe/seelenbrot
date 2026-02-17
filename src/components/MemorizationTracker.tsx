@@ -3,10 +3,11 @@ import {Alert, ScrollView, Text, View, StyleSheet, Pressable} from "react-native
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import {useTranslation} from "react-i18next";
+import { surahMap } from "../../assets/Quran";
 
 
 const PROGRESS_KEY = "app:progress";
-const quran = require("../../assets/quran.json");
+
 
 
 
@@ -113,13 +114,26 @@ export default function MemorizationTracker(): JSX.Element {
             return;
         }
 
-        const list = quran
-            .filter((x: any) => x.sura === memorization.surahNumber && x.aya >= start && x.aya <= end)
-            .sort((a: any, b: any) => a.aya - b.aya);
+        const surah = surahMap[memorization.surahNumber];
 
-        const text = list.map((a: any) => `${a.aya}. ${a.text}`).join("\n");
+        if (!surah) {
+            setPieceText(t("memorization_surah_missing", { number: memorization.surahNumber }));
+            return;
+        }
 
-        setPieceText(text);
+        const lines: string[] = [];
+
+        for (let aya = start; aya <= end; aya++) {
+            const text = surah[String(aya)];
+            if (text) {
+                lines.push(`${aya}. ${text.replace(/۪/g, 'ِ')}`);
+            }
+        }
+
+
+
+        setPieceText(lines.join("\n"));
+
 
     }, [memorization, t]);
 
@@ -205,6 +219,7 @@ const styles = StyleSheet.create({
     counter: { marginTop: 12, color: colors.textPrimary },
 
     pieceText: {
+
         marginTop: 12,
         fontSize: 28,
         lineHeight: 42,

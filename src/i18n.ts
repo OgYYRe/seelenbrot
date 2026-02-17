@@ -49,6 +49,7 @@ i18n
                     recipe_memorization_label3: "Ayet bitiş numarası? (ör: 28)",
                     recipe_memorization_placeholder3: "Ayet bitiş numarası? (ör: 28)",
                     recipe_memorization_button: "+ Tarife Ekle",
+                    recipe_reset_button: "Tüm Tarifeleri Sıfırla",
 
                     // Alerts
                     alert_error: "Hata",
@@ -98,11 +99,12 @@ i18n
                         "Gün değiştiğinde günlük sayaçlar otomatik olarak kontrol edilir ve gerekli sıfırlamalar yapılır.",
                     // Sources
                     sources_title: "Kaynaklar",
-                    sources_desc: "-Kur'an metinleri Tanzil projesinden alınmıştır.\n" +
+                    sources_desc: "-Kur'an metinleri Açık Kuran (acikkuran.com) projesinden alınmıştır.\n" +
+                        "Lisans: CC BY-NC-SA 4.0.\n" +
                         "-Cevşen metni Hayırhah kaynağından alınmıştır.\n" +
                         "-Metin içerikleri üzerinde anlamı değiştirecek herhangi bir değişiklik yapılmamıştır.\n" +
                         "(Sadece görsel düzenleme amacıyla bazı işaretler (örneğin ● yerine ❂) değiştirilmiştir.)",
-                    sources_quran: "https://tanzil.net/download/",
+                    sources_quran: "https://github.com/acik-kuran/acikkuran-api",
                     sources_jawshan: "https://hayirhah.com/cevsen",
                     // Feedback
                     feedback_title: "Geri Bildirim",
@@ -144,9 +146,11 @@ i18n
                     memorization_missing: "Ezber için ayar bulunamadı.",
                     memorization_inactive: "Ezber kapalı. Ezber'i malzemelere eklemek için",
                     memorization_surah:"Sure: {{number}}",
+                    memorization_surah_missing: "Sure bulunamadi",
                     memorization_ayah_range: "Ayet aralığı: {{start}}-{{end}}",
                     jawshan_mark_read: "{{currentBab}}. Bab'i okudum ✔",
                     memorization_button_read: "Okudum (+)",
+
                     // JawshanView
                     jawshan_bab_missing: "{{number}}. bab bulunamadi",
                     // SalavatSlider
@@ -199,6 +203,7 @@ i18n
                     recipe_memorization_label3: "End ayah number? (e.g. 28)",
                     recipe_memorization_placeholder3: "End ayah number? (e.g. 28)",
                     recipe_memorization_button: "+ Add",
+                    recipe_reset_button: "Reset All Recipes",
                     // Alerts
                     alert_error: "Error",
                     alert_missing: "Missing",
@@ -248,12 +253,13 @@ i18n
 
                     // Sources
                     sources_title: "Sources",
-                    sources_desc: "- Qur'an texts are obtained from the Tanzil project.\n" +
+                    sources_desc: "- Qur'an texts are obtained from the Açık Kuran project (acikkuran.com).\n" +
+                        "License: CC BY-NC-SA 4.0.\n" +
                         "- Jawshan text is obtained from the Hayirhah source.\n" +
                         "- No meaning-altering modifications have been made to the texts.\n" +
-                        "(Only minor visual adjustments were made, for example replacing ● with ❂.)",
+                        "(Only minor visual adjustments were made.)",
 
-                    sources_quran: "https://tanzil.net/download/",
+                    sources_quran: "https://github.com/acik-kuran/acikkuran-api",
                     sources_jawshan: "https://hayirhah.com/cevsen",
 
                     // Feedback
@@ -292,6 +298,7 @@ i18n
                     memorization_missing: "No memorization configuration found.",
                     memorization_inactive: "Memorization is disabled. To add it to ingredients",
                     memorization_surah: "Surah: {{number}}",
+                    memorization_surah_missing: "Surah not found",
                     memorization_ayah_range: "Ayah range: {{start}}-{{end}}",
                     memorization_button_read: "I read (+)",
                     // JawshanView
@@ -348,6 +355,7 @@ i18n
                     recipe_memorization_label3: "End-Ayah-Nummer? (z. B. 28)",
                     recipe_memorization_placeholder3: "End-Ayah-Nummer? (z. B. 28)",
                     recipe_memorization_button: "+ Hinzufügen",
+                    recipe_reset_button: "Alle Rezepte zurücksetzen",
                     // Alerts
                     alert_error: "Fehler",
                     alert_missing: "Fehlend",
@@ -397,12 +405,13 @@ i18n
 
                     // Sources
                     sources_title: "Quellen",
-                    sources_desc: "- Die Qur'an-Texte stammen aus dem Tanzil-Projekt.\n" +
+                    sources_desc: "- Die Qur'an-Texte stammen aus dem Projekt Açık Kuran (acikkuran.com).\n" +
+                        "Lizenz: CC BY-NC-SA 4.0.\n" +
                         "- Der Jawshan-Text stammt aus der Quelle Hayirhah.\n" +
                         "- Es wurden keine inhaltlichen Änderungen an den Texten vorgenommen.\n" +
-                        "(Lediglich kleinere visuelle Anpassungen wurden vorgenommen, zum Beispiel wurde ● durch ❂ ersetzt.)",
+                        "(Lediglich kleinere visuelle Anpassungen wurden vorgenommen.)",
 
-                    sources_quran: "https://tanzil.net/download/",
+                    sources_quran: "https://github.com/acik-kuran/acikkuran-api",
                     sources_jawshan: "https://hayirhah.com/cevsen",
 
                     // Feedback
@@ -442,6 +451,7 @@ i18n
                     memorization_missing: "Keine Konfiguration für das Auswendiglernen gefunden.",
                     memorization_inactive: "Auswendiglernen ist deaktiviert. Um es zu den",
                     memorization_surah: "Surah: {{number}}",
+                    memorization_surah_missing: "Sure nicht gefunden",
                     memorization_ayah_range: "Ayah bereich: {{start}}-{{end}}",
                     memorization_button_read: "Gelesen (+)",
                     // JawshanView
