@@ -9,12 +9,16 @@ import {
 } from "react-native";
 import Pdf from "react-native-pdf";
 import {SafeAreaView, useSafeAreaInsets} from "react-native-safe-area-context";
+import {useTranslation} from "react-i18next";
 
 type Props = {
     page: number;
 };
 
 export default function QuranPDFView({ page }: Props) {
+
+    const {t} = useTranslation();
+
     const pdfSource = require("../../assets/lastQ.pdf");
 
     const safePage = useMemo(() => {
@@ -42,7 +46,9 @@ export default function QuranPDFView({ page }: Props) {
     return (
         <View style={styles.previewBox}>
             <Pressable style={styles.previewTap} onPress={open}>
-                <Text style={styles.previewText}>{page}. sayfayi acmak icin tikla</Text>
+                <Text style={styles.previewText}>
+                    {t("pdf_preview_open_page", {page})}
+                </Text>
             </Pressable>
 
             <Modal visible={isFull} animationType="fade" onRequestClose={close}>

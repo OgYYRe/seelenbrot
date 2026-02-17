@@ -7,6 +7,7 @@ import JawshanViewPage from "../components/JawshanTracker.tsx";
 import MemorizationTracker from "../components/MemorizationTracker.tsx";
 import {useState} from "react";
 import { SafeAreaView } from 'react-native-safe-area-context';
+import {useTranslation} from "react-i18next";
 
 
 export default function TodayScreen() {
@@ -18,15 +19,16 @@ export default function TodayScreen() {
     const [openJawshan, setOpenJawshan] = useState(false);
     const [openMemorization, setOpenMemorization] = useState(false);
 
+    const {t}  = useTranslation();
+
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView style={styles.container} contentContainerStyle={styles.content}>
 
-
                 {/* Salawat – always */}
                 <View style={styles.card}>
                 <SalavatSlider
-                    label="Peygamberimize selam gönder."
+                    label={t("salavat_label_send")}
                     disabled={salavatDone}
                     onUnlock={() => setSalavatDone(true)}
                 />
@@ -35,8 +37,10 @@ export default function TodayScreen() {
                 {/* Dhikr – optional */}
                 <View style={styles.card}>
                     <Pressable onPress={() => setOpenDhikr(prev => !prev)} style={styles.cardHeader}>
-                        <Text style={styles.cardTitle}>Zikir</Text>
-                        <Text style={styles.cardAction}>{openDhikr ? "Kapat" : "Aç"}</Text>
+                        <Text style={styles.cardTitle}>
+                            {t("today_dhikr_title")}
+                        </Text>
+                        <Text style={styles.cardAction}>{openDhikr ? t("toggle_close") : t("toggle_open")}</Text>
                     </Pressable>
                     {openDhikr && <View style={styles.cardBody}><DhikrCounter/></View>}
                 </View>
@@ -45,8 +49,10 @@ export default function TodayScreen() {
                 {/* Quran */}
                 <View style={styles.card}>
                     <Pressable onPress={() => setOpenQuran(prev => !prev)} style={styles.cardHeader}>
-                        <Text style={styles.cardTitle}>Kur'an-ı Kerim</Text>
-                        <Text style={styles.cardAction}>{openQuran ? "Kapat" : "Aç"}</Text>
+                        <Text style={styles.cardTitle}>
+                            {t("today_quran_title")}
+                        </Text>
+                        <Text style={styles.cardAction}>{openQuran ? t("toggle_close") : t("toggle_open")}</Text>
                     </Pressable>
                     {openQuran && <View style={styles.cardBody}><QuranTracker/></View>}
                 </View>
@@ -55,8 +61,10 @@ export default function TodayScreen() {
                 {/* Jawshan */}
                 <View style={styles.card}>
                     <Pressable onPress={() => setOpenJawshan(prev => !prev)} style={styles.cardHeader}>
-                        <Text style={styles.cardTitle}>Cevşen</Text>
-                        <Text style={styles.cardAction}>{openJawshan ? "Kapat" : "Aç"}</Text>
+                        <Text style={styles.cardTitle}>
+                            {t("today_jawshan_title")}
+                        </Text>
+                        <Text style={styles.cardAction}>{openJawshan ? t("toggle_close") : t("toggle_open")}</Text>
                     </Pressable>
                     {openJawshan && <View style={styles.cardBody}><JawshanViewPage/></View>}
                 </View>
@@ -65,8 +73,10 @@ export default function TodayScreen() {
                 {/* Memorization */}
                 <View style={styles.card}>
                     <Pressable onPress={() => setOpenMemorization(prev => !prev)} style={styles.cardHeader}>
-                        <Text style={styles.cardTitle}>Ezber</Text>
-                        <Text style={styles.cardAction}>{openMemorization ? "Kapat" : "Aç"}</Text>
+                        <Text style={styles.cardTitle}>
+                            {t("today_memorization_title")}
+                        </Text>
+                        <Text style={styles.cardAction}>{openMemorization ? t("toggle_close") : t("toggle_open")}</Text>
                     </Pressable>
                     {openMemorization && <View style={styles.cardBody}><MemorizationTracker/></View>}
                 </View>

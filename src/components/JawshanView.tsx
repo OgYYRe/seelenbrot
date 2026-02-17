@@ -1,6 +1,7 @@
 import React, { JSX, useEffect, useState } from "react";
 import { ScrollView, Text, View, StyleSheet } from "react-native";
 import { BAB_MAP } from "../../assets/Jawshan/";
+import {useTranslation} from "react-i18next";
 
 type Props = { babNumber: number };
 
@@ -10,6 +11,9 @@ const colors = {
 }
 
 export default function JawshanView({ babNumber }: Props): JSX.Element {
+
+    const {t} = useTranslation();
+
     const [bab, setBab] = useState<any>(null);
 
     useEffect(() => {
@@ -17,7 +21,9 @@ export default function JawshanView({ babNumber }: Props): JSX.Element {
     }, [babNumber]);
 
     if (!bab) {
-        return <Text style={styles.missing}>{babNumber}. bab bulunamadi</Text>;
+        return <Text style={styles.missing}>
+            {t("jawshan_bab_missing", { number: babNumber })}
+        </Text>;
     }
 
     return (

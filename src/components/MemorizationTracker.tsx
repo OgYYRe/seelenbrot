@@ -2,6 +2,7 @@ import React, { JSX, useEffect, useState } from "react";
 import {Alert, ScrollView, Text, View, StyleSheet, Pressable} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
+import {useTranslation} from "react-i18next";
 
 
 const PROGRESS_KEY = "app:progress";
@@ -20,6 +21,10 @@ type Memorization = {
 };
 
 export default function MemorizationTracker(): JSX.Element {
+
+
+    const {t} = useTranslation();
+
     const [memorization, setMemorization] = useState<Memorization | null>(null);
     const [loaded, setLoaded] = useState(false);
 
@@ -38,7 +43,7 @@ export default function MemorizationTracker(): JSX.Element {
 
         const target = Number(memorization.dailyTarget ?? 0);
         if (!target || target <= 0) {
-            Alert.alert("Hata", "dailyTarget ayarlanmamis degil.");
+            Alert.alert(t("error_inlvalid"), t("error_invalid_message"));
             return;
         }
 
@@ -104,8 +109,7 @@ export default function MemorizationTracker(): JSX.Element {
         const end = memorization.ayahEnd;
 
         if (start > end) {
-            setPieceText("Hata: Ayet baslangici bitisten buyuk olamaz.");
-
+            setPieceText(t("memorization_invalid_range"));
             return;
         }
 
@@ -117,21 +121,27 @@ export default function MemorizationTracker(): JSX.Element {
 
         setPieceText(text);
 
-    }, [memorization]);
+    }, [memorization, t]);
 
 
-    if (!loaded) return <Text style={styles.loadingText}>Yukleniyor...</Text>;
+    if (!loaded) return <Text style={styles.loadingText}>
+        {t("loading_text")}
+    </Text>;
 
-    if (!memorization) return <Text style={styles.missingText}>Ezber icin ayar bulunamadi.</Text>;
+    if (!memorization) return <Text style={styles.missingText}>
+        {t("memorization_missing")}
+    </Text>;
 
     if (!memorization.active)
         return (
             <View style={styles.inactiveWrap}>
                 <Text style={styles.inactiveText}>
-                    Ezber kapali.
+                    {t("memorization_inactive")}
                 </Text>
                 <Pressable onPress={() => navigation.navigate('Recipe')} style={({pressed}) => [styles.linkWrap, pressed && styles.linkPressed]}>
-                    <Text style={styles.linkText}>Malzemeleri ayarla</Text>
+                    <Text style={styles.linkText}>
+                        {t("action_configure")}
+                    </Text>
                 </Pressable>
             </View>
         );
@@ -143,11 +153,16 @@ export default function MemorizationTracker(): JSX.Element {
             <View>
 
 
-                <Text style={styles.meta}>Sure: {memorization.surahNumber}</Text>
-                <Text style={styles.meta}>Ayet araligi: {memorization.ayahStart}-{memorization.ayahEnd}</Text>
+                <Text style={styles.meta}>
+                    {t("memorization_surah", { number: memorization.surahNumber })}
+                </Text>
+                <Text style={styles.meta}>
+                    {t("memorization_ayah_range", {
+                        start: memorization.ayahStart,
+                        end: memorization.ayahEnd
+                    })}
 
-
-
+                </Text>
 
                 <Text style={styles.counter}>{todayCount}/{memorization.dailyTarget}</Text>
 
@@ -161,7 +176,9 @@ export default function MemorizationTracker(): JSX.Element {
 
 
                 <Pressable onPress={handleCounter} style={({pressed}) => [styles.primaryButton, pressed && styles.buttonPressed]} disabled={todayCount >= Number(memorization.dailyTarget ?? 0)}>
-                    <Text style={styles.primaryButtonText}>Okudum (+)</Text>
+                    <Text style={styles.primaryButtonText}>
+                        {t("memorization_button_read")}
+                    </Text>
                 </Pressable>
 
 

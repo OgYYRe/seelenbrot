@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import {Pressable, Text, View, StyleSheet} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
+import {useTranslation} from "react-i18next";
 
 
 type DhikrProps = {
@@ -26,12 +27,15 @@ const colors = {
 
 export default function DhikrCounter({target, name}: DhikrProps) {
 
+    const {t} = useTranslation();
+
     // Navigation
     const navigation = useNavigation<any>();
     const [active, setActive] = useState(true);
 
 
     const [dhikr, setDhikr] = useState<Dhikr | null>(null);
+
 
 
 
@@ -88,14 +92,14 @@ export default function DhikrCounter({target, name}: DhikrProps) {
         return (
             <View style={styles.inactiveWrap}>
                 <Text style={styles.inactiveText}>
-                    Zikir kapali. Zikir'i malzemelere eklemek icin
+                    {t("today_dhikr_inactive")}
                 </Text>
 
                 <Text
                     onPress={() => navigation.navigate("Recipe")}
                     style={styles.linkText}
                 >
-                    Malzemeleri ayarla {"->"}
+                    {t("action_configure")}
                 </Text>
             </View>
         );
@@ -113,8 +117,9 @@ export default function DhikrCounter({target, name}: DhikrProps) {
                 <Text style={styles.primaryButtonText}>{usedName} +1</Text>
             </Pressable>
 
-            {done && <Text style={styles.doneText}>Allah kabul etsin</Text>}
-            {/*TODO: For future: max 3 Zikir. + Some zikir has explanation*/}
+            {done && <Text style={styles.doneText}>
+                {t("dhikr_done_message")}
+            </Text>}
         </View>
 
     );

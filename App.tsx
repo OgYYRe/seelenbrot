@@ -10,6 +10,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import {useEffect} from "react";
 import { AppState, type AppStateStatus } from "react-native";
 import "./src/i18n";
+import i18n from "i18next";
 
 const STORAGE_KEY = 'app:progress';
 
@@ -79,6 +80,9 @@ async function checkDailyReset() {
     progress.jawshan = progress.jawshan ?? { total: 0, todayCount: 0 };
     progress.salawat = progress.salawat ?? { todayCount: 0, doneToday: false };
     progress.memorization = progress.memorization ?? { total: 0, todayCount: 0 };
+    progress.dhikr = progress.dhikr ?? { todayCount: 0, dailyTarget: 0 };
+
+
 
     if (progress.lastResetDate === today) return;
 
@@ -86,6 +90,10 @@ async function checkDailyReset() {
     progress.quran.todayCount = 0;
 
     progress.jawshan.todayCount = 0;
+
+    if (Number(progress.dhikr.todayCount) >= Number(progress.dhikr.dailyTarget)) {
+        progress.dhikr.todayCount = 0;
+    }
 
     progress.salawat.doneToday = false;
     progress.salawat.todayCount = 0;
@@ -107,10 +115,16 @@ export default function App() {
         let currentState: AppStateStatus = AppState.currentState;
 
         const init = async () => {
+            const lang = await AsyncStorage.getItem("app:lang");
+            if (lang) {
+                await i18n.changeLanguage(lang);
+            }
+
             await initProgressStorage();
             await checkDailyReset();
         };
-        init();
+
+        void init();
 
         const sub = AppState.addEventListener("change", (nextState) => {
             const wasBackground = currentState === "inactive" || currentState === "background";
@@ -125,6 +139,7 @@ export default function App() {
 
         return () => sub.remove();
     }, []);
+
 
 
 

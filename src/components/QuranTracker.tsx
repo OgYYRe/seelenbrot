@@ -5,12 +5,15 @@ import CheckBox from "@react-native-community/checkbox";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import QuranPDFView from "./QuranPDFView.tsx";
 import { useNavigation } from "@react-navigation/native";
+import {useTranslation} from "react-i18next";
 
 
 
 const PROGRESS_KEY = 'app:progress'
 
 export default function QuranTracker(){
+
+    const { t } = useTranslation();
 
     // Navigation
     const navigation = useNavigation<any>();
@@ -41,20 +44,19 @@ export default function QuranTracker(){
         if (!value) return;
 
         Alert.alert(
-            'Onay',
-            `${currentPage}. sayfayi okudunuz mu?`,
+            t("confirm_title"),
+            t("confirm_mark_page"),
             [
                 {
-                    text: 'Iptal',
+                    text: t("confirm_cancel"),
                     onPress: ()=> {
-                        console.log('Iptal edildi')
                         setChecked(false)
                     },
                     style: 'cancel',
                     isPreferred: true
                 },
                 {
-                    text: 'Evet',
+                    text: t("confirm_yes"),
                     onPress: async () => {
                         const stored = await AsyncStorage.getItem(PROGRESS_KEY);
                         if (!stored) return;
@@ -86,10 +88,12 @@ export default function QuranTracker(){
         return (
             <View style={styles.inactiveWrap}>
                 <Text style={styles.inactiveText}>
-                    Kuran-i Kerim kapali. Kuran-i Kerim'i malzemelere eklemek icin -{">"} {" "}
+                    {t("quran_inactive")}
                 </Text>
                 <Pressable onPress={() => navigation.navigate("Recipe") } style={({pressed}) => [styles.linkWrap, pressed && styles.linkPressed]}>
-                    <Text style={styles.linkText}>Malzemeleri ayarla</Text>
+                    <Text style={styles.linkText}>
+                        {t("action_configure")}
+                    </Text>
                 </Pressable>
             </View>
         );
@@ -98,7 +102,9 @@ export default function QuranTracker(){
     return (
         <View style={styles.container}>
 
-            <Text style={styles.pageLabel}>{currentPage}. Sayfa</Text>
+            <Text style={styles.pageLabel}>
+                {t("quran_page", {currentPage})}
+            </Text>
 
             <QuranPDFView page={currentPage} />
 
@@ -111,7 +117,9 @@ export default function QuranTracker(){
                     }}
                     tintColors={{ true: colors.accentBlue, false: 'rgba(255,255,255,0.4)'}}
                 />
-                <Text style={styles.checkText}>{currentPage}. Sayfayi okudum ✔</Text>
+                <Text style={styles.checkText}>
+                    {t("quran_mark_read",{currentPage})}
+                </Text>
             </View>
 
         </View>

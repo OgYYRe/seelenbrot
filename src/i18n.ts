@@ -75,10 +75,55 @@ i18n
                     alert_memorization_range_invalid: "Ayet aralığı hatalı (başlangıç bitişten büyük olamaz).",
                     alert_memorization_saved: "Ezber hedefi tarife eklendi.",
 
-                    // Reset Progress
-                    recipe_reset_button: "Tüm ayarları sıfırla",
-                    alert_reset_confirm: "Tüm ayarlar ve ilerleme verileri silinecek. Devam etmek istiyor musunuz?",
-                    alert_reset_done: "Tüm ayarlar başarıyla sıfırlandı.",
+                    // Today Screen
+                    salavat_label_send: "Peygamberimize selam gönder.",
+                    today_dhikr_title: "Zikir",
+                    today_quran_title: "Kur'an-ı Kerim",
+                    today_jawshan_title: "Cevşen",
+                    today_memorization_title: "Ezber",
+                    toggle_open: "Aç",
+                    toggle_close: "Kapat",
+
+
+                    //Components
+                    action_configure: "Malzemeleri Ayarla ->",
+                    confirm_title: "Onay",
+                    confirm_cancel: "İptal",
+                    confirm_yes: "Evet",
+
+                    // DhikrCounter
+                    dhikr_inactive: "Zikir kapalı. Zikir'i malzemelere eklemek için",
+                    dhikr_done_message: "Allah kabul etsin",
+                    //QuranTracker
+                    quran_inactive: "Kur'an-ı Kerim kapalı. Malzemelere eklemek için -{\">\"} {\" \"}",
+                    quran_page: "{{currentPage}}. Sayfa",
+                    confirm_mark_page: "{{currentPage}}. sayfayı okudunuz mu?",
+                    quran_mark_read: "{{currentPage}}. Sayfayi okudum ✔",
+                    // QuranPDFView
+                    pdf_preview_open_page: "{{page}}. sayfayı açmak için tıkla",
+                    // JawshanTracker
+                    jawshan_confirm_desc: "{{currentBab}}. Bab'ı okudunuz mu?",
+                    jawshan_inactive: "Cevşen kapalı. Cevşen'i malzemelere eklemek için -{\">\"} {\" \"}",
+                    jawshan_completed_title: "Cevşen tamamlandı",
+                    jawshan_completed_total: "Toplam: {{TOTAL_PARTS}}/{{TOTAL_PARTS}}",
+                    // MemorizationTracker
+                    error_invalid: "Hata: ",
+                    error_invalid_message: "Günlük hedef yanlış tanımlanmış ya da geçersiz. Lütfen malzemelerden kontrol edin.",
+                    error_invalid_range: "Hata: Ayet aralığı geçersiz (başlangıç bitişten büyük olamaz). Lütfen malzemelerden kontrol edin.",
+                    loading_text: "Yükleniyor...",
+                    memorization_missing: "Ezber için ayar bulunamadı.",
+                    memorization_inactive: "Ezber kapalı. Ezber'i malzemelere eklemek için",
+                    memorization_surah:"Sure: {{number}}",
+                    memorization_ayah_range: "Ayet aralığı: {{start}}-{{end}}",
+                    jawshan_mark_read: "{{currentBab}}. Bab'i okudum ✔",
+                    memorization_button_read: "Okudum (+)",
+                    // JawshanView
+                    jawshan_bab_missing: "{{number}}. bab bulunamadi",
+                    // SalavatSlider
+                    salawat_done: "Salavat gönderildi",
+                    salawat_prayer_text: "Allahümme salli alâ seyyidinâ Muhammed",
+
+
 
                 }
             },
@@ -149,10 +194,54 @@ i18n
                     alert_memorization_range_invalid: "Invalid ayah range (start cannot be greater than end).",
                     alert_memorization_saved: "Memorization goal added.",
 
-                    // Reset Progress
-                    recipe_reset_button: "Reset all settings",
-                    alert_reset_confirm: "All settings and progress data will be deleted. Do you want to continue?",
-                    alert_reset_done: "All settings have been successfully reset.",
+                    // Today Screen
+                    salavat_label_send: "Send greetings to our Prophet.",
+                    today_dhikr_title: "Dhikr",
+                    today_quran_title: "Qur'an",
+                    today_jawshan_title: "Jawshan",
+                    today_memorization_title: "Memorization",
+                    toggle_open: "Open",
+                    toggle_close: "Close",
+
+
+                    // Components
+                    action_configure: "Configure ingredients {\"->\"}",
+                    confirm_title: "Confirm",
+                    confirm_cancel: "Cancel",
+                    confirm_yes: "Yes",
+                    // DhikrCounter
+                    dhikr_inactive: "Dhikr is disabled. To add Dhikr to ingredients",
+                    dhikr_done_message: "May Allah accept it",
+                    // QuranTracker
+                    quran_inactive: "Qur'an is disabled. To add it to ingredients -{\">\"} {\" \"}",
+                    quran_page: "Page {{currentPage}}",
+                    confirm_mark_page: "Did you read page {{currentPage}}?",
+                    quran_mark_read: "I read page {{currentPage}} ✔",
+                    // QuranPDFView
+                    pdf_preview_open_page: "Tap to open page {{page}}",
+                    // JawshanTracker
+                    jawshan_confirm_desc: "Did you read Bab {{currentBab}}?",
+                    jawshan_inactive: "Jawshan is disabled. To add it to ingredients -{\">\"} {\" \"}",
+                    jawshan_completed_title: "Jawshan completed",
+                    jawshan_completed_total: "Total: {{TOTAL_PARTS}}/{{TOTAL_PARTS}}",
+                    // MemorizationTracker
+                    error_invalid: "Error:",
+                    error_invalid_message: "Daily target is invalid or not defined. Please check ingredients.",
+                    error_invalid_range: "Error: Invalid ayah range (start cannot be greater than end). Please check ingredients.",
+                    loading_text: "Loading...",
+                    memorization_missing: "No memorization configuration found.",
+                    memorization_inactive: "Memorization is disabled. To add it to ingredients",
+                    memorization_surah: "Surah: {{number}}",
+                    memorization_ayah_range: "Ayah range: {{start}}-{{end}}",
+                    memorization_button_read: "I read (+)",
+                    // JawshanView
+                    jawshan_bab_missing: "Bab {{number}} not found",
+                    jawshan_mark_read: "I read Bab {{currentBab}} ✔",
+                    // SalavatSlider
+                    salawat_done: "Salawat sent",
+                    salawat_prayer_text: "O Allah, send blessings upon our master Muhammad",
+
+
 
                 }
             },
@@ -224,16 +313,63 @@ i18n
                     alert_memorization_range_invalid: "Ungültiger Ayah-Bereich (Start darf nicht größer als Ende sein).",
                     alert_memorization_saved: "Auswendiglern-Ziel hinzugefügt.",
 
-                    // Reset Progress
-                    recipe_reset_button: "Alle Einstellungen zurücksetzen",
-                    alert_reset_confirm: "Alle Einstellungen und Fortschrittsdaten werden gelöscht. Möchten Sie fortfahren?",
-                    alert_reset_done: "Alle Einstellungen wurden erfolgreich zurückgesetzt.",
+                    // Today Screen
+                    salavat_label_send: "Sende Segenswünsche an unseren Propheten.",
+                    today_dhikr_title: "Dhikr",
+                    today_quran_title: "Qur'an",
+                    today_jawshan_title: "Jawshan",
+                    today_memorization_title: "Auswendiglernen",
+                    toggle_open: "Öffnen",
+                    toggle_close: "Schließen",
+
+
+                    // Components
+                    action_configure: "Zutaten konfigurieren {\"->\"}",
+                    confirm_title: "Bestätigung",
+                    confirm_cancel: "Abbrechen",
+                    confirm_yes: "Ja",
+
+                    // DhikrCounter
+                    dhikr_inactive: "Dhikr ist deaktiviert. Um Dhikr zu den Zutaten hinzuzufügen",
+                    dhikr_done_message: "Möge Allah es annehmen",
+                    // QuranTracker
+                    quran_inactive: "Der Qur'an ist deaktiviert. Um ihn zu den Zutaten hinzuzufügen -{\">\"} {\" \"}",
+                    quran_page: "Seite {{currentPage}}",
+                    confirm_mark_page: "Haben Sie Seite {{currentPage}} gelesen?",
+                    quran_mark_read: "Ich habe Seite {{currentPage}} gelesen ✔",
+                    // QuranPDFView
+                    pdf_preview_open_page: "Tippen, um Seite {{page}} zu öffnen",
+                    // JawshanTracker
+                    jawshan_confirm_desc: "Haben Sie Bab {{currentBab}} gelesen?",
+                    jawshan_inactive: "Jawshan ist deaktiviert. Um es zu den Zutaten hinzuzufügen -{\">\"} {\" \"}",
+                    jawshan_completed_title: "Jawshan abgeschlossen",
+                    jawshan_completed_total: "Gesamt: {{TOTAL_PARTS}}/{{TOTAL_PARTS}}",
+                    // MemorizationTracker
+                    error_invalid: "Fehler:",
+                    error_invalid_message: "Tagesziel ist ungültig oder nicht definiert. Bitte überprüfen Sie die Zutaten.",
+                    error_invalid_range: "Fehler: Ungültiger Ayah-Bereich (Start darf nicht größer als Ende sein). Bitte Zutaten prüfen.",
+                    loading_text: "Wird geladen...",
+                    memorization_missing: "Keine Konfiguration für das Auswendiglernen gefunden.",
+                    memorization_inactive: "Auswendiglernen ist deaktiviert. Um es zu den Zutaten hinzuzufügen",
+                    memorization_surah: "Surah: {{number}}",
+                    memorization_ayah_range: "Ayah bereich: {{start}}-{{end}}",
+                    memorization_button_read: "Gelesen (+)",
+                    // JawshanView
+                    jawshan_bab_missing: "Bab {{number}} nicht gefunden",
+                    jawshan_mark_read: "Bab {{currentBab}} gelesen ✔",
+                    // SalavatSlider
+                    salawat_done: "Salawat gesendet",
+                    salawat_prayer_text: "O Allah, sende Segen über unseren Meister Muhammad",
+
+
 
                 }
             }
         },
         interpolation: { escapeValue: false }
     });
+
+
 
 
 export default i18n;

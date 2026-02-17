@@ -4,11 +4,14 @@ import CheckBox from "@react-native-community/checkbox";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import JawshanView from "./JawshanView.tsx";
 import { useNavigation } from "@react-navigation/native";
+import {useTranslation} from "react-i18next";
 
 
 const PROGRESS_KEY = 'app:progress'
 
 export default function JawshanTracker(): JSX.Element {
+
+    const {t}  = useTranslation();
 
     // Navigation
     const navigation = useNavigation<any>();
@@ -49,19 +52,18 @@ export default function JawshanTracker(): JSX.Element {
     const handleCheckChange = async (value: boolean) => {
         if (!value) return;
 
-        Alert.alert("Onay", `${currentBab}. bab'i okudunuz mu?`,
+        Alert.alert(t("confirm_title"), t("jawshan_confirm_desc", {currentBab}),
             [
                 {
-                    text: "Iptal",
+                    text: t("confirm_cancel"),
                     onPress: () => {
-                        console.log("Iptal edildi");
                         setChecked(false);
                     },
                     style: 'cancel',
                     isPreferred: true
                 },
                 {
-                    text: 'Evet',
+                    text: t("confirm_yes"),
                     onPress: async () => {
                         const stored = await AsyncStorage.getItem(PROGRESS_KEY);
                         if (!stored) return;
@@ -88,10 +90,12 @@ export default function JawshanTracker(): JSX.Element {
         return (
             <View style={styles.inactiveWrap}>
                 <Text style={styles.inactiveText}>
-                    Cevşen kapali. Cevşen'i malzemelere eklemek icin -{">"} {" "}
+                    {t("jawshan_inactive")}
                 </Text>
                 <Pressable onPress={() => navigation.navigate("Recipe")} style={({pressed}) => [styles.linkWrap, pressed && styles.linkPressed]}>
-                    <Text style={styles.linkText}>Malzemeleri ayarla</Text>
+                    <Text style={styles.linkText}>
+                        {t("action_configure")}
+                    </Text>
                 </Pressable>
             </View>
         );
@@ -99,14 +103,20 @@ export default function JawshanTracker(): JSX.Element {
     if (remaining === 0) {
         return (
             <View style={styles.doneWrap}>
-                <Text style={styles.doneTitle}>Cevşen tamamlandi</Text>
-                <Text style={styles.doneText}>Toplam: {TOTAL_PARTS}/{TOTAL_PARTS}</Text>
+                <Text style={styles.doneTitle}>
+                    {t("jawshan_completed_title")}
+                </Text>
+                <Text style={styles.doneText}>
+                    {t("jawshan_completed_total",{TOTAL_PARTS})}
+                </Text>
 
                 <Pressable
                     onPress={() => navigation.navigate("Recipe")}
                     style={({ pressed }) => [styles.linkWrap, pressed && styles.linkPressed]}
                 >
-                    <Text style={styles.linkText}>Malzemeleri ayarla</Text>
+                    <Text style={styles.linkText}>
+                        {t("action_configure")}
+                    </Text>
                 </Pressable>
             </View>
         );
@@ -121,8 +131,6 @@ export default function JawshanTracker(): JSX.Element {
             contentContainerStyle={styles.content}
         >
             <View>
-
-
 
                 <JawshanView babNumber={currentBab} />
                 <Text style={styles.counter}>{todayCount}/{shownTarget}</Text>
@@ -139,7 +147,9 @@ export default function JawshanTracker(): JSX.Element {
                         tintColors={{ true: colors.accentBlue, false: 'rgba(255,255,255,0.4)'}}
 
                     />
-                    <Text style={styles.checkText}>{currentBab}. Bab'i okudum ✔</Text>
+                    <Text style={styles.checkText}>
+                        {t("jawshan_mark_read", {currentBab})}
+                    </Text>
                 </View>
 
             </View>

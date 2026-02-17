@@ -2,13 +2,15 @@ import React from "react";
 import {Pressable, Text, View, StyleSheet, ScrollView} from "react-native";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from "react-i18next";
-import i18n from "../i18n";
+import i18n from "i18next";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 export default function HomeScreen({navigation}:  any ) {
 
-    const changeLanguage = (lng: string) => {
-            i18n.changeLanguage(lng);
+    const changeLanguage = async (lang: string) => {
+        await AsyncStorage.setItem("app:lang", lang);
+        await i18n.changeLanguage(lang);
     };
 
     const { t } = useTranslation();

@@ -8,6 +8,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { scheduleOnRN } from "react-native-worklets";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import {useTranslation} from "react-i18next";
 
 
 type Props = {
@@ -18,6 +19,8 @@ type Props = {
 };
 
 export default function SalavatSlider({width = 275, onUnlock, disabled = false, label = "Slide to unlock",}: Props) {
+
+    const {t} = useTranslation();
 
     const [todayCount, setTodayCount] = useState(0);
     const done = todayCount >= 1;
@@ -141,7 +144,7 @@ export default function SalavatSlider({width = 275, onUnlock, disabled = false, 
                     }}
                 >
 
-                {done ? "Salavat Gönderildi" : "Allahümme salli alâ seyyidinâ Muhammed"}
+                {done ? t("salawat_done") : t("salawat_prayer_text")}
                 </Text>
 
 
