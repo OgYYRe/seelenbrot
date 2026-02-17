@@ -1,4 +1,7 @@
 import {Pressable, ScrollView, Text, View, StyleSheet} from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
+import { useCallback } from "react";
+
 import SalavatSlider from "../components/SalavatSlider";
 import DhikrCounter from "../components/DhikrCounter.tsx";
 import QuranTracker from "../components/QuranTracker";
@@ -11,6 +14,15 @@ import {useTranslation} from "react-i18next";
 
 
 export default function TodayScreen() {
+    const [refreshKey, setRefreshKey] = useState(0);
+    useFocusEffect(
+        useCallback(() => {
+            setRefreshKey(prev => prev + 1);
+        }, [])
+    );
+
+
+
     const [salavatDone, setSalavatDone] = useState(false);
 
     // Recipes toggles
@@ -42,7 +54,9 @@ export default function TodayScreen() {
                         </Text>
                         <Text style={styles.cardAction}>{openDhikr ? t("toggle_close") : t("toggle_open")}</Text>
                     </Pressable>
-                    {openDhikr && <View style={styles.cardBody}><DhikrCounter/></View>}
+                    {openDhikr && <View style={styles.cardBody}>
+                        <DhikrCounter key={refreshKey}/>
+                    </View>}
                 </View>
 
 
@@ -54,7 +68,9 @@ export default function TodayScreen() {
                         </Text>
                         <Text style={styles.cardAction}>{openQuran ? t("toggle_close") : t("toggle_open")}</Text>
                     </Pressable>
-                    {openQuran && <View style={styles.cardBody}><QuranTracker/></View>}
+                    {openQuran && <View style={styles.cardBody}>
+                        <QuranTracker key={refreshKey}/>
+                    </View>}
                 </View>
 
 
@@ -66,7 +82,9 @@ export default function TodayScreen() {
                         </Text>
                         <Text style={styles.cardAction}>{openJawshan ? t("toggle_close") : t("toggle_open")}</Text>
                     </Pressable>
-                    {openJawshan && <View style={styles.cardBody}><JawshanViewPage/></View>}
+                    {openJawshan && <View style={styles.cardBody}>
+                        <JawshanViewPage key={refreshKey}/>
+                    </View>}
                 </View>
 
 
@@ -78,7 +96,9 @@ export default function TodayScreen() {
                         </Text>
                         <Text style={styles.cardAction}>{openMemorization ? t("toggle_close") : t("toggle_open")}</Text>
                     </Pressable>
-                    {openMemorization && <View style={styles.cardBody}><MemorizationTracker/></View>}
+                    {openMemorization && <View style={styles.cardBody}>
+                        <MemorizationTracker key={refreshKey}/>
+                    </View>}
                 </View>
 
             </ScrollView>
