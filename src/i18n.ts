@@ -274,7 +274,7 @@ i18n
                     recipe_quran_placeholder2: "Ab welcher Seite möchtest du beginnen? (z. B. 1)",
                     recipe_quran_button: "+ Hinzufügen",
                     // Jawshan
-                    recipe_jawshan_title: "Cevşen",
+                    recipe_jawshan_title: "Cevşen (islamisches Schutzgebet)",
                     recipe_jawshan_desc: "Gib an, wie viele Abschnitte (Bab) du pro Tag lesen möchtest (z. B. 15 Bab/Tag). Ein Cevşen ist damit ungefähr in einer Woche gelesen.",
                     recipe_jawshan_placeholder: "Wie viele Bab pro Tag? (z. B. 15)",
                     recipe_jawshan_button: "+ Hinzufügen",
