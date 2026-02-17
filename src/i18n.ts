@@ -131,6 +131,8 @@ i18n
                     quran_page: "{{currentPage}}. Sayfa",
                     confirm_mark_page: "{{currentPage}}. sayfayı okudunuz mu?",
                     quran_mark_read: "{{currentPage}}. Sayfayi okudum ✔",
+                    quran_daily_done_title: "Günlük hedef tamamlandı",
+                    quran_daily_done_desc: "Bugünkü {{target}} sayfa hedefi tamamlandı.",
                     // QuranPDFView
                     pdf_preview_open_page: "{{page}}. sayfayı açmak için tıkla",
                     // JawshanTracker
@@ -138,6 +140,8 @@ i18n
                     jawshan_inactive: "Cevşen kapalı. Cevşen'i malzemelere eklemek için ",
                     jawshan_completed_title: "Cevşen tamamlandı",
                     jawshan_completed_total: "Toplam: {{TOTAL_PARTS}}/{{TOTAL_PARTS}}",
+                    jawshan_daily_done_title: "Günlük hedef tamamlandı",
+                    jawshan_daily_done_desc: "Bugünkü {{target}} bab hedefi tamamlandı.",
                     // MemorizationTracker
                     error_invalid: "Hata: ",
                     error_invalid_message: "Günlük hedef yanlış tanımlanmış ya da geçersiz. Lütfen malzemelerden kontrol edin.",
@@ -150,6 +154,9 @@ i18n
                     memorization_ayah_range: "Ayet aralığı: {{start}}-{{end}}",
                     jawshan_mark_read: "{{currentBab}}. Bab'i okudum ✔",
                     memorization_button_read: "Okudum (+)",
+                    memorization_read_done: "Okuma tamamlandı",
+                    memorization_read_done_message: "Bugünlük hedef tamamlandı. Yarın görüşmek üzere.",
+
 
                     // JawshanView
                     jawshan_bab_missing: "{{number}}. bab bulunamadi",
@@ -283,6 +290,8 @@ i18n
                     quran_page: "Page {{currentPage}}",
                     confirm_mark_page: "Did you read page {{currentPage}}?",
                     quran_mark_read: "I read page {{currentPage}} ✔",
+                    quran_daily_done_title: "Daily target completed",
+                    quran_daily_done_desc: "Today's target of {{target}} pages completed.",
                     // QuranPDFView
                     pdf_preview_open_page: "Tap to open page {{page}}",
                     // JawshanTracker
@@ -290,6 +299,8 @@ i18n
                     jawshan_inactive: "Jawshan is disabled. To add it to ingredients",
                     jawshan_completed_title: "Jawshan completed",
                     jawshan_completed_total: "Total: {{TOTAL_PARTS}}/{{TOTAL_PARTS}}",
+                    jawshan_daily_done_title: "Daily target completed",
+                    jawshan_daily_done_desc: "Today's target of {{target}} bab completed.",
                     // MemorizationTracker
                     error_invalid: "Error:",
                     error_invalid_message: "Daily target is invalid or not defined. Please check ingredients.",
@@ -301,6 +312,8 @@ i18n
                     memorization_surah_missing: "Surah not found",
                     memorization_ayah_range: "Ayah range: {{start}}-{{end}}",
                     memorization_button_read: "I read (+)",
+                    memorization_read_done: "Reading completed",
+                    memorization_read_done_message: "Today's target completed. See you tomorrow.",
                     // JawshanView
                     jawshan_bab_missing: "Bab {{number}} not found",
                     jawshan_mark_read: "I read Bab {{currentBab}} ✔",
@@ -436,6 +449,8 @@ i18n
                     quran_page: "Seite {{currentPage}}",
                     confirm_mark_page: "Haben Sie Seite {{currentPage}} gelesen?",
                     quran_mark_read: "Ich habe Seite {{currentPage}} gelesen ✔",
+                    quran_daily_done_title: "Tagesziel erreicht",
+                    quran_daily_done_desc: "Das heutige Ziel von {{target}} Seiten ist erreicht.",
                     // QuranPDFView
                     pdf_preview_open_page: "Tippen, um Seite {{page}} zu öffnen",
                     // JawshanTracker
@@ -443,6 +458,8 @@ i18n
                     jawshan_inactive: "Jawshan ist deaktiviert. Um es zu den ",
                     jawshan_completed_title: "Jawshan abgeschlossen",
                     jawshan_completed_total: "Gesamt: {{TOTAL_PARTS}}/{{TOTAL_PARTS}}",
+                    jawshan_daily_done_title: "Tagesziel erreicht",
+                    jawshan_daily_done_desc: "Das heutige Ziel von {{target}} Bab ist erreicht.",
                     // MemorizationTracker
                     error_invalid: "Fehler:",
                     error_invalid_message: "Tagesziel ist ungültig oder nicht definiert. Bitte überprüfen Sie die Zutaten.",
@@ -454,6 +471,8 @@ i18n
                     memorization_surah_missing: "Sure nicht gefunden",
                     memorization_ayah_range: "Ayah bereich: {{start}}-{{end}}",
                     memorization_button_read: "Gelesen (+)",
+                    memorization_read_done: "Lesen abgeschlossen",
+                    memorization_read_done_message: "Das Tagesziel ist erreicht. Bis morgen.",
                     // JawshanView
                     jawshan_bab_missing: "Bab {{number}} nicht gefunden",
                     jawshan_mark_read: "Bab {{currentBab}} gelesen ✔",

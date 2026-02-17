@@ -28,7 +28,11 @@ export default function JawshanTracker(): JSX.Element {
     const remaining = Math.max(0, TOTAL_PARTS - doneSoFar);
     const shownTarget = Math.min(dailyTarget, remaining);
 
-    const currentBab = Math.min(TOTAL_PARTS, doneSoFar + 1);
+    const currentBab = Math.min(
+        TOTAL_PARTS,
+        totalRead + Math.min(todayCount, shownTarget) + 1
+    );
+
 
 
     const [checked, setChecked] = useState<boolean>(false);
@@ -78,6 +82,14 @@ export default function JawshanTracker(): JSX.Element {
                         setTodayCount(nextToday);
                         setChecked(false);
 
+                        if (nextToday >= shownTarget) {
+                            Alert.alert(
+                                t("jawshan_daily_done_title"),
+                                t("jawshan_daily_done_desc", { target: shownTarget }),
+
+                            );
+
+                        }
 
                     },
                     style: 'default',
@@ -99,6 +111,17 @@ export default function JawshanTracker(): JSX.Element {
                 </Pressable>
             </View>
         );
+    if (todayCount >= shownTarget && shownTarget > 0) {
+        return (
+            <View style={styles.doneWrap}>
+                <Text style={styles.doneTitle}>{t("jawshan_daily_done_title")}</Text>
+                <Text style={styles.doneText}>
+                    {t("jawshan_daily_done_desc", { target: shownTarget })}
+                </Text>
+            </View>
+        );
+    }
+
 
     if (remaining === 0) {
         return (

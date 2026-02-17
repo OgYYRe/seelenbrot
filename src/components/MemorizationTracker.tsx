@@ -63,7 +63,7 @@ export default function MemorizationTracker(): JSX.Element {
         await AsyncStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
 
         if (next === target) {
-            Alert.alert("Tamam", "Bugunluk ezber hedefi tamam. Yarin tekrar gorusuruz.");
+            Alert.alert(t("memorization_read_done"), t("memorization_read_done_message"));
         }
     };
 

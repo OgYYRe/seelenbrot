@@ -24,7 +24,19 @@ export default function QuranTracker(){
 
     // Quran State for UI
     const [totalRead, setTotalRead] = useState<number>(0)
-    const currentPage = totalRead + 1;
+
+
+    const TOTAL_PAGES = 604;
+
+    const [todayCount, setTodayCount] = useState<number>(0);
+    const [dailyTarget, setDailyTarget] = useState<number>(2);
+
+    const remaining = Math.max(0, TOTAL_PAGES - totalRead);
+    const shownTarget = Math.min(dailyTarget, remaining);
+    const isDailyDone = shownTarget > 0 && todayCount >= shownTarget;
+
+    const currentPage = isDailyDone ? Math.max(1, totalRead) : totalRead + 1;
+
     const [checked, setChecked] = useState(false);
 
     useEffect(() => {
@@ -34,6 +46,9 @@ export default function QuranTracker(){
                 const parsed = JSON.parse(stored);
                 setTotalRead(Number(parsed.quran?.total ?? 0));
                 setActive(parsed.quran?.active ?? true);
+                setTodayCount(Number(parsed.quran?.todayCount ?? 0));
+                setDailyTarget(Number(parsed.quran?.dailyTarget ?? 2));
+
 
             }
         };
@@ -44,8 +59,8 @@ export default function QuranTracker(){
         if (!value) return;
 
         Alert.alert(
-            t("confirm_title"),
-            t("confirm_mark_page"),
+            t("confirm_title", ),
+            t("confirm_mark_page",{currentPage}),
             [
                 {
                     text: t("confirm_cancel"),
@@ -73,7 +88,18 @@ export default function QuranTracker(){
 
                         await AsyncStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
                         setTotalRead(nextPage);
-                        setChecked(false)
+                        setTodayCount(progress.quran.todayCount);
+                        setChecked(false);
+
+                        const target = Math.min(Number(progress.quran.dailyTarget ?? dailyTarget), Math.max(0, TOTAL_PAGES - nextPage + 1));
+                        if (progress.quran.todayCount >= target) {
+                            Alert.alert(
+                                t("quran_daily_done_title"),
+                                t("quran_daily_done_desc", { target })
+                            );
+                        }
+
+
 
                     },
                     style: 'default',
@@ -105,18 +131,24 @@ export default function QuranTracker(){
             <Text style={styles.pageLabel}>
                 {t("quran_page", {currentPage})}
             </Text>
+            <Text style={styles.pageLabel}>
+                {todayCount}/{shownTarget}
+            </Text>
+
 
             <QuranPDFView page={currentPage} />
 
             <View style={styles.checkRow}>
                 <CheckBox
                     value={checked}
+                    disabled={shownTarget === 0 || isDailyDone}
                     onValueChange={(v) => {
                         setChecked(v);
                         handleCheckChange(v);
                     }}
                     tintColors={{ true: colors.accentBlue, false: 'rgba(255,255,255,0.4)'}}
                 />
+
                 <Text style={styles.checkText}>
                     {t("quran_mark_read",{currentPage})}
                 </Text>
