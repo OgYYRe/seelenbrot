@@ -362,7 +362,7 @@ export default function RecipeScreen() {
                 }
             }
 
-            // Quran inputs, only if quran is active
+            // Quran inputs, only if Quran is active
             if (progress.quran) {
                 const quran = progress.quran;
                 if (typeof quran.dailyTarget === "number") {
@@ -612,7 +612,7 @@ export default function RecipeScreen() {
 const colors = {
     background: '#041219', // deeper dark navy
     card: '#072f36', // deep teal
-    accentBlue: '#0f5b83', // slightly brighter deep blue
+    accentBlue: '#00ffff', // unified accent color
     accentGreen: '#1f7a3a', // deep green
     buttonBg: '#072a2e',
     textPrimary: '#e6f7ff',

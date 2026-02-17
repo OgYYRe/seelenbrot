@@ -34,7 +34,9 @@ export default function HomeScreen({navigation}:  any ) {
 
 
                 <View style={styles.headerCard}>
-                    <Text style={styles.arabicText}>اَلَا بِذِكْرِ ٱللَّهِ تَطْمَئِنُّ ٱلْقُلُوبُ ❂ </Text>
+                    <Text style={styles.arabicText}>
+                        اَلَا بِذِكْرِ اللّٰهِ تَطْمَئِنُّ الْقُلُوبُؕ❂
+                    </Text>
                     <Text style={styles.subtitle}>Kalpler, ancak Allah’ı anmakla huzur bulur.</Text>
                     <Text style={styles.smallTextGer}>Die Herzen werden nur durch die Erwähnung Allahs ruhig.</Text>
                     <Text style={styles.smallTextEng}>Hearts find peace through the remembrance of Allah.</Text>
@@ -90,7 +92,7 @@ const colors = {
     background: '#041219', // deeper dark navy
     card: '#072f36', // deep teal
     cardElev: 'rgba(0,0,0,0.6)',
-    accentBlue: '#0f5b83', // slightly brighter deep blue
+    accentBlue: '#00ffff', // unified accent color
     accentGreen: '#1f7a3a', // deep green
     buttonBg: '#04232a',
     textPrimary: '#e6f7ff',

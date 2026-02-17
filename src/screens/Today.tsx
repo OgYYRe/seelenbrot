@@ -89,7 +89,7 @@ export default function TodayScreen() {
 const colors = {
     background: '#041219', // deeper dark navy
     card: '#072f36', // deep teal
-    accentBlue: '#0f5b83', // slightly brighter deep blue
+    accentBlue: '#00ffff', // unified accent color
     accentGreen: '#1f7a3a', // deep green
     textPrimary: '#e6f7ff',
     textAction: '#7CB7FF'

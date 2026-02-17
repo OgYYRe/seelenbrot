@@ -84,6 +84,36 @@ i18n
                     toggle_open: "Aç",
                     toggle_close: "Kapat",
 
+                    // Info Screen
+                    // About App
+                    app_title: "Uygulama Hakkında",
+                    app_desc: "Ruhun Gıdası, günlük ibadet ve manevi hedeflerinizi düzenli takip edebilmeniz için geliştirilmiş bir uygulamadır.\n" +
+                        "Uygulama içerisinde:\n" +
+                        "- Peygamberimize selam göndermeyi hatırlayabilir\n" +
+                        "- Zikir hedefi belirleyebilir\n" +
+                        "- Kur'an-ı Kerim için günlük sayfa planı oluşturabilir\n" +
+                        "- Cevşen okuma düzeni kurabilir\n" +
+                        "- Ezber çalışmaları için sure ve ayet aralığı seçebilirsiniz\n" +
+                        "Belirlenen hedefler Yemek Vakti ekranında günlük olarak takip edilir.\n" +
+                        "Gün değiştiğinde günlük sayaçlar otomatik olarak kontrol edilir ve gerekli sıfırlamalar yapılır.",
+                    // Sources
+                    sources_title: "Kaynaklar",
+                    sources_desc: "-Kur'an metinleri Tanzil projesinden alınmıştır.\n" +
+                        "-Cevşen metni Hayırhah kaynağından alınmıştır.\n" +
+                        "-Metin içerikleri üzerinde anlamı değiştirecek herhangi bir değişiklik yapılmamıştır.\n" +
+                        "(Sadece görsel düzenleme amacıyla bazı işaretler (örneğin ● yerine ❂) değiştirilmiştir.)",
+                    sources_quran: "https://tanzil.net/download/",
+                    sources_jawshan: "https://hayirhah.com/cevsen",
+                    // Feedback
+                    feedback_title: "Geri Bildirim",
+                    feedback_desc: "Herhangi bir hata, eksik veya öneri için:",
+                    feedback_email: "cetinkaya-oguzhan@hotmail.com",
+                    feedback_github: "https://github.com/OgYYRe",
+
+
+
+
+
 
                     //Components
                     action_configure: "Malzemeleri Ayarla ->",
@@ -95,7 +125,7 @@ i18n
                     dhikr_inactive: "Zikir kapalı. Zikir'i malzemelere eklemek için",
                     dhikr_done_message: "Allah kabul etsin",
                     //QuranTracker
-                    quran_inactive: "Kur'an-ı Kerim kapalı. Malzemelere eklemek için -{\">\"} {\" \"}",
+                    quran_inactive: "Kur'an-ı Kerim kapalı. Malzemelere eklemek için",
                     quran_page: "{{currentPage}}. Sayfa",
                     confirm_mark_page: "{{currentPage}}. sayfayı okudunuz mu?",
                     quran_mark_read: "{{currentPage}}. Sayfayi okudum ✔",
@@ -103,7 +133,7 @@ i18n
                     pdf_preview_open_page: "{{page}}. sayfayı açmak için tıkla",
                     // JawshanTracker
                     jawshan_confirm_desc: "{{currentBab}}. Bab'ı okudunuz mu?",
-                    jawshan_inactive: "Cevşen kapalı. Cevşen'i malzemelere eklemek için -{\">\"} {\" \"}",
+                    jawshan_inactive: "Cevşen kapalı. Cevşen'i malzemelere eklemek için ",
                     jawshan_completed_title: "Cevşen tamamlandı",
                     jawshan_completed_total: "Toplam: {{TOTAL_PARTS}}/{{TOTAL_PARTS}}",
                     // MemorizationTracker
@@ -203,9 +233,39 @@ i18n
                     toggle_open: "Open",
                     toggle_close: "Close",
 
+                    // Info Screen
+                    // About App
+                    app_title: "About the App",
+                    app_desc: "Food of the Soul is an application developed to help you regularly track your daily worship and spiritual goals.\n" +
+                        "Within the app you can:\n" +
+                        "- Send greetings to our Prophet\n" +
+                        "- Set a daily dhikr target\n" +
+                        "- Create a daily page plan for the Qur'an\n" +
+                        "- Set a Jawshan reading schedule\n" +
+                        "- Select a surah and ayah range for memorization\n" +
+                        "Your selected goals are tracked daily on the Food Time screen.\n" +
+                        "When the day changes, daily counters are automatically checked and reset when necessary.",
+
+                    // Sources
+                    sources_title: "Sources",
+                    sources_desc: "- Qur'an texts are obtained from the Tanzil project.\n" +
+                        "- Jawshan text is obtained from the Hayirhah source.\n" +
+                        "- No meaning-altering modifications have been made to the texts.\n" +
+                        "(Only minor visual adjustments were made, for example replacing ● with ❂.)",
+
+                    sources_quran: "https://tanzil.net/download/",
+                    sources_jawshan: "https://hayirhah.com/cevsen",
+
+                    // Feedback
+                    feedback_title: "Feedback",
+                    feedback_desc: "If you notice any errors, omissions, or have suggestions:",
+                    feedback_email: "cetinkaya-oguzhan@hotmail.com",
+                    feedback_github: "https://github.com/OgYYRe",
+
+
 
                     // Components
-                    action_configure: "Configure ingredients {\"->\"}",
+                    action_configure: "Configure ingredients ->",
                     confirm_title: "Confirm",
                     confirm_cancel: "Cancel",
                     confirm_yes: "Yes",
@@ -213,7 +273,7 @@ i18n
                     dhikr_inactive: "Dhikr is disabled. To add Dhikr to ingredients",
                     dhikr_done_message: "May Allah accept it",
                     // QuranTracker
-                    quran_inactive: "Qur'an is disabled. To add it to ingredients -{\">\"} {\" \"}",
+                    quran_inactive: "Qur'an is disabled. To add it to ingredients ",
                     quran_page: "Page {{currentPage}}",
                     confirm_mark_page: "Did you read page {{currentPage}}?",
                     quran_mark_read: "I read page {{currentPage}} ✔",
@@ -221,7 +281,7 @@ i18n
                     pdf_preview_open_page: "Tap to open page {{page}}",
                     // JawshanTracker
                     jawshan_confirm_desc: "Did you read Bab {{currentBab}}?",
-                    jawshan_inactive: "Jawshan is disabled. To add it to ingredients -{\">\"} {\" \"}",
+                    jawshan_inactive: "Jawshan is disabled. To add it to ingredients",
                     jawshan_completed_title: "Jawshan completed",
                     jawshan_completed_total: "Total: {{TOTAL_PARTS}}/{{TOTAL_PARTS}}",
                     // MemorizationTracker
@@ -322,18 +382,48 @@ i18n
                     toggle_open: "Öffnen",
                     toggle_close: "Schließen",
 
+                    // Info Screen
+                    // About App
+                    app_title: "Über die App",
+                    app_desc: "Seelenbrot ist eine Anwendung, die entwickelt wurde, um dir zu helfen, deine täglichen religiösen und spirituellen Ziele regelmäßig zu verfolgen.\n" +
+                        "In der App kannst du:\n" +
+                        "- Segenswünsche an unseren Propheten senden\n" +
+                        "- Ein tägliches Dhikr-Ziel festlegen\n" +
+                        "- Einen täglichen Seitenplan für den Qur'an erstellen\n" +
+                        "- Einen Leseplan für Jawshan festlegen\n" +
+                        "- Eine Sure und einen Ayah-Bereich zum Auswendiglernen auswählen\n" +
+                        "Deine festgelegten Ziele werden täglich im Menü Essenszeit verfolgt.\n" +
+                        "Wenn der Tag wechselt, werden die Tageszähler automatisch überprüft und bei Bedarf zurückgesetzt.",
+
+                    // Sources
+                    sources_title: "Quellen",
+                    sources_desc: "- Die Qur'an-Texte stammen aus dem Tanzil-Projekt.\n" +
+                        "- Der Jawshan-Text stammt aus der Quelle Hayirhah.\n" +
+                        "- Es wurden keine inhaltlichen Änderungen an den Texten vorgenommen.\n" +
+                        "(Lediglich kleinere visuelle Anpassungen wurden vorgenommen, zum Beispiel wurde ● durch ❂ ersetzt.)",
+
+                    sources_quran: "https://tanzil.net/download/",
+                    sources_jawshan: "https://hayirhah.com/cevsen",
+
+                    // Feedback
+                    feedback_title: "Feedback",
+                    feedback_desc: "Wenn Sie Fehler, fehlende Inhalte oder Verbesserungsvorschläge bemerken:",
+                    feedback_email: "cetinkaya-oguzhan@hotmail.com",
+                    feedback_github: "https://github.com/OgYYRe",
+
+
 
                     // Components
-                    action_configure: "Zutaten konfigurieren {\"->\"}",
+                    action_configure: "Zutaten konfigurieren ->",
                     confirm_title: "Bestätigung",
                     confirm_cancel: "Abbrechen",
                     confirm_yes: "Ja",
 
                     // DhikrCounter
-                    dhikr_inactive: "Dhikr ist deaktiviert. Um Dhikr zu den Zutaten hinzuzufügen",
+                    dhikr_inactive: "Dhikr ist deaktiviert. Um Dhikr zu den",
                     dhikr_done_message: "Möge Allah es annehmen",
                     // QuranTracker
-                    quran_inactive: "Der Qur'an ist deaktiviert. Um ihn zu den Zutaten hinzuzufügen -{\">\"} {\" \"}",
+                    quran_inactive: "Der Qur'an ist deaktiviert. Um ihn zu den ",
                     quran_page: "Seite {{currentPage}}",
                     confirm_mark_page: "Haben Sie Seite {{currentPage}} gelesen?",
                     quran_mark_read: "Ich habe Seite {{currentPage}} gelesen ✔",
@@ -341,7 +431,7 @@ i18n
                     pdf_preview_open_page: "Tippen, um Seite {{page}} zu öffnen",
                     // JawshanTracker
                     jawshan_confirm_desc: "Haben Sie Bab {{currentBab}} gelesen?",
-                    jawshan_inactive: "Jawshan ist deaktiviert. Um es zu den Zutaten hinzuzufügen -{\">\"} {\" \"}",
+                    jawshan_inactive: "Jawshan ist deaktiviert. Um es zu den ",
                     jawshan_completed_title: "Jawshan abgeschlossen",
                     jawshan_completed_total: "Gesamt: {{TOTAL_PARTS}}/{{TOTAL_PARTS}}",
                     // MemorizationTracker
@@ -350,7 +440,7 @@ i18n
                     error_invalid_range: "Fehler: Ungültiger Ayah-Bereich (Start darf nicht größer als Ende sein). Bitte Zutaten prüfen.",
                     loading_text: "Wird geladen...",
                     memorization_missing: "Keine Konfiguration für das Auswendiglernen gefunden.",
-                    memorization_inactive: "Auswendiglernen ist deaktiviert. Um es zu den Zutaten hinzuzufügen",
+                    memorization_inactive: "Auswendiglernen ist deaktiviert. Um es zu den",
                     memorization_surah: "Surah: {{number}}",
                     memorization_ayah_range: "Ayah bereich: {{start}}-{{end}}",
                     memorization_button_read: "Gelesen (+)",

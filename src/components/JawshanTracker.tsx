@@ -161,7 +161,7 @@ export default function JawshanTracker(): JSX.Element {
 const colors = {
     background: '#041219',
     card: '#072f36',
-    accentBlue: '#0f5b83',
+    accentBlue: '#00ffff',
     accentGreen: '#1f7a3a',
     textPrimary: '#e6f7ff',
     muted: 'rgba(255,255,255,0.65)'
