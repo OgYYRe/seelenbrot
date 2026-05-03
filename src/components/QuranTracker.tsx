@@ -106,8 +106,6 @@ export default function QuranTracker(){
                 },
             ],
         );
-
-
     }
 
     if (!active)
