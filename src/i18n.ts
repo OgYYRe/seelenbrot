@@ -76,6 +76,13 @@ i18n
                     alert_memorization_range_invalid: "Ayet aralığı hatalı (başlangıç bitişten büyük olamaz).",
                     alert_memorization_saved: "Ezber hedefi tarife eklendi.",
 
+                    alert_reset_title: "Tüm veriler sıfırlansın mı?",
+                    alert_reset_confirm: "Bu işlem cihazınızdaki kayıtlı ilerlemeyi ve lokal verileri silecek. Bu işlem geri alınamaz.",
+                    alert_reset_cancel: "İptal",
+                    alert_reset_action: "Sıfırla",
+                    alert_reset_done: "Tüm veriler sıfırlandı.",
+
+
                     // Today Screen
                     salavat_label_send: "Peygamberimize selam gönder.",
                     today_dhikr_title: "Zikir",
@@ -236,6 +243,13 @@ i18n
                     alert_memorization_range_invalid: "Invalid ayah range (start cannot be greater than end).",
                     alert_memorization_saved: "Memorization goal added.",
 
+
+                    alert_reset_title: "Reset all data?",
+                    alert_reset_confirm: "This will delete all saved progress and local data on this device. This action cannot be undone.",
+                    alert_reset_cancel: "Cancel",
+                    alert_reset_action: "Reset",
+                    alert_reset_done: "All data has been reset.",
+
                     // Today Screen
                     salavat_label_send: "Send greetings to our Prophet.",
                     today_dhikr_title: "Dhikr",
@@ -393,6 +407,13 @@ i18n
                     alert_memorization_invalid: "Das Auswendiglern-Ziel muss eine Zahl sein.",
                     alert_memorization_range_invalid: "Ungültiger Ayah-Bereich (Start darf nicht größer als Ende sein).",
                     alert_memorization_saved: "Auswendiglern-Ziel hinzugefügt.",
+
+
+                    alert_reset_title: "Alle Daten zurücksetzen?",
+                    alert_reset_confirm: "Dadurch werden alle gespeicherten Fortschritte und lokalen Daten auf diesem Gerät gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.",
+                    alert_reset_cancel: "Abbrechen",
+                    alert_reset_action: "Zurücksetzen",
+                    alert_reset_done: "Alle Daten wurden zurückgesetzt.",
 
                     // Today Screen
                     salavat_label_send: "Sende Segenswünsche an unseren Propheten.",

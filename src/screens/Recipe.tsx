@@ -299,16 +299,16 @@ export default function RecipeScreen() {
 
     const handleReset = () => {
         Alert.alert(
-            t("alert_confirm"),
+            t("alert_reset_title"),
             t("alert_reset_confirm"),
             [
                 {
-                    text: t("alert_cancel"),
+                    text: t("alert_reset_cancel"),
                     style: "cancel",
                     isPreferred: true,
                 },
                 {
-                    text: t("alert_yes"),
+                    text: t("alert_reset_action"),
                     style: "destructive",
                     onPress: async () => {
                         const defaultProgress = createDefaultProgress();
