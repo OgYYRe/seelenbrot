@@ -88,6 +88,9 @@ async function checkDailyReset() {
     // Reset daily counts
     progress.quran.todayCount = 0;
 
+    const jawshanTotal = Number(progress.jawshan.total ?? 0);
+    const jawshanToday = Number(progress.jawshan.todayCount ?? 0);
+    progress.jawshan.total = jawshanTotal + jawshanToday;
     progress.jawshan.todayCount = 0;
 
     if (Number(progress.dhikr.todayCount) >= Number(progress.dhikr.dailyTarget)) {
