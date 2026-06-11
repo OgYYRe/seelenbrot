@@ -8,12 +8,13 @@ import QuranTracker from "../components/QuranTracker";
 
 import JawshanViewPage from "../components/JawshanTracker.tsx";
 import MemorizationTracker from "../components/MemorizationTracker.tsx";
+import ExtraTracker from "../components/ExtraTracker";
 import {useState} from "react";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {useTranslation} from "react-i18next";
 
 
-export default function TodayScreen() {
+export default function TodayScreen({ navigation }: any) {
     const [refreshKey, setRefreshKey] = useState(0);
     useFocusEffect(
         useCallback(() => {
@@ -30,12 +31,18 @@ export default function TodayScreen() {
     const [openQuran, setOpenQuran] = useState(false);
     const [openJawshan, setOpenJawshan] = useState(false);
     const [openMemorization, setOpenMemorization] = useState(false);
+    const [openExtra, setOpenExtra] = useState(false);
 
     const {t}  = useTranslation();
 
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+                <View style={styles.topNav}>
+                    <Pressable onPress={() => navigation.navigate('Home')} style={({ pressed }) => [styles.backButton, pressed && styles.buttonPressed]}>
+                        <Text style={styles.topNavText}>← {t('nav_home')}</Text>
+                    </Pressable>
+                </View>
 
                 {/* Salawat – always */}
                 <View style={styles.card}>
@@ -101,6 +108,18 @@ export default function TodayScreen() {
                     </View>}
                 </View>
 
+
+                {/* Ekstra Okuma */}
+                <View style={styles.card}>
+                    <Pressable onPress={() => setOpenExtra(prev => !prev)} style={styles.cardHeader}>
+                        <Text style={styles.cardTitle}>{t('today_extra_title')}</Text>
+                        <Text style={styles.cardAction}>{openExtra ? t("toggle_close") : t("toggle_open")}</Text>
+                    </Pressable>
+                    {openExtra && <View style={styles.cardBody}>
+                        <ExtraTracker key={refreshKey} />
+                    </View>}
+                </View>
+
             </ScrollView>
         </SafeAreaView>
     );
@@ -156,4 +175,10 @@ const styles = StyleSheet.create({
     cardBody: {
         marginTop: 10,
     }
+    ,
+    topNav: { flexDirection: 'row', alignItems: 'center', marginBottom: 8 },
+    topNavText: { color: '#e6f7ff', fontWeight: '700' },
+    backButton: { padding: 8, backgroundColor: 'transparent' },
+    buttonPressed: { opacity: 0.9 },
 });
+

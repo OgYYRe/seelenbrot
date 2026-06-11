@@ -51,6 +51,25 @@ i18n
                     recipe_memorization_button: "+ Tarife Ekle",
                     recipe_reset_button: "Tüm Tarifeleri Sıfırla",
 
+
+                    // Extra Reading (PDF)
+                    recipe_extra_title: "Ekstra Okuma",
+                    recipe_extra_desc: "Cihazınızdan bir PDF seçip hangi sayfadan başlayacağınızı belirleyin. Günlük hedef sayısını girin.",
+                    recipe_extra_label_pdf: "PDF seç / değiştir",
+                    recipe_extra_button_pdf: "PDF Seç",
+                    recipe_extra_button_pdf_replace: "PDF Değiştir",
+                    recipe_extra_label1: "Günde kaç sayfa?",
+                    recipe_extra_placeholder1: "Günde kaç sayfa? (ör: 2)",
+                    recipe_extra_label2: "PDF hangi sayfadan başlıyor? (1 = PDF sayfa 1)",
+                    recipe_extra_placeholder2: "Kaçıncı sayfadan başlamak istersiniz? (ör: 1)",
+                    recipe_extra_button_save: "Kaydet",
+                    recipe_extra_pdf_selected: "PDF seçildi.",
+                    recipe_extra_pdf_error: "PDF seçilemedi.",
+                    recipe_extra_saved: "Ekstra okuma hedefi kaydedildi.",
+                    recipe_extra_selected_label: "Seçilen PDF",
+                    today_extra_title: "Ekstra Okuma",
+                    nav_home: "Ana Menü",
+
                     // Alerts
                     alert_error: "Hata",
                     alert_missing: "Eksik",
@@ -107,12 +126,9 @@ i18n
                     // Sources
                     sources_title: "Kaynaklar",
                     sources_desc: "-Kur'an metinleri Açık Kuran (acikkuran.com) projesinden alınmıştır.\n" +
-                        "Lisans: CC BY-NC-SA 4.0.\n" +
-                        "-Cevşen metni Hayırhah kaynağından alınmıştır.\n" +
-                        "-Metin içerikleri üzerinde anlamı değiştirecek herhangi bir değişiklik yapılmamıştır.\n" +
-                        "(Sadece görsel düzenleme amacıyla bazı işaretler (örneğin ● yerine ❂) değiştirilmiştir.)",
+                        "Lisans: CC BY-NC-SA 4.0.\n",
                     sources_quran: "https://github.com/acik-kuran/acikkuran-api",
-                    sources_jawshan: "https://hayirhah.com/cevsen",
+
                     // Feedback
                     feedback_title: "Geri Bildirim",
                     feedback_desc: "Herhangi bir hata, eksik veya öneri için:",
@@ -172,6 +188,15 @@ i18n
                     salawat_prayer_text: "Allahümme salli alâ seyyidinâ Muhammed",
 
 
+                    // ExtraPDFView
+                    extra_inactive: "Ekstra okuma kapalı. Malzemelere eklemek için",
+                    extra_page: "{{currentPage}}. Sayfa",
+                    extra_confirm_mark_page: "{{currentPage}}. sayfayı okudunuz mu?",
+                    extra_mark_read: "{{currentPage}}. sayfayı okudum ✔",
+                    extra_daily_done_title: "Günlük hedef tamamlandı",
+                    extra_daily_done_desc: "Bugünkü {{target}} sayfa hedefi tamamlandı.",
+
+
 
                 }
             },
@@ -218,6 +243,26 @@ i18n
                     recipe_memorization_placeholder3: "End ayah number? (e.g. 28)",
                     recipe_memorization_button: "+ Add",
                     recipe_reset_button: "Reset All Recipes",
+
+
+                    // Extra Reading (PDF)
+                    recipe_extra_title: "Extra Reading",
+                    recipe_extra_desc: "Choose a PDF from your device and set which page corresponds to page 1 of your book. Also set daily target.",
+                    recipe_extra_label_pdf: "Select / replace PDF",
+                    recipe_extra_button_pdf: "Select PDF",
+                    recipe_extra_button_pdf_replace: "Replace PDF",
+                    recipe_extra_label1: "How many pages per day?",
+                    recipe_extra_placeholder1: "How many pages per day? (e.g. 2)",
+                    recipe_extra_label2: "Which PDF page is your book page 1?",
+                    recipe_extra_placeholder2: "Which page to start from? (e.g. 1)",
+                    recipe_extra_button_save: "Save",
+                    recipe_extra_pdf_selected: "PDF selected.",
+                    recipe_extra_pdf_error: "Could not select PDF.",
+                    recipe_extra_saved: "Extra reading target saved.",
+
+                    recipe_extra_selected_label: "Selected PDF",
+                    today_extra_title: "Extra Reading",
+                    nav_home: "Home",
                     // Alerts
                     alert_error: "Error",
                     alert_missing: "Missing",
@@ -275,13 +320,9 @@ i18n
                     // Sources
                     sources_title: "Sources",
                     sources_desc: "- Qur'an texts are obtained from the Açık Kuran project (acikkuran.com).\n" +
-                        "License: CC BY-NC-SA 4.0.\n" +
-                        "- Jawshan text is obtained from the Hayirhah source.\n" +
-                        "- No meaning-altering modifications have been made to the texts.\n" +
-                        "(Only minor visual adjustments were made.)",
+                        "License: CC BY-NC-SA 4.0.\n",
 
                     sources_quran: "https://github.com/acik-kuran/acikkuran-api",
-                    sources_jawshan: "https://hayirhah.com/cevsen",
 
                     // Feedback
                     feedback_title: "Feedback",
@@ -335,6 +376,15 @@ i18n
                     salawat_done: "Salawat sent",
                     salawat_prayer_text: "O Allah, send blessings upon our master Muhammad",
 
+                    // ExtraPDFView
+                    extra_inactive: "Extra reading is disabled. To add it to ingredients",
+                    extra_page: "Page {{currentPage}}",
+                    extra_confirm_mark_page: "Did you read page {{currentPage}}?",
+                    extra_mark_read: "I read page {{currentPage}} ✔",
+                    extra_daily_done_title: "Daily target completed",
+                    extra_daily_done_desc: "Today's target of {{target}} pages completed.",
+
+
 
 
                 }
@@ -383,6 +433,24 @@ i18n
                     recipe_memorization_placeholder3: "End-Ayah-Nummer? (z. B. 28)",
                     recipe_memorization_button: "+ Hinzufügen",
                     recipe_reset_button: "Alle Rezepte zurücksetzen",
+
+                    // Extra Reading (PDF)
+                    recipe_extra_title: "Extra Lesen",
+                    recipe_extra_desc: "Wähle ein PDF von deinem Gerät und lege fest, welche PDF-Seite Seite 1 deines Buches ist. Setze außerdem das Tagesziel.",
+                    recipe_extra_label_pdf: "PDF auswählen/ersetzen",
+                    recipe_extra_button_pdf: "PDF auswählen",
+                    recipe_extra_button_pdf_replace: "PDF ersetzen",
+                    recipe_extra_label1: "Wie viele Seiten pro Tag?",
+                    recipe_extra_placeholder1: "Wie viele Seiten pro Tag? (z. B. 2)",
+                    recipe_extra_label2: "Welche PDF-Seite entspricht Buchseite 1?",
+                    recipe_extra_placeholder2: "Ab welcher Seite beginnen? (z. B. 1)",
+                    recipe_extra_button_save: "Speichern",
+                    recipe_extra_pdf_selected: "PDF ausgewählt.",
+                    recipe_extra_pdf_error: "PDF konnte nicht ausgewählt werden.",
+                    recipe_extra_saved: "Extra-Leseziel gespeichert.",
+                    recipe_extra_selected_label: "Ausgewählte PDF",
+                    today_extra_title: "Extra Lesen",
+                    nav_home: "Startseite",
                     // Alerts
                     alert_error: "Fehler",
                     alert_missing: "Fehlend",
@@ -440,13 +508,8 @@ i18n
                     // Sources
                     sources_title: "Quellen",
                     sources_desc: "- Die Qur'an-Texte stammen aus dem Projekt Açık Kuran (acikkuran.com).\n" +
-                        "Lizenz: CC BY-NC-SA 4.0.\n" +
-                        "- Der Jawshan-Text stammt aus der Quelle Hayirhah.\n" +
-                        "- Es wurden keine inhaltlichen Änderungen an den Texten vorgenommen.\n" +
-                        "(Lediglich kleinere visuelle Anpassungen wurden vorgenommen.)",
-
+                        "Lizenz: CC BY-NC-SA 4.0.\n",
                     sources_quran: "https://github.com/acik-kuran/acikkuran-api",
-                    sources_jawshan: "https://hayirhah.com/cevsen",
 
                     // Feedback
                     feedback_title: "Feedback",
@@ -500,6 +563,15 @@ i18n
                     // SalavatSlider
                     salawat_done: "Salawat gesendet",
                     salawat_prayer_text: "O Allah, sende Segen über unseren Meister Muhammad",
+
+
+                    // ExtraPDFView
+                    extra_inactive: "Extra-Lesen ist deaktiviert. Um es zu den ",
+                    extra_page: "Seite {{currentPage}}",
+                    extra_confirm_mark_page: "Haben Sie Seite {{currentPage}} gelesen?",
+                    extra_mark_read: "Ich habe Seite {{currentPage}} gelesen ✔",
+                    extra_daily_done_title: "Tagesziel erreicht",
+                    extra_daily_done_desc: "Das heutige Ziel von {{target}} Seiten ist erreicht.",
 
 
 

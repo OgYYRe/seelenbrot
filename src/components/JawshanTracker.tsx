@@ -18,7 +18,7 @@ export default function JawshanTracker(): JSX.Element {
     const [active, setActive] = useState(true);
 
 
-    const TOTAL_PARTS = 102;
+    const TOTAL_PARTS = 105;
 
     const [totalRead, setTotalRead] = useState<number>(0);
     const [todayCount, setTodayCount] = useState<number>(0);

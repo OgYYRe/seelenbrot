@@ -1,6 +1,8 @@
 import React from 'react';
 import {useEffect, useState} from "react";
 import {Pressable, Text, View, StyleSheet} from "react-native";
+import Animated, { useSharedValue, useAnimatedProps, withTiming, interpolateColor } from 'react-native-reanimated';
+import Svg, { Circle } from 'react-native-svg';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import {useTranslation} from "react-i18next";
@@ -40,6 +42,7 @@ export default function DhikrCounter({target, name}: DhikrProps) {
 
 
     const [todayCount, setTodayCount] = useState(0);
+    const progressShared = useSharedValue(0);
     useEffect(() => {
         const load = async () => {
             const raw = await AsyncStorage.getItem("app:progress");
@@ -59,6 +62,9 @@ export default function DhikrCounter({target, name}: DhikrProps) {
                 name: typeof progress.dhikr?.dhikrName === "string" ? progress.dhikr.dhikrName : "",
                 target: Number(progress.dhikr?.dailyTarget ?? 0),
             });
+            // initialize shared progress value
+            const initial = Number(progress.dhikr?.todayCount ?? 0) / Math.max(1, Number(progress.dhikr?.dailyTarget ?? 1));
+            progressShared.value = initial > 1 ? 1 : initial;
         };
 
         load();
@@ -85,6 +91,9 @@ export default function DhikrCounter({target, name}: DhikrProps) {
 
         await AsyncStorage.setItem('app:progress', JSON.stringify(progress));
         setTodayCount(current + 1);
+        // animate progress
+        const newRatio = Math.min(1, (current + 1) / Math.max(1, usedTarget));
+        progressShared.value = withTiming(newRatio, { duration: 350 });
 
     }
 
@@ -107,19 +116,50 @@ export default function DhikrCounter({target, name}: DhikrProps) {
 
 
 
+    // circle progress parameters
+    const size = 86;
+    const strokeWidth = 10;
+    const radius = (size - strokeWidth) / 2;
+    const circumference = 2 * Math.PI * radius;
+
+    const AnimatedCircle = Animated.createAnimatedComponent(Circle);
+
+    const fgAnimatedProps = useAnimatedProps(() => {
+        const dashoffset = circumference * (1 - progressShared.value);
+        const stroke = interpolateColor(progressShared.value, [0, 1], [colors.accentBlue, colors.accentGreen]);
+        return {
+            strokeDashoffset: dashoffset,
+            stroke: stroke,
+        } as any;
+    });
+
+    const innerMaxRadius = radius - strokeWidth - 2;
+    const innerAnimatedProps = useAnimatedProps(() => {
+        const r = innerMaxRadius * Math.sqrt(progressShared.value);
+        return { r } as any;
+    });
+
     return (
 
 
-        <View style={styles.container}>
-            <Text style={styles.countText}>{todayCount} / {usedTarget}</Text>
+        <View style={styles.containerRow}>
+            <View style={styles.circleWrap}>
+                <Svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+                    <Circle cx={size/2} cy={size/2} r={radius} stroke={'rgba(255,255,255,0.06)'} strokeWidth={strokeWidth} fill={'transparent'} />
+                    <AnimatedCircle animatedProps={fgAnimatedProps} cx={size/2} cy={size/2} r={radius} strokeWidth={strokeWidth} strokeLinecap={'round'} strokeDasharray={`${circumference} ${circumference}`} transform={`rotate(-90 ${size/2} ${size/2})`} fill={'transparent'} />
+                    <Circle cx={size/2} cy={size/2} r={radius - strokeWidth - 2} fill={'rgba(255,255,255,0.02)'} />
+                    <AnimatedCircle animatedProps={innerAnimatedProps} cx={size/2} cy={size/2} strokeWidth={0} fill={colors.accentGreen} />
+                </Svg>
+                <View style={styles.circleLabel}><Text style={styles.countText}>{todayCount}</Text></View>
+            </View>
 
-            <Pressable onPress={onDhikrPress} style={({pressed}) => [styles.primaryButton, pressed && styles.buttonPressed]} disabled={done}>
-                <Text style={styles.primaryButtonText}>{usedName} +1</Text>
-            </Pressable>
-
-            {done && <Text style={styles.doneText}>
-                {t("dhikr_done_message")}
-            </Text>}
+            <View style={styles.controls}>
+                <Text style={styles.smallLabel}>{todayCount} / {usedTarget}</Text>
+                <Pressable onPress={onDhikrPress} style={({pressed}) => [styles.primaryButton, pressed && styles.buttonPressed]} disabled={done}>
+                    <Text style={styles.primaryButtonText}>{usedName} +1</Text>
+                </Pressable>
+                {done && <Text style={styles.doneText}>{t("dhikr_done_message")}</Text>}
+            </View>
         </View>
 
     );
@@ -127,7 +167,12 @@ export default function DhikrCounter({target, name}: DhikrProps) {
 
 const styles = StyleSheet.create({
     container: { paddingVertical: 6 },
-    countText: { color: colors.textPrimary, fontWeight: '600', marginBottom: 8 },
+    containerRow: { flexDirection: 'row', alignItems: 'center', gap: 12 },
+    circleWrap: { width: 86, height: 86, alignItems: 'center', justifyContent: 'center' },
+    circleLabel: { position: 'absolute', alignItems: 'center', justifyContent: 'center' },
+    controls: { flex: 1 },
+    smallLabel: { color: colors.textPrimary, marginBottom: 6 },
+    countText: { color: colors.textPrimary, fontWeight: '600', marginBottom: 8, textAlign: 'center' },
 
     primaryButton: {
         backgroundColor: colors.accentBlue,

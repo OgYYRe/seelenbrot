@@ -56,6 +56,15 @@ const DEFAULT_PROGRESS = {
         todayCount: 0,
         total: 0
     }
+    ,
+    extras: {
+        active: true,
+        dailyTarget: 1,
+        todayCount: 0,
+        total: 0,
+        pdfUri: null,
+        startPage: 1
+    }
 };
 
 async function initProgressStorage() {
@@ -80,6 +89,7 @@ async function checkDailyReset() {
     progress.salawat = progress.salawat ?? { todayCount: 0, doneToday: false };
     progress.memorization = progress.memorization ?? { total: 0, todayCount: 0 };
     progress.dhikr = progress.dhikr ?? { todayCount: 0, dailyTarget: 0 };
+    progress.extras = progress.extras ?? { total: 0, todayCount: 0 };
 
 
 
@@ -148,7 +158,7 @@ export default function App() {
     return (
       <GestureHandlerRootView style={{flex: 1}}>
       <NavigationContainer>
-          <Stack.Navigator initialRouteName="Home">
+          <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
               <Stack.Screen name="Home" component={HomeScreen} />
               <Stack.Screen name="Today" component={TodayScreen} />
               <Stack.Screen name="Recipe" component={RecipeScreen} />

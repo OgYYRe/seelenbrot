@@ -1,4 +1,5 @@
 import { ScrollView, View, Text, StyleSheet, Pressable, Linking } from "react-native";
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import {useTranslation} from "react-i18next";
 
@@ -7,12 +8,17 @@ const openLink = (url: string) => {
 };
 
 
-export default function InfoScreen() {
-
+export default function InfoScreen({ navigation }: any) {
 
     const { t } = useTranslation();
     return (
-        <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+        <SafeAreaView style={styles.container}>
+            <ScrollView contentContainerStyle={styles.content}>
+                <View style={styles.topNav}>
+                    <Pressable onPress={() => navigation.navigate('Home')} style={({ pressed }) => [styles.backButton, pressed && { opacity: 0.9 }] }>
+                        <Text style={styles.topNavText}>← {t('nav_home')}</Text>
+                    </Pressable>
+                </View>
 
             {/* About App */}
             <View style={styles.card}>
@@ -39,11 +45,6 @@ export default function InfoScreen() {
                     </Text>
                 </Pressable>
 
-                <Pressable onPress={() => openLink("https://hayirhah.com/cevsen")}>
-                    <Text style={styles.link}>
-                        {t("sources_jawshan")}
-                    </Text>
-                </Pressable>
             </View>
 
             {/* Feedback */}
@@ -68,7 +69,8 @@ export default function InfoScreen() {
                 </Pressable>
             </View>
 
-        </ScrollView>
+            </ScrollView>
+        </SafeAreaView>
 
     );
 }
@@ -105,6 +107,13 @@ const styles = StyleSheet.create({
         color: '#64acd3',
         marginTop: 6,
         textDecorationLine: 'underline'
-    }
+    },
+    topNav: { flexDirection: 'row', alignItems: 'center', marginBottom: 8, paddingHorizontal: 16, paddingTop: 8 },
+    topNavText: { color: '#e6f7ff', fontWeight: '700' },
+    backButton: { padding: 8, backgroundColor: 'transparent' }
 
 })
+
+// top navigation styles (keep inside StyleSheet)
+// ...existing code...
+
