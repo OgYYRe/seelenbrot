@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, Text, TextInput, ScrollView, View, Pressable, StyleSheet } from 'react-native';
+import { Alert, Text, TextInput, ScrollView, View, Pressable, StyleSheet, KeyboardAvoidingView } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DocumentPicker from 'react-native-document-picker';
@@ -189,8 +189,12 @@ export default function RecipeScreen({ navigation }: any) {
           // no-op
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.content}>
+      <SafeAreaView style={styles.container}>
+        <KeyboardAvoidingView
+            style={{ flex: 1 }}
+            behavior="padding"
+        >
+          <ScrollView contentContainerStyle={styles.content}>
         {/* Top navigation row (since native header is hidden) */}
         <View style={styles.topNav}>
           <Pressable onPress={() => navigation.navigate('Home')} style={({ pressed }) => [styles.backButton, pressed && styles.buttonPressed]}>
@@ -331,6 +335,7 @@ export default function RecipeScreen({ navigation }: any) {
           <Text style={styles.resetText}>{t('recipe_reset_button')}</Text>
         </Pressable>
       </ScrollView>
+        </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
