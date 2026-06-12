@@ -3,8 +3,6 @@ import { Alert, Text, TextInput, ScrollView, View, Pressable, StyleSheet } from 
 import CheckBox from '@react-native-community/checkbox';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DocumentPicker from 'react-native-document-picker';
-import RNFS from 'react-native-fs';
-import { Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 
@@ -138,35 +136,16 @@ export default function RecipeScreen({ navigation }: any) {
 
   const pickExtraPdf = async () => {
     try {
-      const res = await DocumentPicker.pickSingle({ type: [DocumentPicker.types.pdf] });
-      const pickedUri = (res as any).uri || (res as any).fileCopyUri || (res as any).fileUri || '';
+      const res = await DocumentPicker.pickSingle({
+        type: [DocumentPicker.types.pdf],
+        copyTo: 'documentDirectory',
+      });
 
-      // Destination inside app documents directory
-      const destName = `extra_${Date.now()}.pdf`;
-      const destPath = `${RNFS.DocumentDirectoryPath}/${destName}`;
+      const finalUri =
+          (res as any).fileCopyUri ||
+          (res as any).uri ||
+          '';
 
-      // Normalize source path for RNFS: strip file:// for file paths
-      let srcPath = pickedUri;
-      if (pickedUri.startsWith('file://')) srcPath = pickedUri.replace('file://', '');
-
-      // Try copying. If copy fails, fall back to alternative uri fields
-      try {
-        await RNFS.copyFile(srcPath, destPath);
-      } catch (copyErr) {
-        const alt = (res as any).fileCopyUri || (res as any).fileUri;
-        if (alt) {
-          let altSrc = alt;
-          if (altSrc.startsWith('file://')) altSrc = altSrc.replace('file://', '');
-          await RNFS.copyFile(altSrc, destPath);
-        } else {
-          // If copy failed and no alternative, surface an error to user
-          console.warn('Copy failed and no alt uri', copyErr);
-          Alert.alert(t('alert_error'), t('recipe_extra_pdf_error'));
-          return;
-        }
-      }
-
-      const finalUri = Platform.OS === 'android' ? `file://${destPath}` : destPath.startsWith('/') ? `file://${destPath}` : destPath;
       setExtraPdfUri(finalUri);
 
       // persist immediately to AsyncStorage so Today screen can pick it up without saving whole form
