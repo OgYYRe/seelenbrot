@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Alert, Text, TextInput, ScrollView, View, Pressable, StyleSheet, KeyboardAvoidingView } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import DocumentPicker from 'react-native-document-picker';
+import { pick, types } from '@react-native-documents/picker';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 
@@ -136,8 +136,8 @@ export default function RecipeScreen({ navigation }: any) {
 
   const pickExtraPdf = async () => {
     try {
-      const res = await DocumentPicker.pickSingle({
-        type: [DocumentPicker.types.pdf],
+      const [res] = await pick({
+        type: [types.pdf],
         copyTo: 'documentDirectory',
       });
 
@@ -148,7 +148,6 @@ export default function RecipeScreen({ navigation }: any) {
 
       setExtraPdfUri(finalUri);
 
-      // persist immediately to AsyncStorage so Today screen can pick it up without saving whole form
       try {
         const raw = await AsyncStorage.getItem(PROGRESS_KEY);
         const progress = raw ? JSON.parse(raw) : createDefaultProgress();
@@ -160,11 +159,11 @@ export default function RecipeScreen({ navigation }: any) {
 
       Alert.alert(t('alert_success'), t('recipe_extra_pdf_selected'));
     } catch (e: any) {
-      if (DocumentPicker.isCancel(e)) {
+      if (e?.code === 'OPERATION_CANCELED') {
         return;
       }
 
-      console.warn('DocumentPicker / copy error', e);
+      console.warn('Document picker / copy error', e);
       Alert.alert(t('alert_error'), t('recipe_extra_pdf_error'));
     }
   };

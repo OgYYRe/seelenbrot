@@ -95,6 +95,7 @@ const colors = {
 
 const styles = StyleSheet.create({
     langRow: {
+        fontFamily: "Noto Naskh Arabic",  //!TODO: make this dynamic based on language
         flexDirection: "row",
         justifyContent: "center",
         marginBottom: 12,
