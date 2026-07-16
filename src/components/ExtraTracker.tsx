@@ -40,34 +40,66 @@ export default function ExtraTracker(){
     }, []);
 
     const handleCheckChange = async (value: boolean) => {
-        if (!value) return;
+        if (!value) {
+            setChecked(false);
+            return;
+        }
+
+        // Show confirmation alert
         Alert.alert(
             t("confirm_title"),
             t("confirm_mark_page", { currentPage }),
             [
-                { text: t("confirm_cancel"), onPress: () => setChecked(false), style: 'cancel', isPreferred: true },
-                { text: t("confirm_yes"), onPress: async () => {
-                    const stored = await AsyncStorage.getItem(PROGRESS_KEY);
-                    if (!stored) return;
-                    const progress = JSON.parse(stored);
-                    if (!progress.extras) progress.extras = { total: 0, todayCount: 0, active: true };
+                {
+                    text: t("confirm_cancel"),
+                    onPress: () => {
+                        setChecked(false);
+                    },
+                    style: 'cancel',
+                    isPreferred: true
+                },
+                {
+                    text: t("confirm_yes"),
+                    onPress: async () => {
+                        try {
+                            const stored = await AsyncStorage.getItem(PROGRESS_KEY);
+                            if (!stored) {
+                                setChecked(false);
+                                return;
+                            }
 
-                    const total = Number(progress.extras.total ?? 0);
-                    const nextPage = total + 1;
+                            const progress = JSON.parse(stored);
+                            if (!progress.extras) {
+                                progress.extras = { total: 0, todayCount: 0, active: true, dailyTarget: 1, pdfUri: null };
+                            }
 
-                    progress.extras.total = nextPage;
-                    progress.extras.todayCount = Number(progress.extras.todayCount ?? 0) + 1;
-                    await AsyncStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
+                            const total = Number(progress.extras.total ?? 0);
+                            const nextPage = total + 1;
+                            const dailyTargetValue = Number(progress.extras.dailyTarget ?? 1);
 
-                    setTotalRead(nextPage);
-                    setTodayCount(progress.extras.todayCount);
-                    setChecked(false);
+                            progress.extras.total = nextPage;
+                            progress.extras.todayCount = Number(progress.extras.todayCount ?? 0) + 1;
+                            await AsyncStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
 
-                    const target = Math.min(Number(progress.extras.dailyTarget ?? dailyTarget), Math.max(0, TOTAL_PAGES - nextPage + 1));
-                    if (progress.extras.todayCount >= target) {
-                        Alert.alert(t("extra_daily_done_title"), t("extra_daily_done_desc", { target }));
-                    }
-                }, style: 'default' }
+                            setTotalRead(nextPage);
+                            setTodayCount(progress.extras.todayCount);
+                            setDailyTarget(dailyTargetValue);
+
+                            const remaining = Math.max(0, TOTAL_PAGES - nextPage);
+                            const targetPages = Math.min(dailyTargetValue, remaining);
+
+                            if (progress.extras.todayCount >= targetPages) {
+                                Alert.alert(t("extra_daily_done_title"), t("extra_daily_done_desc", { target: targetPages }));
+                            }
+                        } catch (error) {
+                            console.error('Error updating progress:', error);
+                            Alert.alert(t("alert_error"), "Sayfalar sayılırken bir hata oluştu.");
+                        } finally {
+                            setChecked(false);
+                        }
+                    },
+                    style: 'default'
+                }
             ]
         );
     }
@@ -84,7 +116,17 @@ export default function ExtraTracker(){
             <ExtraPDFView uri={pdfUri ?? undefined} page={currentPage} />
 
             <View style={styles.checkRow}>
-                <CheckBox value={checked} disabled={shownTarget === 0 || isDailyDone} onValueChange={(v)=>{ setChecked(v); handleCheckChange(v); }} tintColors={{ true: '#00ffff', false: 'rgba(255,255,255,0.4)'}} />
+                <CheckBox
+                    value={checked}
+                    disabled={shownTarget === 0 || isDailyDone}
+                    onValueChange={(value) => {
+                        if (value) {
+                            setChecked(true);
+                            handleCheckChange(true);
+                        }
+                    }}
+                    tintColors={{ true: '#00ffff', false: 'rgba(255,255,255,0.4)'}}
+                />
                 <Text style={styles.checkText}>{t("extra_mark_read", { currentPage })}</Text>
             </View>
         </View>

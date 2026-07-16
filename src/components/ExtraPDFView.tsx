@@ -34,7 +34,10 @@ export default function ExtraPDFView({ uri, page }: Props) {
         setLoading(!!uri);
         setIsFull(true);
     };
-    const close = () => setIsFull(false);
+    const close = () => {
+        setIsFull(false);
+        setLoading(false);
+    };
 
     const source = uri ? { uri, cache: true } : undefined;
 
