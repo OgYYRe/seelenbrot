@@ -3,6 +3,7 @@ import {
     ActivityIndicator,
     Modal,
     Pressable,
+    Platform,
     StyleSheet,
     Text,
     View,
@@ -18,8 +19,13 @@ type Props = {
 export default function QuranPDFView({ page }: Props) {
 
     const {t} = useTranslation();
+    const pdfSource = useMemo(() => {
+        if (Platform.OS === "android") {
+            return { uri: "bundle-assets://lastQ.pdf" };
+        }
 
-    const pdfSource = require("../../assets/lastQ.pdf");
+        return require("../../assets/lastQ.pdf");
+    }, []);
 
     const safePage = useMemo(() => {
         const p = Math.floor(Number(page) || 1);

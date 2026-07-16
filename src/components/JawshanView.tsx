@@ -3,6 +3,7 @@ import {
     ActivityIndicator,
     Modal,
     Pressable,
+    Platform,
     StyleSheet,
     Text,
     View,
@@ -25,8 +26,13 @@ const colors = {
 export default function JawshanView({ babNumber }: Props): JSX.Element {
 
     const {t} = useTranslation();
+    const pdfSource = useMemo(() => {
+        if (Platform.OS === "android") {
+            return { uri: "bundle-assets://Jawshan.pdf" };
+        }
 
-    const pdfSource = require("../../assets/Jawshan/Jawshan.pdf");
+        return require("../../assets/Jawshan/Jawshan.pdf");
+    }, []);
 
     const safePage = useMemo(() => {
         const p = Math.floor(Number(babNumber) || 1);
