@@ -31,6 +31,8 @@ export default function ExtraPDFView({ uri, page }: Props) {
 
     const open = () => {
         console.log("PDF URI =", uri);
+        console.log("Platform URI =", JSON.stringify(uri));
+
         setLoading(!!uri);
         setIsFull(true);
     };

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Alert, Text, TextInput, ScrollView, View, Pressable, StyleSheet, KeyboardAvoidingView } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { pick, types } from '@react-native-documents/picker';
+import { pick, types, keepLocalCopy } from '@react-native-documents/picker';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 
@@ -138,33 +138,53 @@ export default function RecipeScreen({ navigation }: any) {
     try {
       const [res] = await pick({
         type: [types.pdf],
-        copyTo: 'documentDirectory',
       });
 
-      const finalUri =
-          (res as any).fileCopyUri ||
-          (res as any).uri ||
-          '';
+      const [copyResult] = await keepLocalCopy({
+        files: [
+          {
+            uri: res.uri,
+            fileName: res.name ?? `extra-${Date.now()}.pdf`,
+          },
+        ],
+        destination: 'documentDirectory',
+      });
+
+      if (copyResult.status !== 'success') {
+        throw new Error(copyResult.copyError);
+      }
+
+      const finalUri = copyResult.localUri;
 
       setExtraPdfUri(finalUri);
 
-      try {
-        const raw = await AsyncStorage.getItem(PROGRESS_KEY);
-        const progress = raw ? JSON.parse(raw) : createDefaultProgress();
-        progress.extras = { ...progress.extras, pdfUri: finalUri };
-        await AsyncStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
-      } catch (persistErr) {
-        console.warn('Persist extras.pdfUri failed', persistErr);
-      }
+      const raw = await AsyncStorage.getItem(PROGRESS_KEY);
+      const progress = raw ? JSON.parse(raw) : createDefaultProgress();
 
-      Alert.alert(t('alert_success'), t('recipe_extra_pdf_selected'));
+      progress.extras = {
+        ...progress.extras,
+        pdfUri: finalUri,
+      };
+
+      await AsyncStorage.setItem(
+          PROGRESS_KEY,
+          JSON.stringify(progress)
+      );
+
+      Alert.alert(
+          t('alert_success'),
+          t('recipe_extra_pdf_selected')
+      );
     } catch (e: any) {
       if (e?.code === 'OPERATION_CANCELED') {
         return;
       }
 
       console.warn('Document picker / copy error', e);
-      Alert.alert(t('alert_error'), t('recipe_extra_pdf_error'));
+      Alert.alert(
+          t('alert_error'),
+          t('recipe_extra_pdf_error')
+      );
     }
   };
 
