@@ -121,6 +121,15 @@ export default function QuranTracker(){
                 </Pressable>
             </View>
         );
+    // If daily target is reached, show summary view (close reading area)
+    if (isDailyDone && shownTarget > 0) {
+        return (
+            <View style={styles.doneWrap}>
+                <Text style={styles.doneTitle}>{t("quran_daily_done_title")}</Text>
+                <Text style={styles.doneText}>{t("quran_daily_done_desc", { target: shownTarget })}</Text>
+            </View>
+        );
+    }
 
 
     return (
@@ -177,4 +186,8 @@ const styles = StyleSheet.create({
     linkWrap: { alignSelf: 'flex-start' },
     linkText: { color: colors.accentBlue, textDecorationLine: 'underline', fontWeight: '600' },
     linkPressed: { opacity: 0.8 }
+    ,
+    doneWrap: { padding: 12, backgroundColor: colors.card, borderRadius: 12, borderWidth: 1, borderColor: 'rgba(255,255,255,0.03)' },
+    doneTitle: { color: colors.textPrimary, fontSize: 18, fontWeight: '700', marginBottom: 6 },
+    doneText: { color: colors.muted, marginBottom: 8 },
 });

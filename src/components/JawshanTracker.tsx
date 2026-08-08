@@ -24,8 +24,10 @@ export default function JawshanTracker(): JSX.Element {
     const [todayCount, setTodayCount] = useState<number>(0);
     const [dailyTarget, setDailyTarget] = useState<number>(15);
 
-    const doneSoFar = totalRead + todayCount;
-    const remaining = Math.max(0, TOTAL_PARTS - doneSoFar);
+    // remaining should be calculated against the permanent totalRead
+    // so that the shown daily target doesn't shrink as user checks items
+    // during the day. todayCount affects progress but not the remaining pool.
+    const remaining = Math.max(0, TOTAL_PARTS - totalRead);
     const shownTarget = Math.min(dailyTarget, remaining);
 
     const currentBab = Math.min(

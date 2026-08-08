@@ -129,8 +129,11 @@ export default function RecipeScreen({ navigation }: any) {
     if (!extraStartPageInput.trim()) { Alert.alert(t('alert_missing'), 'Başlangıç sayfası boş olamaz.'); return; }
     const startPage = Number(extraStartPageInput.trim()); if (Number.isNaN(startPage) || startPage < 1) { Alert.alert(t('alert_error'), 'Başlangıç sayfası geçersiz.'); return; }
     const raw = await AsyncStorage.getItem(PROGRESS_KEY); if (!raw) return; const progress = JSON.parse(raw);
-    progress.extras = { ...progress.extras, dailyTarget: daily, total: Math.max(0, startPage - 1), todayCount: 0, pdfUri: extraPdfUri ? extraPdfUri : null, startPage: startPage, active: progress.extras?.active ?? true };
+    // Preserve existing todayCount to avoid losing daily progress when saving
+    const existingExtras = progress.extras ?? { todayCount: 0, active: true };
+    progress.extras = { ...existingExtras, dailyTarget: daily, total: Math.max(0, startPage - 1), todayCount: existingExtras.todayCount, pdfUri: extraPdfUri ? extraPdfUri : null, startPage: startPage, active: existingExtras.active ?? true };
     await AsyncStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
+    console.log('[Recipe:saveExtraHandler] Saved extras with preserved todayCount:', { todayCount: existingExtras.todayCount, dailyTarget: daily, startPage, total: Math.max(0, startPage - 1) });
     Alert.alert(t('alert_success'), t('recipe_extra_saved'));
   };
 
@@ -151,10 +154,22 @@ export default function RecipeScreen({ navigation }: any) {
       try {
         const raw = await AsyncStorage.getItem(PROGRESS_KEY);
         const progress = raw ? JSON.parse(raw) : createDefaultProgress();
-        progress.extras = { ...progress.extras, pdfUri: finalUri };
+        // Safely preserve all existing extras fields when updating pdfUri
+        const existingExtras = progress.extras ?? { dailyTarget: 1, total: 0, todayCount: 0, active: true, startPage: 1, pdfUri: null };
+        progress.extras = { 
+          ...existingExtras, 
+          pdfUri: finalUri,
+          // Ensure all critical fields are preserved with proper defaults
+          dailyTarget: existingExtras.dailyTarget ?? 1,
+          startPage: existingExtras.startPage ?? 1,
+          total: existingExtras.total ?? 0,
+          todayCount: existingExtras.todayCount ?? 0,
+          active: existingExtras.active ?? true,
+        };
         await AsyncStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
+        console.log('[Recipe:pickExtraPdf] PDF URI saved, extras preserved:', { pdfUri: finalUri, todayCount: progress.extras.todayCount, dailyTarget: progress.extras.dailyTarget, startPage: progress.extras.startPage });
       } catch (persistErr) {
-        console.warn('Persist extras.pdfUri failed', persistErr);
+        console.error('[Recipe:pickExtraPdf] Failed to persist PDF URI:', persistErr);
       }
 
       Alert.alert(t('alert_success'), t('recipe_extra_pdf_selected'));
@@ -163,7 +178,7 @@ export default function RecipeScreen({ navigation }: any) {
         return;
       }
 
-      console.warn('Document picker / copy error', e);
+      console.error('[Recipe:pickExtraPdf] Document picker error:', e);
       Alert.alert(t('alert_error'), t('recipe_extra_pdf_error'));
     }
   };
